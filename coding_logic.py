@@ -26,7 +26,7 @@ MAX_ROWS = 100
 SAVE_INTERVAL = 10 
 
 genai.configure(api_key=API_KEY)
-model = genai.GenerativeModel('gemini-1.5-flash-latest')
+model = genai.GenerativeModel('gemini-flash-latest')
 
 VALID_CODES = set(CODEBOOK_DICT.keys())
 
@@ -69,6 +69,8 @@ def code_transcript(transcript):
     if len(cleaned_input) < 10:
         return "Abandoned Chat | Insufficient data"
 
+    last_error = "Unknown Error" # Initialize the variable
+
     for attempt in range(2): 
         try:
             response = model.generate_content(
@@ -77,9 +79,12 @@ def code_transcript(transcript):
             )
             return response.text.replace("**", "").replace("\n", " ").strip()
         except Exception as e:
-            time.sleep(2)
-    return f"ERROR | {str(e)[:50]}"
-
+            last_error = str(e) # Store the error message
+            time.sleep(2) # Wait before trying again
+            
+    # If we get here, both attempts failed
+    return f"ERROR | {last_error[:50]}"
+   
 # --- 4. MAIN EXECUTION LOOP ---
 def main():
     if os.path.exists(OUTPUT_FILE):
