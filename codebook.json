@@ -1,7 +1,6 @@
-# --- 2. CODEBOOK & SYSTEM PROMPT ---
-CODEBOOK_DICT = {
+{
   "Abandoned Chat": "Empty fields, greetings only, or just 'library help' with no intent.",
-  "Request Purchase": "Requests for library to acquire books, journals, databases or other materials. request may be for personal use, course support, or research purposes. ",
+  "Request Purchase": "Requests for library to acquire books, journals, databases or other materials. request may be for personal use, course support, or research purposes.",
   "Hours": "Opening/closing times of the library or specific departments.",
   "Navigation & Wayfinding": "Locating areas, physical items, collections, restrooms or services.",
   "Lost & Found": "Inquiries about lost personal items.",
@@ -9,10 +8,10 @@ CODEBOOK_DICT = {
   "Physical Accessibility": "Inquiries about ADA access, ADA software or elevators.",
   "Safety & Security": "Personal safety or security, emergency procedures, or the presence of security personnel.",
   "Study Rooms & Reservations": "Booking or availability of study rooms including availability, policies, and equipment.",
-  "Campus: Services": "non-library services offered on campus (e.g., tutoring, writing support,  IT help, financial aid, counseling, dining).",
+  "Campus: Services": "non-library services offered on campus (e.g., tutoring, writing support, IT help, financial aid, counseling, dining).",
   "Campus Wayfinding": "Directions to locations elsewhere on campus.",
   "Course Reserves": "Borrowing textbooks/readings for classes.",
-  "Faculty Instruction Support": "faculty or instructors seeking help with teaching-related resources, tools, or services..",
+  "Faculty Instruction Support": "faculty or instructors seeking help with teaching-related resources, tools, or services.",
   "Known Item: AV": "Specific DVDs, streaming, audiobooks, or music.",
   "Known Item: Books": "Specific books by title, call number, or ISBN.",
   "Known Item: Articles": "Specific journal titles or individual articles.",
