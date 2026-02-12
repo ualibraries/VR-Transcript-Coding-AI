@@ -6,11 +6,19 @@ import os
 import sys
 from google.colab import userdata
 
-# Ensure Colab finds your utility file
-sys.path.append(os.getcwd())
-
-# Import the cleaner AND the new AI settings
+# Call the utilities model:
 from preprocessing_utils import clean_raw_text, AI_CONFIG, MODEL_NAME
+
+def code_transcript(row_id, transcript):
+    try:
+        response = client.models.generate_content(
+            model=MODEL_NAME,
+            contents=f"Row ID: {row_id}\nTranscript: {transcript}",
+            config=AI_CONFIG  # <--- Ensure this is just 'config'
+        )
+        return response.text
+    except Exception as e:
+        return f"Error: {e}"
 
 # --- BRIDGE 1: LOAD THE CODEBOOK ---
 with open('codebook.json', 'r') as f:
