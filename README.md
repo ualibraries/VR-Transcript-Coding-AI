@@ -2,7 +2,7 @@
 Python-based NLP pipeline and API orchestration used to classify over 35,000 virtual reference transcripts
 # Virtual Reference Analysis: Scalable Intent Classification (35k Corpus)
 
-This repository contains the Python-based NLP pipeline and API orchestration used to classify over 35,000 virtual reference transcripts across multiple academic library systems. 
+This repository contains the Python-based NLP pipeline and API orchestration used to classify approximately 35,000 virtual reference transcripts across 5 large, academic library systems. 
 
 ## 📌 Project Overview
 As academic libraries face increasing demand for virtual support, this research evaluates the efficacy of Large Language Models (LLMs) in replicating professional librarian judgment for transcript coding. This project specifically compares **Aggressive Linguistic Preprocessing** (VBA/Lemmatization) against **Structural Natural Language Processing** (Python/API) to identify the "Semantic Gap" in automated intent classification.
@@ -18,7 +18,7 @@ Unlike traditional keyword-matching models, this pipeline utilizes a **Structura
 * **Deterministic Execution:** API configuration set to $Temperature = 0.0$ to ensure computational reproducibility.
 
 ## 📂 Repository Structure
-* `coding_logic.py`: The main Python script using the Gemini 1.5 Flash API.
+* `coding_logic.py`: The main Python script using the Gemini 2.5 Flash API.
 * `codebook.json`: The 41-category hierarchical taxonomy used for classification.
 * `preprocessing_utils.py`: Regex utilities for timestamp and metadata stripping.
 * `pilot_results/`: Comparative data from the 100-row head-to-head testing phase.
