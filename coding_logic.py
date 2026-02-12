@@ -141,7 +141,7 @@ def main():
                 print(f"💾 Saved {processed_this_session} rows to {OUTPUT_FILE}")
 
             # Pace the API to avoid 503s
-            time.sleep(1.0) 
+            time.sleep(5.0) 
 
     except KeyboardInterrupt:
         print("\n🛑 Manual stop detected. Saving safely...")
