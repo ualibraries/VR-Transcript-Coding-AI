@@ -102,34 +102,34 @@ def main():
 
     print(f"Beginning processing of {total_rows} rows...")
 
-  try:
-        for i, row in df.iterrows():
-            # 1. Check if we've hit our session limit (e.g., 5000 rows)
-            if processed_this_session >= MAX_ROWS: 
-                print(f"Reached session limit of {MAX_ROWS}. Stopping...")
-                break 
+try:
+    for i, row in df.iterrows():
+    # 1. Check if we've hit our session limit (e.g., 5000 rows)
+    if processed_this_session >= MAX_ROWS: 
+        print(f"Reached session limit of {MAX_ROWS}. Stopping...")
+    break 
             
-            # 2. Skip rows that are already coded (Resume Logic)
-            if pd.notnull(df.at[i, 'Applied_Code_Reasoning']) and df.at[i, 'Applied_Code_Reasoning'] != "":
-                continue
+   # 2. Skip rows that are already coded (Resume Logic)
+    if pd.notnull(df.at[i, 'Applied_Code_Reasoning']) and df.at[i, 'Applied_Code_Reasoning'] != "":
+    continue
 
-            # 3. THE API CALL (Only do this ONCE per row!)
-            result = code_transcript(row['OriginalTranscript'])
-            df.at[i, 'Applied_Code_Reasoning'] = result
-            processed_this_session += 1
+   # 3. THE API CALL (Only do this ONCE per row!)
+     result = code_transcript(row['OriginalTranscript'])
+     df.at[i, 'Applied_Code_Reasoning'] = result
+     processed_this_session += 1
 
-            # 4. HEARTBEAT: Update us every 50 rows
-            if processed_this_session % 50 == 0:
-                print(f"✔️ Progress: {i+1} total rows scanned | {processed_this_session} coded this session")
-                print(f"   Latest Insight: {result[:75]}...")
+# 4. HEARTBEAT: Update us every 50 rows
+    if processed_this_session % 50 == 0:
+      print(f"✔️ Progress: {i+1} total rows scanned | {processed_this_session} coded this session")
+      print(f"   Latest Insight: {result[:75]}...")
 
-            # 5. PERIODIC SAVE: Save to CSV based on your SAVE_INTERVAL
-            if processed_this_session % SAVE_INTERVAL == 0:
-                df.to_csv(OUTPUT_FILE, index=False)
-                print(f"--- Auto-save complete at row {i+1} ---")
+     # 5. PERIODIC SAVE: Save to CSV based on your SAVE_INTERVAL
+    if processed_this_session % SAVE_INTERVAL == 0:
+       df.to_csv(OUTPUT_FILE, index=False)
+       print(f"--- Auto-save complete at row {i+1} ---")
 
-            # 6. RATE LIMIT SAFETY: A tiny pause to keep the API happy
-            time.sleep(0.5)
+  # 6. RATE LIMIT SAFETY: A tiny pause to keep the API happy
+    time.sleep(0.5)
 
     except KeyboardInterrupt:
         print("\nManual stop detected. Saving progress...")
