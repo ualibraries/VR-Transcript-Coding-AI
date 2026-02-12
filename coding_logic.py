@@ -8,7 +8,9 @@ from google.colab import userdata
 
 # Ensure Colab finds your utility file
 sys.path.append(os.getcwd())
-from preprocessing_utils import clean_raw_text 
+
+# Import the cleaner AND the new AI settings
+from preprocessing_utils import clean_raw_text, AI_CONFIG, MODEL_NAME
 
 # --- BRIDGE 1: LOAD THE CODEBOOK ---
 with open('codebook.json', 'r') as f:
@@ -65,23 +67,35 @@ def code_transcript(transcript):
     # We increased attempts and added a smarter wait time (Backoff)
     for attempt in range(3): 
         try:
-            # NEW SYNTAX for the Upgraded SDK
+            # UPDATED: Using MODEL_NAME and AI_CONFIG from your utilities file
             response = client.models.generate_content(
-                model='gemini-2.5-flash-lite',
-                contents=f"{SYSTEM_PROMPT}\n\nTranscript: {cleaned_input}"
+                model=MODEL_NAME,
+                contents=f"{SYSTEM_PROMPT}\n\nTranscript: {cleaned_input}",
+                config=AI_CONFIG  # This applies Temperature 0.0 and Top_P settings
             )
+            
+            # Clean up formatting for the CSV
             return response.text.replace("**", "").replace("\n", " ").strip()
             
         except Exception as e:
             last_error = str(e)
+            
+            # 404 Handle: If the model name is wrong or server is migrating
+            if "404" in last_error:
+                print(f"❌ Model {MODEL_NAME} not found. Check your utility file.")
+                break 
+
+            # 503 Handle: Server overloaded
             if "503" in last_error:
-                # Exponential wait: 5s, 15s, 30s
+                # Exponential wait: 10s, 20s, 30s
                 wait_time = (attempt + 1) * 10 
                 print(f"⚠️ Server Busy (503). Retrying in {wait_time}s...")
                 time.sleep(wait_time)
             else:
-                time.sleep(2)
-            
+                # General fallback for other errors (like rate limits)
+                print(f"⚠️ Unexpected error: {last_error}. Retrying...")
+                time.sleep(5)
+   
     return f"ERROR | {last_error[:50]}"
    
 # --- 4. MAIN EXECUTION LOOP ---
