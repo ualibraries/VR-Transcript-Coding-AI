@@ -4,13 +4,17 @@ from google.genai import types # Moved to top
 
 # --- CONFIGURATION ---
 # Define your "Scientific Constants" here
+from google.genai import types  # Use the new unified types
+
 MODEL_NAME = "gemini-2.5-flash-lite"
 
-AI_CONFIG = types.GenerateConfig(
-    temperature=0.0,
-    top_p=0.95,
-    max_output_tokens=1024
-)
+# Using a Dictionary is the safest way to avoid 'AttributeError' across versions
+AI_CONFIG = {
+    "temperature": 0.0,
+    "top_p": 0.95,
+    "max_output_tokens": 1024,
+    "top_k": 1,  # Recommended for high-consistency research coding
+}
 
 # --- CLEANING LOGIC ---
 def clean_raw_text(text):
