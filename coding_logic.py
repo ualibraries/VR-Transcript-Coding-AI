@@ -67,7 +67,7 @@ def code_transcript(transcript):
         try:
             # NEW SYNTAX for the Upgraded SDK
             response = client.models.generate_content(
-                model='gemini-1.5-flash-002',
+                model='gemini-2.5-flash-lite',
                 contents=f"{SYSTEM_PROMPT}\n\nTranscript: {cleaned_input}"
             )
             return response.text.replace("**", "").replace("\n", " ").strip()
