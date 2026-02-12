@@ -86,34 +86,56 @@ def code_transcript(transcript):
    
 # --- 4. MAIN EXECUTION LOOP ---
 def main():
-    # ... [Logic to load/resume remains same] ...
-    # (Fixes the indentation error from your previous version)
+    # 1. Load the Data
+    if os.path.exists(OUTPUT_FILE):
+        print(f"📂 Found existing progress. Resuming from {OUTPUT_FILE}...")
+        df = pd.read_csv(OUTPUT_FILE)
+    else:
+        print(f"🆕 Starting fresh with {INPUT_FILE}...")
+        df = pd.read_csv(INPUT_FILE)
+        # Ensure the output column exists
+        if 'Applied_Code_Reasoning' not in df.columns:
+            df['Applied_Code_Reasoning'] = ""
+
+    processed_this_session = 0
+    total_rows = len(df)
+    
+    print(f"🚀 Ready to process up to {MAX_ROWS} rows (Total file size: {total_rows}).")
+
     try:
         for i, row in df.iterrows():
+            # Stop if we hit the session cap
             if processed_this_session >= MAX_ROWS: 
+                print(f"✅ Session limit of {MAX_ROWS} reached.")
                 break 
             
-            if pd.notnull(df.at[i, 'Applied_Code_Reasoning']) and str(df.at[i, 'Applied_Code_Reasoning']).strip() != "":
+            # RESUME LOGIC: Skip if row is already done
+            current_val = str(df.at[i, 'Applied_Code_Reasoning'])
+            if pd.notnull(df.at[i, 'Applied_Code_Reasoning']) and current_val.strip() != "" and "ERROR" not in current_val:
                 continue
 
+            # THE WORK: API Call
+            print(f"📝 Coding row {i+1}...")
             result = code_transcript(row['OriginalTranscript'])
+            
             df.at[i, 'Applied_Code_Reasoning'] = result
             processed_this_session += 1
 
-            if processed_this_session % 50 == 0:
-                print(f"✔️ Progress: {i+1} scanned | {processed_this_session} coded")
-
+            # HEARTBEAT & AUTO-SAVE
             if processed_this_session % SAVE_INTERVAL == 0:
                 df.to_csv(OUTPUT_FILE, index=False)
-                print(f"💾 Auto-save complete at row {i+1}")
+                print(f"💾 Saved {processed_this_session} rows to {OUTPUT_FILE}")
 
-            time.sleep(1.0) # Slightly longer pause for stability
+            # Pace the API to avoid 503s
+            time.sleep(1.0) 
 
     except KeyboardInterrupt:
-        print("\nManual stop detected.")
+        print("\n🛑 Manual stop detected. Saving safely...")
+    except Exception as e:
+        print(f"\n❌ Unexpected error: {e}")
     finally:
         df.to_csv(OUTPUT_FILE, index=False)
-        print(f"\nBatch complete. Total: {processed_this_session}")
+        print(f"🏁 Final Save Complete. Session Total: {processed_this_session}")
 
 if __name__ == "__main__":
     main()
