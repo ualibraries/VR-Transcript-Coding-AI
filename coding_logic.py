@@ -26,7 +26,7 @@ MAX_ROWS = 100
 SAVE_INTERVAL = 10 
 
 genai.configure(api_key=API_KEY)
-model = genai.GenerativeModel('gemini-flash-latest')
+model = genai.GenerativeModel('gemini-1.5-pro')
 
 VALID_CODES = set(CODEBOOK_DICT.keys())
 
