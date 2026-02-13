@@ -1,6 +1,6 @@
 import pandas as pd
 
-# 1. ROSETTA STONE AI to Human Codebook
+# 1. ROSETTA STONE
 CODE_MAP = {
     "Request Purchase": "Request a Purchase",
     "Abandoned Chat":"Abandoned Chat",
@@ -15,6 +15,7 @@ CODE_MAP = {
     "Campus Wayfinding":"Campus Wayfinding",
     "Course Reserves":"Course Reserves",
     "Faculty Instruction Support":"Faculty Instructional Support",
+    "Faculty Instructional Support":"Faculty Instructional Support", # Added to be safe
     "Known Item: AV":"Find a Known Item: Audiovisual (e.g., physical, digital, or streaming videos, audio recordings, music)",
     "Known Item: Books":"Find a Known Item: Books",
     "Known Item: Articles":"Find a Known Item: Journals, Periodicals, or Articles",
@@ -45,48 +46,50 @@ CODE_MAP = {
     "Printing & Scanning":"Printing & Scanning"
 }
 
-# 2. Load the merged file
+# 2. Load the file
 df_results = pd.read_csv('/content/drive/My Drive/CodedResults1747.csv')
 
-# 3. Split the single ‘Applied_Code_Reasoning' column into two
-# n=1 ensures we only split at the FIRST pipe (in case reasoning contains one)
+# 3. Split the single ‘Applied_Code_Reasoning' column
 split_data = df_results['Applied_Code_Reasoning'].str.split('|', n=1, expand=True)
 
-# 4. Assign back to your dataframe
-df_results['AI_Final_Code'] = split_data[0].str.strip()  # The code part
-df_results['AI_Reasoning'] = split_data[1].str.strip()   # The reasoning part
+# 4. Assign back
+df_results['AI_Final_Code'] = split_data[0].str.strip()
+df_results['AI_Reasoning'] = split_data[1].str.strip()
 
-# 5. Use 'AI_Final_Code' for your Mismatch Check
-def conduct_audit(df):
-    results = []
+# 5. Define Human Columns
+human_cols = ['Code 1', 'Code 2', 'Code 3']
+results = []
 
-# 6 Define your human columns (must match Excel headers exactly)
-    human_cols = ['Code 1', 'Code 2', 'Code 3']
+# 6. The Corrected Audit Loop
+for index, row in df_results.iterrows():
+    # A. Clean Human Codes
+    human_set = {
+        str(row[col]).strip().lower().rstrip('s') 
+        for col in human_cols if pd.notna(row[col]) and str(row[col]).strip() != ""
+    }
 
-    for index, row in df.iterrows():
-        # A. Collect all Human Codes (cleaning whitespace and ignoring empty cells)
-        human_set = {str(row[col]).strip() for col in human_cols if pd.notna(row[col])}
+    # B. Clean AI Codes
+    # We map them FIRST, then strip/lower/rstrip
+    ai_raw = str(row['AI_Final_Code']).split(',')
+    ai_translated = {
+        CODE_MAP.get(c.strip(), c.strip()).lower().rstrip('s') 
+        for c in ai_raw if c.strip() != ""
+    }
 
-        # B. Collect and Translate AI Codes
-        # Splits "Code 1, Code 2" into a list
-        ai_list_raw = str(row['AI_Final_Code']).split(',')
-        ai_translated = {CODE_MAP.get(c.strip(), c.strip()) for c in ai_list_raw}
+    # C. Intersection
+    matches = human_set.intersection(ai_translated)
 
-        # C. The Intersection Test
-        # We find what they AGREED on
-        matches = human_set.intersection(ai_translated)
-        if matches:
-            # If they share even one code, it's a 'Partial Match'
-            # If they share ALL codes, it's a 'Perfect Match'
-            status = "Perfect Match" if human_set == ai_translated else "Partial Match"
+    if matches:
+        if human_set == ai_translated:
+            status = "Perfect Match"
         else:
-            status = "Mismatch"
+            status = "Partial Match"
+    else:
+        status = "Mismatch"
+    
+    results.append(status)
 
-        results.append(status)
-
-    df['Audit_Result'] = results
-    return df
-
-# Execute the audit on your current dataframe
-df_audited = conduct_audit(df_results)
-print(df_audited['Audit_Result'].value_counts())
+# 7. Update and Show
+df_results['Audit_Result'] = results
+print("--- UPDATED AUDIT TOTALS ---")
+print(df_results['Audit_Result'].value_counts())
