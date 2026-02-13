@@ -28,10 +28,11 @@ with open('codebook.json', 'r') as f:
 # The new Client is the "Boss" of your API connection
 client = genai.Client(api_key=userdata.get('GEMINI_API_KEY'))
 
-INPUT_FILE = "test3_Transcripts.csv"
-OUTPUT_FILE = "coded_results_pilot.csv"
-MAX_ROWS = 100
-SAVE_INTERVAL = 10 
+INPUT_FILE = "Test1500.csv"
+OUTPUT_FILE = "coded_results_1500pilot.csv"
+MAX_ROWS = 1750
+SAVE_INTERVAL = 100
+TOTAL_EXPECTED = 1747
 
 # --- 2. THE SYSTEM PROMPT ---
 SYSTEM_PROMPT = f"""
@@ -145,9 +146,16 @@ def main():
 
             # HEARTBEAT & AUTO-SAVE
             if processed_this_session % SAVE_INTERVAL == 0:
+                # 1. Save the file
                 df.to_csv(OUTPUT_FILE, index=False)
-                print(f"💾 Saved {processed_this_session} rows to {OUTPUT_FILE}")
-
+    
+                # 2. Calculate Progress %
+                progress = (processed_this_session / TOTAL_EXPECTED) * 100
+    
+                # 3. The Heartbeat (keeps Colab from timing out)
+                print(f"💾 CHECKPOINT: {processed_this_session} rows saved ({progress:.1f}% complete)")
+                print(f"⏱️ System Status: {MODEL_NAME} is active. Waiting for next batch...")
+                      
             # Pace the API to avoid 503s
             time.sleep(5.0) 
 
