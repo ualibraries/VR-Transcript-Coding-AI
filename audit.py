@@ -21,7 +21,7 @@ CODE_MAP = {
     "Known Item: Articles":"Find a Known Item: Journals, Periodicals, or Articles",
     "Known Item: Other":"Find a Known Item: Other (e.g., kits, maps, tools, games, slides, or non-traditional items) ",
     "Known Item: Thesis":"Find a Known Item: Theses or Dissertation",
-    "Known Item: Author":"Find Items by Author",
+    "Find by Author":"Find Items by Author",
     "Interlibrary Loan":"Interlibrary Loan",
     "Library Services":"Library Services",
     "Other":"Other",
