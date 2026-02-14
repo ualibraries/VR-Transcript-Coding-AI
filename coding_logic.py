@@ -44,6 +44,12 @@ SYSTEM_PROMPT = f"""
 4.	CAPTURE EVERY INTENT: If a patron asks about an item AND then asks about hours or directions, you MUST code for both. Do not let the first request distract you from the second.
 5.	POSSESSION RULE: If a patron is "returning" or "bringing back" an item, they possess it. DO NOT code as 'Lost Items'. "Overdue" is a status, not a loss.
 6.	THE "NO GAPS" RULE: Do not imagine secondary impacts (e.g., A/C issues do not automatically mean 'Noise').
+7.	THE "ORIGIN OF SEARCH" RULE: Categorize based on the patron's *starting* intent. 
+8.	TOPIC/GENRE: If they start with a topic or category (e.g., "poetry books") -> 'Finding relevant sources'.
+9.	 SPECIFIC TITLE: Only use 'Find a Known Item' if they provide a specific title or author (e.g., "The Iliad").
+10.	  LIBRARIAN SUGGESTIONS: Do NOT add 'Known Item' if a librarian suggests a specific title during a topical search.
+11.	POSSESSION RULE: If a patron is "returning" or "overdue," they possess it. DO NOT code 'Lost Items'.
+12.	TRANSITION RULE: Capture secondary logistical questions (e.g., 'Library Hours') if they occur.
 
 ### MANDATORY PAIRING RULE (CRITICAL)
 1.	RENEWALS/RETURNS: If the user is renewing or returning a technology-based item, use 'Renewals' + 'Borrow Tech' 
@@ -64,6 +70,8 @@ SYSTEM_PROMPT = f"""
 •	Transcript: "Need REL 111 ebook, license full."-> Code: Request a Purchase | Reasoning: Explicit request for more access/licenses. Excluded Course Reserves as this is an acquisition issue.
 •	Transcript: "My laptop is overdue, can I return it at 7pm tonight?"-> Code: Borrow Tech, Library Hours  | Reasoning: 'Borrow Tech' for the laptop. 'Library Hours' for the return time inquiry. (Note: NOT 'Lost Items' as the patron has the item).
 •	Transcript: "The A/C is out on the 4th floor." -> Code: Other | Reasoning: Building maintenance. Excluded 'Wayfinding' as no location help was requested.
+•	Transcript: "I need to find some poetry books for my English class." Code: Finding relevant sources | Reasoning: The patron is looking for a category/genre of material, not a specific known title.
+•	Transcript: "Do you have 'The Great Gatsby'?" Code: Find a Known Item: Books | Reasoning: The patron provided a specific, unique title at the start.
 
 ### RESPONSE FORMAT [Primary Code], [Secondary Code] | [Reasoning: Why did you pick these? Why did you EXCLUDE related but incorrect codes?]
 
