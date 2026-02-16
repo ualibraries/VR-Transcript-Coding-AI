@@ -73,14 +73,34 @@ If a specific object or service is mentioned, you MUST apply the corresponding c
 {json.dumps(CODEBOOK_DICT, indent=2)}
 """
 
-# --- 3. CORE FUNCTIONS ---
+# --- 3. CORE FUNCTIONS (With AI Coffee Injection) ---
 def code_transcript(transcript):
     cleaned_input = clean_raw_text(transcript)
     
     if len(cleaned_input) < 10:
         return "Abandoned Chat | Insufficient data"
 
+    # THE AI COFFEE: This reminder is injected into every single API call
+    # to prevent the "Analytical Fatigue" seen at Item 90.
+    coffee_reminder = (
+        "\n\n### FRESHNESS REMINDER:\n"
+        "Do not drift. Do not skip codes. Every entity must be captured. Capture EVERY intent, even if the primary issue is a technical error."
+    )
+
     last_error = "Unknown Error"
+
+    for attempt in range(3): 
+        try:
+            response = client.models.generate_content(
+                model=MODEL_NAME,
+                # We combine the System Prompt, the Specific Transcript, and the Coffee Reminder
+                contents=f"{SYSTEM_PROMPT}\n\nTranscript: {cleaned_input}\n{coffee_reminder}",
+                config=AI_CONFIG 
+            )
+            
+            return response.text.replace("**", "").replace("\n", " ").strip()
+            
+        except Exception as e:
 
     # We increased attempts and added a smarter wait time (Backoff)
     for attempt in range(3): 
