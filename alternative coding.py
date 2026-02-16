@@ -1,61 +1,112 @@
-# --- 2. THE SYSTEM PROMPT (V3.3.3 Forensic Update) ---
+import json
+import os
+import time
+import pandas as pd
+from google import genai
+from google.colab import userdata
+from preprocessing_utils import clean_raw_text, AI_CONFIG, MODEL_NAME
+
+# --- INITIALIZATION ---
+client = genai.Client(api_key=userdata.get('GEMINI_API_KEY'))
+
+with open('codebook.json', 'r') as f:
+    CODEBOOK_DICT = json.load(f)
+
+INPUT_FILE = "Test1500.csv"
+OUTPUT_FILE = "coded_results_1500pilot.csv"
+MAX_ROWS = 1750
+SAVE_INTERVAL = 100
+TOTAL_EXPECTED = 1747
+
+# --- THE SYSTEM PROMPT ---
 SYSTEM_PROMPT = f"""
 ### ROLE
-You are a Forensic Data Auditor. You do not summarize "Main Points"; you perform an EXHAUSTIVE CENSUS of all entities, actions, and services mentioned.
+You are a Senior Library Science Researcher specializing in qualitative analysis. 
+Apply codes from the provided JSON Codebook with 100% precision. 
 
-### THE AUDIT PROTOCOL: "OBJECT + ACTION"
-For every transcript, you must identify both the Object (The Thing) and the Action (The Request).
-1. Identify Objects: Laptops, Specific Book Titles, Passwords, Course Codes, Study Rooms.
-2. Identify Actions: Renewing, Troubleshooting, Searching, Asking for Hours.
-3. Check the Origin: 
-   - Patron mentions Title -> 'Known Item'
-   - Librarian mentions Title -> 'Finding Relevant Resources' (NOT Known Item)
+### THE "ENTITY MANDATE"
+Capture every distinct intent, action, and object. 
+- VR headset/Laptop/Hotspot -> 'Borrow Tech'
+- Return/Renew/Overdue -> 'Renewals'
+- Open/Closed/Holiday -> 'Hours'
+- Login/VPN/Broken Link -> 'Connectivity & Remote Access Issues'
+- Topic-based search (even if librarian suggests titles) -> 'Finding Relevant Resources'
 
-### THE ENTITY MANDATE (ZERO TOLERANCE)
-• Borrow Tech: MANDATORY if hardware is mentioned (Laptops, Tripods, etc.) regardless of the intent (returning, hours, or damage).
-• Known Item: MANDATORY if Patron provides specific title/author first. Apply even if the issue is a technical/link error.
-• Connectivity vs. Account: Code BOTH if they mention a login failure AND their account status.
-• Topic/Genre: "Poetry," "History," or "3 articles" is 'Finding Relevant Resources'.
+### RESPONSE FORMAT
+Primary Code, Secondary Code | [Reasoning: Brief justification for inclusion/exclusion]
 
-### MANDATORY REASONING FORMAT
-You MUST use this checklist format:
-1. Patron Entity: [Noun/None] -> [Code]
-2. Action/Intent: [Verb/Request] -> [Code]
-3. Origin Check: [Who provided info?] -> [Decision]
-4. Exclusion Check: [Why was a similar code omitted?]
-
-# CODEBOOK JSON:
+### CODEBOOK JSON:
 {json.dumps(CODEBOOK_DICT, indent=2)}
 """
 
-# --- 3. CORE FUNCTIONS (With AI Coffee Injection) ---
 def code_transcript(transcript):
+    """
+    Orchestrates the API call with retries and the 'AI Coffee' freshness injection.
+    """
     cleaned_input = clean_raw_text(transcript)
-    
     if len(cleaned_input) < 10:
-        return "Abandoned Chat | Insufficient data"
+        return "Abandoned Chat | Insufficient data for classification"
 
-    # THE AI COFFEE: This reminder is injected into every single API call
-    # to prevent the "Analytical Fatigue" seen at Item 90.
-    coffee_reminder = (
-        "\n\n### FRESHNESS REMINDER:\n"
-        "Do not drift. If the patron named a specific book, you MUST code 'Known Item'. "
-        "If they mentioned a laptop, you MUST code 'Borrow Tech'. "
-        "Capture EVERY intent, even if the primary issue is a technical error."
-    )
-
+    coffee_reminder = "\n\n### FRESHNESS REMINDER: Capture EVERY intent. Do not drift. Be precise."
     last_error = "Unknown Error"
 
-    for attempt in range(3): 
+    for attempt in range(3):
         try:
             response = client.models.generate_content(
                 model=MODEL_NAME,
-                # We combine the System Prompt, the Specific Transcript, and the Coffee Reminder
-                contents=f"{SYSTEM_PROMPT}\n\nTranscript: {cleaned_input}\n{coffee_reminder}",
+                contents=f"{SYSTEM_PROMPT}\n\nTranscript: {cleaned_input}{coffee_reminder}",
                 config=AI_CONFIG 
             )
-            
+            # Remove markdown bolding and newlines for CSV compatibility
             return response.text.replace("**", "").replace("\n", " ").strip()
             
         except Exception as e:
-            # ... [Existing Error Handling Logic] ...
+            last_error = str(e)
+            if "503" in last_error:
+                wait = (attempt + 1) * 10
+                print(f"⚠️ Server Busy. Retrying in {wait}s...")
+                time.sleep(wait)
+            else:
+                time.sleep(5)
+   
+    return f"ERROR | {last_error[:50]}"
+
+def main():
+    # 1. Load or Resume
+    if os.path.exists(OUTPUT_FILE):
+        print(f"📂 Resuming from {OUTPUT_FILE}...")
+        df = pd.read_csv(OUTPUT_FILE)
+    else:
+        print(f"🆕 Starting fresh from {INPUT_FILE}...")
+        df = pd.read_csv(INPUT_FILE)
+        df['Applied_Code_Reasoning'] = ""
+
+    processed_this_session = 0
+    
+    try:
+        for i, row in df.iterrows():
+            if processed_this_session >= MAX_ROWS: break 
+            
+            # Skip if already coded
+            if pd.notnull(df.at[i, 'Applied_Code_Reasoning']) and df.at[i, 'Applied_Code_Reasoning'].strip() != "" and "ERROR" not in str(df.at[i, 'Applied_Code_Reasoning']):
+                continue
+
+            print(f"📝 [{i+1}/{len(df)}] Coding...")
+            df.at[i, 'Applied_Code_Reasoning'] = code_transcript(row['OriginalTranscript'])
+            processed_this_session += 1
+
+            if processed_this_session % SAVE_INTERVAL == 0:
+                df.to_csv(OUTPUT_FILE, index=False)
+                progress = (i / TOTAL_EXPECTED) * 100
+                print(f"💾 Saved Checkpoint. Total Progress: {progress:.1f}%")
+                      
+            time.sleep(2.0) # Reduced sleep; Flash can handle higher RPS
+
+    except KeyboardInterrupt:
+        print("\n🛑 Manual stop. Saving...")
+    finally:
+        df.to_csv(OUTPUT_FILE, index=False)
+        print(f"🏁 Final Save Complete. Session Total: {processed_this_session}")
+
+if __name__ == "__main__":
+    main()
