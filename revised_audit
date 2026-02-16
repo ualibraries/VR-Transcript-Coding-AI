@@ -1,0 +1,96 @@
+import pandas as pd
+
+# 1. ROSETTA STONE (Updated for clean mapping)
+CODE_MAP = {
+    "Request Purchase": "Request a Purchase",
+    "Abandoned Chat": "Abandoned Chat",
+    "Hours": "Library Hours",
+    "Navigation & Wayfinding": "Library Navigation & Wayfinding",
+    "Lost & Found": "Lost & Found",
+    "Noise Issues": "Noise Issues",
+    "Physical Accessibility": "Physical Accessibility",
+    "Safety & Security": "Safety & Security",
+    "Study Rooms & Reservations": "Study Rooms & Reservations",
+    "Campus: Services": "Campus Services",
+    "Campus Wayfinding": "Campus Wayfinding",
+    "Course Reserves": "Course Reserves",
+    "Faculty Instruction Support": "Faculty Instructional Support",
+    "Known Item: AV": "Find a Known Item: Audiovisual (e.g., physical, digital, or streaming videos, audio recordings, music)",
+    "Known Item: Books": "Find a Known Item: Books",
+    "Known Item: Articles": "Find a Known Item: Journals, Periodicals, or Articles",
+    "Known Item: Other": "Find a Known Item: Other (e.g., kits, maps, tools, games, slides, or non-traditional items) ",
+    "Known Item: Thesis": "Find a Known Item: Theses or Dissertation",
+    "Find by Author": "Find Items by Author",
+    "Interlibrary Loan": "Interlibrary Loan",
+    "Library Services": "Library Services",
+    "Other": "Other",
+    "Fines & Fees": "Fees & Fines",
+    "Holds Request": "Hold Request",
+    "Lost Items": "Lost Items",
+    "Patron Account": "Patron Accounts",
+    "Renewals": "Renewals",
+    "Policies & Procedures": "Policies & Procedures",
+    "Citations & Citing Sources": "Citations / Citing Sources",
+    "Database Search Skills": "Database Search Skills",
+    "Develop Research Topic": "Develop your research topic",
+    "Evaluation Information": "Evaluating Information",
+    "Finding Relevant Resources": "Finding relevant sources",
+    "Managing & Organizing Information": "Managing & Organizing Information",
+    "Research Strategy": "Research Strategies",
+    "Borrow Tech": "Borrow Technology",
+    "Connectivity & Remote Access Issues": "Connectivity & Remote Access Issues",
+    "Software": "Software",
+    "Tech Support": "Tech Support",
+    "Website": "Website",
+    "Printing & Scanning": "Printing & Scanning"
+}
+
+def clean_label(label):
+    """Helper to standardize labels for comparison."""
+    if pd.isna(label): return ""
+    # Strip, lowercase, and remove trailing 's' to handle 'Renewal' vs 'Renewals'
+    return str(label).strip().lower().rstrip('s')
+
+def perform_audit(row):
+    """
+    Comparison logic for a single row. 
+    Uses set theory for high-speed intersection math.
+    """
+    # 1. Standardize Human Codes
+    human_raw = [row['Code 1'], row['Code 2'], row['Code 3']]
+    human_set = {clean_label(c) for c in human_raw if clean_label(c) != ""}
+
+    # 2. Standardize AI Codes (Translate via Rosetta Stone first)
+    # Split by comma if the AI provided multi-intent codes
+    ai_raw_list = str(row['AI_Final_Code']).split(',')
+    ai_translated = {clean_label(CODE_MAP.get(c.strip(), c.strip())) for c in ai_raw_list if c.strip() != ""}
+
+    # 3. Intersection Math
+    if not human_set or not ai_translated:
+        return "Incomplete Data"
+        
+    matches = human_set.intersection(ai_translated)
+
+    if matches:
+        return "Perfect Match" if human_set == ai_translated else "Partial Match"
+    return "Mismatch"
+
+# --- MAIN EXECUTION ---
+# Load only the columns we need to save memory
+df_results = pd.read_csv('CodedResults1747.csv')
+
+# Split 'Applied_Code_Reasoning' into Code and Reasoning columns
+# We use vectorized string operations here instead of a loop
+split_cols = df_results['Applied_Code_Reasoning'].str.split('|', n=1, expand=True)
+df_results['AI_Final_Code'] = split_cols[0].str.strip()
+df_results['AI_Reasoning'] = split_cols[1].str.strip()
+
+# Apply the audit logic across the dataframe
+# .apply(axis=1) is significantly faster than a raw for-loop
+df_results['Audit_Result'] = df_results.apply(perform_audit, axis=1)
+
+print("--- UPDATED AUDIT TOTALS ---")
+print(df_results['Audit_Result'].value_counts())
+
+# Save the final audited dataset
+df_results.to_csv('final_audited_results.csv', index=False)
