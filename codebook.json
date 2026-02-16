@@ -1,7 +1,7 @@
 {
   "Abandoned Chat": "Empty fields, greetings only, or just 'library help' with no intent.",
-  "Request Purchase":"Requests for the library to acquire a new title or institutional license. DISTINCTION: This is for institutional acquisition only. Does NOT include personal fines, library card fees, or 'buying' a replacement for a lost item.",
-  "Hours": "Opening/closing times of the library or specific library departments or services.DISTINCTION: This does not include hours for other campus or community services.",
+  "Request Purchase": "Requests for the library to acquire a new title or institutional license. DISTINCTION: This is for institutional acquisition only. Does NOT include personal fines, library card fees, or 'buying' a replacement for a lost item.",
+  "Hours": "Opening/closing times of the library or specific library departments or services. DISTINCTION: This does not include hours for other campus or community services.",
   "Navigation & Wayfinding": "Locating library based areas, physical items on shelf, collections, restrooms or services.",
   "Lost & Found": "Inquiries about lost personal items.",
   "Noise Issues": "Concerns about noise levels or quiet areas.",
@@ -30,7 +30,7 @@
   "Database Search Skills": "Using search techniques such as filters or Boolean operators including within the library catalog.",
   "Develop Research Topic": "Brainstorming, narrowing or refining a research question.",
   "Evaluation Information": "Assessing credibility or quality of sources.",
-  "Finding Relevant Resources": "Identifying topic-specific materials from inquiries where the patron provides a topic, genre, or course code (e.g., 'books for ENG 101') rather than a specific title. DISTINCTION: This code remains active if a Librarian suggests specific titles to a topic-searching patron. These titles are 'search results,' not 'Known Items'.",
+  "Finding Relevant Resources": "Identifying topic-specific materials from inquiries where the patron provides a topic, genre, or course code (e.g., 'books for ENG 101') rather than a specific title. DISTINCTION: This code remains active if a Librarian suggests specific titles to a topic-searching patron. These titles are 'search results', not 'Known Items'.",
   "Managing & Organizing Information": "Organizing research notes and references.",
   "Research Strategy": "Broad help on how to begin or improve research.",
   "Borrow Tech": "Laptops, chargers, tablets, cameras or other hardware loans.",
@@ -39,5 +39,5 @@
   "Tech Support": "Help with frozen computers or equipment login.",
   "Website": "Issues or questions navigating the library site or scheduling appointments.",
   "Printing & Scanning": "Printing, scanning, or reporting equipment issues. 3D print",
-  "Other": "Inquiries not fitting in any above category. MANDATORY: All offers of donations, book gifts, or material contributions MUST be coded here. Do NOT invent a 'Donation' code.",
+  "Other": "Inquiries not fitting in any above category. MANDATORY: All offers of donations, book gifts, or material contributions MUST be coded here. Do NOT invent a 'Donation' code."
 }
