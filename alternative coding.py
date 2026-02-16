@@ -72,15 +72,21 @@ def code_transcript(transcript):
     return f"ERROR | {last_error[:50]}"
 
 def main():
-    # 1. Load or Resume
+    # 1. Load the Data
     if os.path.exists(OUTPUT_FILE):
-        print(f"📂 Resuming from {OUTPUT_FILE}...")
+        print(f"📂 Found existing progress. Resuming from {OUTPUT_FILE}...")
         df = pd.read_csv(OUTPUT_FILE)
     else:
-        print(f"🆕 Starting fresh from {INPUT_FILE}...")
+        print(f"🆕 Starting fresh with {INPUT_FILE}...")
         df = pd.read_csv(INPUT_FILE)
-        df['Applied_Code_Reasoning'] = ""
 
+    # FIX: Explicitly ensure the column exists and is treated as a String/Object
+    if 'Applied_Code_Reasoning' not in df.columns:
+        df['Applied_Code_Reasoning'] = ""
+    
+    # This line prevents the FutureWarning by forcing the column to be a string
+    df['Applied_Code_Reasoning'] = df['Applied_Code_Reasoning'].astype(str) 
+   
     processed_this_session = 0
     
     try:
