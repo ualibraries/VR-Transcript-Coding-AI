@@ -1,90 +1,93 @@
 import pandas as pd
 import numpy as np
 
-def run_tiered_audit(input_file, output_file):
-    """
-    Categorizes AI vs Human coding into Tiers to prioritize expert review.
-    """
-    print(f"📂 Loading {input_file} for tiered audit...")
+def consensus_audit_workflow(input_file, output_file):
+    print(f"📂 Processing {input_file}...")
     df = pd.read_csv(input_file)
-    
-    def get_code_set(row, source='human'):
-        """Helper to extract non-null codes into a set."""
-        if source == 'human':
-            cols = ['Code 1', 'Code 2', 'Code 3']
-            codes = [str(row[c]).strip() for c in cols if pd.notna(row[c]) and str(row[c]).lower() != 'nan']
-        else:
-            val = row.get('New_AI_Final_Code', '')
-            codes = [c.strip() for c in str(val).split(',') if c.strip()]
-        return set(codes)
 
+    # --- STEP 1: PRE-AUDIT CLEANUP (Splitting Logic) ---
+    # We check if the columns already exist; if not, we split the raw column
+    if 'Applied_Code_Reasoning' in df.columns and 'New_AI_Final_Code' not in df.columns:
+        print("✂️ Splitting 'Applied_Code_Reasoning' into Code and Reasoning...")
+        split_data = df['Applied_Code_Reasoning'].str.split('|', n=1, expand=True)
+        df['New_AI_Final_Code'] = split_data[0].str.strip()
+        df['New_AI_Reasoning'] = split_data[1].str.strip() if len(split_data.columns) > 1 else ""
+
+    # --- STEP 2: NORMALIZATION (Ensures 'Hours' matches 'Hours ') ---
+    def clean_codes(val):
+        if pd.isna(val) or str(val).strip().lower() == 'nan' or not str(val).strip():
+            return set()
+        # Clean specific artifacts and standardize case
+        return {c.strip().lower().rstrip('s') for c in str(val).split(',')}
+
+    # --- STEP 3: TIERED CLASSIFICATION ---
     def classify_tier(row):
-        human = get_code_set(row, 'human')
-        ai = get_code_set(row, 'ai')
+        # Extract Human Codes (Codes 1, 2, 3)
+        h_cols = ['Code 1', 'Code 2', 'Code 3']
+        human = set()
+        for col in h_cols:
+            if col in row and pd.notna(row[col]):
+                human.update(clean_codes(row[col]))
         
-        # 1. Perfect Match
-        if human == ai and len(human) > 0:
-            return 'Match'
+        # Extract AI Codes
+        ai = clean_codes(row.get('New_AI_Final_Code', ''))
         
-        # 2. Abandoned/Empty Check
-        if not human and not ai:
-            return 'Both Empty'
+        if not human and not ai: return 'Match (Both Empty)'
+        if human == ai: return 'Match'
         
-        # 3. Tier 1: Total Mismatch (Zero Overlap)
         intersection = human.intersection(ai)
+        
+        # Tier 1: Total Mismatch (Zero overlap)
         if not intersection and human and ai:
             return 'Tier 1: Total Mismatch'
         
-        # 4. Tier 2: Intent Expansion (AI found everything human did + MORE)
-        if human.issubset(ai) and ai != human:
-            return 'Tier 2: Intent Expansion'
+        # Tier 2: Intent Expansion (AI found everything human did + MORE)
+        if human.issubset(ai):
+            return 'Tier 2: AI Intent Expansion'
         
-        # 5. Tier 3: Intent Contraction (Human found things AI missed)
-        if ai.issubset(human) and ai != human:
-            return 'Tier 3: Intent Contraction'
+        # Tier 3: Intent Contraction (Human found things AI missed)
+        if ai.issubset(human):
+            return 'Tier 3: AI Intent Contraction'
             
-        # 6. Complex Overlap (Some overlap, but both have unique additions)
-        return 'Complex Overlap'
+        # Complex Overlap (Mixed additions and misses)
+        return 'Tier 4: Complex Overlap'
 
-    # Apply Tiering
     df['Audit_Tier'] = df.apply(classify_tier, axis=1)
-    
-    # Generate human-readable "Diff" for the auditor
+
+    # --- STEP 4: GENERATE AUDIT DIFF NOTES ---
     def generate_diff(row):
-        human = get_code_set(row, 'human')
-        ai = get_code_set(row, 'ai')
+        h_cols = ['Code 1', 'Code 2', 'Code 3']
+        human = set()
+        for col in h_cols:
+            if col in row and pd.notna(row[col]): human.update(clean_codes(row[col]))
+        ai = clean_codes(row.get('New_AI_Final_Code', ''))
         
         added = ai - human
         missed = human - ai
         
-        diff_text = []
-        if missed: diff_text.append(f"MISSING IN AI: {', '.join(missed)}")
-        if added: diff_text.append(f"ADDED BY AI: {', '.join(added)}")
-        
-        return " | ".join(diff_text) if diff_text else "Identical"
+        notes = []
+        if added: notes.append(f"AI ADDED: {', '.join(added)}")
+        if missed: notes.append(f"AI MISSED: {', '.join(missed)}")
+        return " | ".join(notes) if notes else "No Change"
 
     df['Audit_Diff_Notes'] = df.apply(generate_diff, axis=1)
 
-    # Sort by Tier Priority for the researcher
-    tier_order = [
-        'Tier 1: Total Mismatch', 
-        'Tier 3: Intent Contraction', 
-        'Tier 2: Intent Expansion', 
-        'Complex Overlap',
-        'Match',
-        'Both Empty'
-    ]
+    # --- STEP 5: SORT AND SAVE ---
+    tier_order = ['Tier 1: Total Mismatch', 'Tier 4: Complex Overlap', 
+                  'Tier 3: AI Intent Contraction', 'Tier 2: AI Intent Expansion', 'Match']
     df['Audit_Tier'] = pd.Categorical(df['Audit_Tier'], categories=tier_order, ordered=True)
     df = df.sort_values('Audit_Tier')
-    
-    # Save the Audit File
+
     df.to_csv(output_file, index=False)
     
-    # Print Summary Report
-    print("\n--- AUDIT SUMMARY REPORT ---")
+    # Report the new breakdown
+    print("\n" + "="*30)
+    print("CONSENSUS AUDIT REPORT")
+    print("="*30)
     print(df['Audit_Tier'].value_counts().sort_index())
-    print(f"\n✅ Audit complete. Review flagged rows in: {output_file}")
+    print("="*30)
+    print(f"Done! Open '{output_file}' to begin Expert Adjudication.")
 
+# Run it
 if __name__ == "__main__":
-    # Point this to your latest AI output file
-    run_tiered_audit('Comparison_TestSample_Mismatch.csv', 'Tiered_Consensus_Audit.csv')
+    consensus_audit_workflow('CodedResults1747.csv', 'Adjudication_Master_List.csv')
