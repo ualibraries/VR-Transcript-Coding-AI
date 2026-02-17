@@ -6,6 +6,7 @@ import re
 CODE_MAP = {
     "Request Purchase": "Request a Purchase",
     "Abandoned Chat": "Abandoned Chat",
+    "System Test": "System Test",
     "Hours": "Library Hours",
     "Navigation & Wayfinding": "Library Navigation & Wayfinding",
     "Lost & Found": "Lost & Found",
