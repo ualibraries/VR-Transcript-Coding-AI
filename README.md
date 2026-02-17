@@ -26,7 +26,7 @@ Unlike traditional models, this pipeline utilizes a **Structural Preprocessing**
 * `coding_logic.py`: Optimized Python orchestration using the Gemini 2.5 Flash-lite API with exponential backoff and resume logic. Includes system prompt with explicit "Traps" and "Negative Constraints" to prevent common misclassifications.  
 * `codebook.json`: A 41-category hierarchical taxonomy  
 * preprocessing_utils.py: High-performance utility script for structural noise reduction and API configuration.  
-* audit.py: A tiered conflict-detection script that prioritizes **Tier 1 (Total Mismatches)** and **Tier 2 (Intent Expansions)** for expert review.
+* tiered_audit.py: A tiered conflict-detection script that prioritizes **Tier 1 (Total Mismatches)** and **Tier 2 (Intent Expansions)** for expert review.
 
 ## 🚀 Key Discovery: The Preprocessing Paradox
 * **The Preprocessing Paradox**: Lemmatization was found to degrade model performance by removing the syntactic nuance required to distinguish between formats (e.g., "Print" as a format vs. "Printing" as a tech issue).
