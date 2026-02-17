@@ -98,7 +98,7 @@ def main():
                 continue
 
             print(f"📝 [{i+1}/{len(df)}] Coding...")
-            df.at[i, 'Applied_Code_Reasoning'] = code_transcript(row['OriginalTranscript'])
+            df.at[i, 'Applied_Code_Reasoning'] = code_transcript(row['Transcript'])
             processed_this_session += 1
 
             if processed_this_session % SAVE_INTERVAL == 0:
