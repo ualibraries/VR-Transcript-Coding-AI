@@ -46,8 +46,9 @@ def code_transcript(transcript):
     cleaned_input = clean_raw_text(transcript)
     if len(cleaned_input) < 10:
         return "Abandoned Chat | Insufficient data for classification"
+# Updated Coffee Reminder
 
-    coffee_reminder = "\n\n### FRESHNESS REMINDER: Capture EVERY intent. Do not drift. Be precise."
+    coffee_reminder = "\n\n### PRECISION CHECK: Identify all distinct categories from the taxonomy. If a topic (like HVAC) has no category, use 'Other'. Do not 'stretch' definitions like Hours or Noise to fit."
     last_error = "Unknown Error"
 
     for attempt in range(3):
