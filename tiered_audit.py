@@ -128,4 +128,4 @@ def consensus_audit_workflow(input_file, output_file):
     print("="*30 + f"\nSaved to: {output_file}")
 
 if __name__ == "__main__":
-    consensus_audit_workflow('coded_results_1500pilot.csv.csv', 'Adjudication_Master_List_Final.csv')
+    consensus_audit_workflow('coded_results_1500pilot.csv', 'Adjudication_Master_List_Final.csv')
