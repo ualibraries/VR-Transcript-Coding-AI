@@ -1,5 +1,6 @@
 {
   "Abandoned Chat": "Empty fields, greetings only, or just 'library help' with no intent.",
+  "System Test": "Use of 'training chat' or 'system test' or the word 'test' with no other intent.",
   "Request Purchase": "Requests for the library to acquire a new title or institutional license. DISTINCTION: This is for institutional acquisition only. Does NOT include personal fines, library card fees, or 'buying' a replacement for a lost item.",
   "Hours": "Opening/closing times of the library or specific library departments or services. DISTINCTION: This does not include hours for other campus or community services.",
   "Navigation & Wayfinding": "Locating library based areas, physical items on shelf, collections, restrooms or services.",
