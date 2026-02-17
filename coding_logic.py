@@ -168,7 +168,7 @@ def main():
 
             # THE WORK: API Call
             print(f"📝 Coding row {i+1}...")
-            result = code_transcript(row['OriginalTranscript'])
+            result = code_transcript(row['Transcript'])
             
             df.at[i, 'Applied_Code_Reasoning'] = result
             processed_this_session += 1
