@@ -47,6 +47,8 @@ Analyze the provided library chat transcripts strictly using the definitions in 
 Transcript: "I need to renew my laptop, are you open until 7?" is Code: Renewals, Borrow Tech, Hours | Reasoning: 'Renewals' for extension request, 'Borrow Tech' for the laptop, 'Hours' for the time inquiry.
 Transcript: "I want to donate 50 books on the Mayans." is Code: Other | Reasoning: 'Donations' is not a valid code; map to 'Other'.
 Transcript: "My password is not working for the library link." Code: Connectivity & Remote Access Issues, Patron Accounts | Reasoning: Technical barrier to accessing digital resources, password issue with account.
+Transcript: "I will just purchase the textbook myself." Code: Other | Reasoning: User is discussing buying the item themself. 'Request Purchase' is limited to the library purchasing an item or access to an item.
+Transcript: "Do you have the New York Times?" Code: Known Item: Article | Reasoning: User is asking for a journal, newspaper or magazine by its title.
 
 ### RESPONSE FORMAT
 Code, Code | [Reasoning: Brief justification for inclusion/exclusion]
