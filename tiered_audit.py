@@ -14,7 +14,7 @@ CODE_MAP = {
     "Physical Accessibility": "Physical Accessibility",
     "Safety & Security": "Safety & Security",
     "Study Rooms & Reservations": "Study Rooms & Reservations",
-    "Campus: Services": "Campus Services",
+    "Campus Services": "Campus Services",
     "Campus Wayfinding": "Campus Wayfinding",
     "Course Reserves": "Course Reserves",
     "Faculty Instruction Support": "Faculty Instructional Support",
