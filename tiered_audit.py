@@ -75,16 +75,30 @@ def clean_and_normalize(val):
     return normalized
 
 def consensus_audit_workflow(input_file, output_file):
-    print(f"📂 Processing: {input_file}...")
+    print(f"📂 Loading: {input_file}...")
     df = pd.read_csv(input_file)
 
-    # Split logic
+    # --- STEP 1: SPLIT LOGIC ---
     if 'Applied_Code_Reasoning' in df.columns and 'New_AI_Final_Code' not in df.columns:
         split_data = df['Applied_Code_Reasoning'].str.split('|', n=1, expand=True)
         df['New_AI_Final_Code'] = split_data[0].str.strip()
         df['New_AI_Reasoning'] = split_data[1].str.strip() if len(split_data.columns) > 1 else ""
 
+    # --- STEP 2: PATTERN GENERATION (New for Filtering) ---
+    def get_human_pattern(row):
+        codes = [str(row[c]).strip() for c in ['Code 1', 'Code 2', 'Code 3'] if pd.notna(row[c])]
+        return " | ".join(sorted(codes))
+
+    def get_ai_pattern(row):
+        return str(row.get('New_AI_Final_Code', '')).strip()
+
+    # Add these as actual columns for your CSV
+    df['Human_Pattern'] = df.apply(get_human_pattern, axis=1)
+    df['AI_Pattern'] = df.apply(get_ai_pattern, axis=1)
+
+    # --- STEP 3: TIERED CLASSIFICATION ---
     def classify_tier(row):
+        # We reuse our clean_and_normalize logic here
         h_cols = ['Code 1', 'Code 2', 'Code 3']
         human = set()
         for col in h_cols:
@@ -103,6 +117,7 @@ def consensus_audit_workflow(input_file, output_file):
 
     df['Audit_Tier'] = df.apply(classify_tier, axis=1)
 
+    # --- STEP 4: GENERATE DIFF NOTES ---
     def generate_diff(row):
         h_cols = ['Code 1', 'Code 2', 'Code 3']
         human = set()
@@ -118,15 +133,36 @@ def consensus_audit_workflow(input_file, output_file):
 
     df['Audit_Diff_Notes'] = df.apply(generate_diff, axis=1)
 
+    # --- STEP 5: SORT AND SAVE ---
     tier_order = ['Tier 1: Total Mismatch', 'Tier 4: Complex Overlap', 
                   'Tier 3: AI Intent Contraction', 'Tier 2: AI Intent Expansion', 'Match']
     df['Audit_Tier'] = pd.Categorical(df['Audit_Tier'], categories=tier_order, ordered=True)
-    df = df.sort_values('Audit_Tier')
+    df = df.sort_values(['Audit_Tier', 'Human_Pattern']) # Sorted by Tier then Pattern
 
     df.to_csv(output_file, index=False)
+    print(f"\n✅ Audit complete. Review results in: {output_file}")
+
+# --- STEP 5: SORT AND SAVE ---
+    # We sort by Tier first, then by the Human Pattern to group identical conflicts together
+    tier_order = ['Tier 1: Total Mismatch', 'Tier 4: Complex Overlap', 
+                  'Tier 3: AI Intent Contraction', 'Tier 2: AI Intent Expansion', 'Match']
+    
+    df['Audit_Tier'] = pd.Categorical(df['Audit_Tier'], categories=tier_order, ordered=True)
+    
+    # Sorting by Tier then Human_Pattern groups all "Abandoned Chat" mismatches together
+    df = df.sort_values(['Audit_Tier', 'Human_Pattern']) 
+
+    # Save the file
+    df.to_csv(output_file, index=False)
+    
+    # Print the terminal report
     print("\nCONSENSUS AUDIT REPORT\n" + "="*30)
     print(df['Audit_Tier'].value_counts().sort_index())
-    print("="*30 + f"\nSaved to: {output_file}")
+    print("="*30 + f"\n✅ Success! Adjudication file saved as: {output_file}")
 
 if __name__ == "__main__":
-    consensus_audit_workflow('coded_results_1500pilot.csv', 'Adjudication_Master_List_Final.csv')
+    # Ensure this matches your actual pilot results filename
+    INPUT_FILE = 'coded_results_1500pilot.csv'
+    OUTPUT_FILE = 'Adjudication_Master_List_Final.csv'
+    
+    consensus_audit_workflow(INPUT_FILE, OUTPUT_FILE)
