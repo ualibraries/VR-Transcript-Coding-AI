@@ -32,7 +32,7 @@ CODE_MAP = {
     "Library Services": "Library Services",
     "Other": "Other",
     "Fines & Fees": "Fees & Fines",
-    "Holds Request": "Hold Request",
+    "Hold Request": "Hold Request",
     "Lost Items": "Lost Items",
     "Patron Account": "Patron Accounts",
     "Renewals": "Renewals",
