@@ -134,15 +134,6 @@ def consensus_audit_workflow(input_file, output_file):
     df['Audit_Diff_Notes'] = df.apply(generate_diff, axis=1)
 
     # --- STEP 5: SORT AND SAVE ---
-    tier_order = ['Tier 1: Total Mismatch', 'Tier 4: Complex Overlap', 
-                  'Tier 3: AI Intent Contraction', 'Tier 2: AI Intent Expansion', 'Match']
-    df['Audit_Tier'] = pd.Categorical(df['Audit_Tier'], categories=tier_order, ordered=True)
-    df = df.sort_values(['Audit_Tier', 'Human_Pattern']) # Sorted by Tier then Pattern
-
-    df.to_csv(output_file, index=False)
-    print(f"\n✅ Audit complete. Review results in: {output_file}")
-
-# --- STEP 5: SORT AND SAVE ---
     # We sort by Tier first, then by the Human Pattern to group identical conflicts together
     tier_order = ['Tier 1: Total Mismatch', 'Tier 4: Complex Overlap', 
                   'Tier 3: AI Intent Contraction', 'Tier 2: AI Intent Expansion', 'Match']
@@ -162,7 +153,7 @@ def consensus_audit_workflow(input_file, output_file):
 
 if __name__ == "__main__":
     # Ensure this matches your actual pilot results filename
-    INPUT_FILE = 'coded_results_1500pilot.csv'
-    OUTPUT_FILE = 'Adjudication_Master_List_Final.csv'
+    INPUT_FILE = 'Results_NewPrompt.csv'
+    OUTPUT_FILE = 'Adjudication_NewPrompt.csv'
     
-    consensus_audit_workflow(INPUT_FILE, OUTPUT_FILE)
+    consensus_audit_workflow(INPUT_FILE, OUTPUT_FILE)  
