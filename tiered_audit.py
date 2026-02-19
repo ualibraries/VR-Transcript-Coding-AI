@@ -18,6 +18,10 @@ CODE_MAP = {
     "Campus Wayfinding": "Campus Wayfinding",
     "Course Reserves": "Course Reserves",
     "Faculty Instruction Support": "Faculty Instructional Support",
+    # Singular (AI's favorite)
+    "Known Item: Article": "Find a Known Item: Journals, Periodicals, or Articles",
+    "Known Item: Book": "Find a Known Item: Books",
+    # plural (safety net)
     "Known Item: AV": "Find a Known Item: Audiovisual (e.g., physical, digital, or streaming videos, audio recordings, music)",
     "Known Item: Books": "Find a Known Item: Books",
     "Known Item: Articles": "Find a Known Item: Journals, Periodicals, or Articles",
