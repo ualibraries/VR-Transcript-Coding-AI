@@ -22,7 +22,7 @@
   "Interlibrary Loan": "Borrowing from other library systems.",
   "Library Services": "General info on workshops or reference help (e.g., reference help, workshops).",
   "Fines & Fees": "Patron fines or payment procedures, billing issues.",
-  "Holds Request": "Placing or managing requests for library items, including delivery of local library materials to other campus locations.",
+  "Hold Request": "Placing or managing requests for library items, including delivery of local library materials to other campus locations.",
   "Lost Items": "Items borrowed by the patron they are reporting lost or billed by library as lost.",
   "Patron Account": "library user accounts, library card, or account status.",
   "Renewals": "Extending borrowing periods.",
