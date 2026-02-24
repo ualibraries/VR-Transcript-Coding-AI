@@ -40,5 +40,5 @@
   "System Test": "Use of 'training chat' or 'system test' or the word 'test' with no other intent.",
   "Tech Support": "Help with frozen computers or equipment login.",
   "Website": "Issues or questions navigating the library site or scheduling appointments.",
-  "Request Purchase": "Requests for the library to acquire a new title or institutional license. DISTINCTION: This is for institutional acquisition only. Does NOT include questions about the number of available licenses or personal fines, library card fees, or 'buying' a replacement for a lost item.",
+  "Request Purchase": "Requests for the library to acquire a new title or institutional license. DISTINCTION: This is for institutional acquisition only. Does NOT include questions about the number of available licenses or personal fines, library card fees, or 'buying' a replacement for a lost item."
   }
