@@ -25,7 +25,7 @@ CODE_MAP = {
     "Find a Known Item: Journal, Periodical, or Article": "Find a Known Item: Journals, Periodicals, or Articles",
     "Known Item: Book": "Find a Known Item: Books",
          # plural (safety net)
-    "Find a Known Item: Journals, Periodicals, or Articles": "Find a Known Item: Journals, Periodicals, or Articles",
+    "Known Item: Articles": "Find a Known Item: Journals, Periodicals, or Articles",
     "Known Item: Books": "Find a Known Item: Books",
     "Known Item: AV": "Find a Known Item: Audiovisual (e.g., physical, digital, or streaming videos, audio recordings, music)",
     "Known Item: Other": "Find a Known Item: Other (e.g., kits, maps, tools, games, slides, or non-traditional items)",
