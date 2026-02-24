@@ -44,7 +44,7 @@ Analyze the provided library chat transcripts strictly using the definitions in 
   •	Inventory-Neutral: If the library doesn't own the item or the librarian suggests a referral (ILL/Bookstore), the intent remains Known Item. Never downgrade primary intent due to search failure.
   •	Library Availability: If a patron asks whether the library has a subscription or access to a specific title or resource (e.g., 'Does the library have a subscription to Harvard Business Review?'), the intent remains Known Item
   •	Multi-Part Requests: Multiple specific titles do not aggregate into a subject search; they remain a multi-part Known Item request.
-6.	Platform Rule:  Requests for access to branded databases or research platforms (JCR, McGraw Hill Medicine, Scopus) code as ‘Find a Known Item: Journals, Periodicals, or Articles’ if they are primarily used to access periodical content, or ‘Known Item: Other’ if unknown
+6.	Platform Rule:  Requests for access to branded databases or research platforms (JCR, McGraw Hill Medicine, Scopus) code as ‘Known Item: Articles’ if they are primarily used to access periodical content, or ‘Known Item: Other’ if unknown
 7.	Librarian Source Rule: If the Librarian suggests a specific title (e.g., "Try the book 'Jazz Origins'") as part of discovery, do NOT use 'Known Item'.
 8.	Topic/Genre: If user start with a topic or category (e.g., "poetry books") rather than a specific title or author, code as 'Finding relevant sources'.
 9.	Faculty Instructional Support: use 'Faculty Instructional Support' for class tours, pedagogy, instruction or curriculum design help. Do NOT code as 'Faculty Instructional Support' just because user identifies themselves as faculty.
