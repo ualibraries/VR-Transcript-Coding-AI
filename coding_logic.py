@@ -34,7 +34,7 @@ Analyze the provided library chat transcripts strictly using the definitions in 
 ### CORE LOGIC.
 1.	Multi-Labeling: Assign all relevant codes if a transcript touches multiple topics. Separate with commas.
 2.	Keyword Contextualization: Map keywords to the "Intent" and "Definition" sections of the Codebook. Do not infer meaning not supported by a keyword.
-3.	Abandoned Chat: Contains only greetings, thank you, nonsensical words or is blank), code as 'Abandoned Chat'
+3.	Abandoned Chat: Contains only greetings, thank you, nonsensical words or is blank, code as 'Abandoned Chat'
 4.	Known Item Triggers: Code as Known Item if the patron provides a unique identifier.  This can include:
   •	Proper Nouns: Branded platforms (Wiley, JCR), Organizations (MGMA), or cultural shorthand (Cosmo).
   •	Specific Titles: Books, book chapters, journals, journal articles, government reports, or unique archival/administrative docs (e.g., "Syllabus for PHYS 541, 2012").
@@ -44,7 +44,7 @@ Analyze the provided library chat transcripts strictly using the definitions in 
   •	Inventory-Neutral: If the library doesn't own the item or the librarian suggests a referral (ILL/Bookstore), the intent remains Known Item. Never downgrade primary intent due to search failure.
   •	Library Availability: If a patron asks whether the library has a subscription or access to a specific title or resource (e.g., 'Does the library have a subscription to Harvard Business Review?'), the intent remains Known Item
   •	Multi-Part Requests: Multiple specific titles do not aggregate into a subject search; they remain a multi-part Known Item request.
-6.	Platform Rule:  Requests for access to branded databases or research platforms (JCR, McGraw Hill Medicine, Scopus) code as ‘Known Item: Article’ if they are primarily used to access periodical content, or ‘Known Item: Other’ if unknown
+6.	Platform Rule:  Requests for access to branded databases or research platforms (JCR, McGraw Hill Medicine, Scopus) code as ‘Find a Known Item: Journals, Periodicals, or Articles’ if they are primarily used to access periodical content, or ‘Known Item: Other’ if unknown
 7.	Librarian Source Rule: If the Librarian suggests a specific title (e.g., "Try the book 'Jazz Origins'") as part of discovery, do NOT use 'Known Item'.
 8.	Topic/Genre: If user start with a topic or category (e.g., "poetry books") rather than a specific title or author, code as 'Finding relevant sources'.
 9.	Faculty Instructional Support: use 'Faculty Instructional Support' for class tours, pedagogy, instruction or curriculum design help. Do NOT code as 'Faculty Instructional Support' just because user identifies themselves as faculty.
@@ -56,13 +56,14 @@ Analyze the provided library chat transcripts strictly using the definitions in 
 15.	Policy vs. Info: Any question regarding permission or rules for the library (e.g., "Am I allowed to...?", "Can I bring coffee?") MUST be coded as ‘Policies & Procedures’.
 16.	Physical Wayfinding: If a permission or access question involves a specific physical space (e.g., "Are the stacks open?"), apply both ‘Policies & Procedures’ and ‘Navigation & Wayfinding’
 17.	Campus Service Priority: If a librarian refers a patron to a non-library entity (Bookstore, Bursar, Financial Aid), the code ‘Campus Service’ is mandatory.
+18. Compound Intent Rule: If the patron provides a Title + Author, apply [Known Item: Format] AND [Find Item by Author]. This captures the full metadata density of the request.
 
 ### FEW-SHOT EXAMPLES (THE ANCHORS)
 •	Transcript: "I need to renew my laptop, are you open until 7?" is Code: Renewals, Borrow Tech, Hours | Reasoning: 'Renewals' for extension request, 'Borrow Tech' for the laptop, 'Hours' for the time inquiry.
 •	Transcript: "I want to donate 50 books on the Mayans." is Code: Other | Reasoning: 'Donations' is not a valid code; map to 'Other'.
 •	Transcript: "My password is not working for the library link." Code: Connectivity & Remote Access Issues, Patron Accounts | Reasoning: Technical barrier to accessing digital resources, password issue with account.
 •	Transcript: "I will just purchase the textbook myself." Code: Other | Reasoning: User is discussing buying the item themself. 'Request Purchase' is limited to the library purchasing an item or access to an item.
-•	Transcript: "Do you have the New York Times?" Code: Known Item: Article | Reasoning: User is asking for a journal, newspaper or magazine by its title.
+•	Transcript: "Do you have the New York Times?" Code: Find a Known Item: Journals, Periodicals, or Articles | Reasoning: User is asking for a journal, newspaper or magazine by its title.
 
 ### RESPONSE FORMAT
 Code, Code | [Reasoning: Brief justification for inclusion/exclusion]
