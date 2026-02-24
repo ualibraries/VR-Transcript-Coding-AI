@@ -82,12 +82,29 @@ def consensus_audit_workflow(input_file, output_file):
     print(f"📂 Loading: {input_file}...")
     df = pd.read_csv(input_file)
 
-    # --- STEP 1: SPLIT LOGIC ---
-    if 'Applied_Code_Reasoning' in df.columns and 'New_AI_Final_Code' not in df.columns:
-        split_data = df['Applied_Code_Reasoning'].str.split('|', n=1, expand=True)
-        df['New_AI_Final_Code'] = split_data[0].str.strip()
-        df['New_AI_Reasoning'] = split_data[1].str.strip() if len(split_data.columns) > 1 else ""
+   # --- STEP 1: SPLIT LOGIC & DEDUPLICATION ---
+if 'Applied_Code_Reasoning' in df.columns and 'New_AI_Final_Code' not in df.columns:
+    # Initial split of the raw API output
+    split_data = df['Applied_Code_Reasoning'].str.split('|', n=1, expand=True)
+    
+    # 1. Basic extraction and stripping
+    df['New_AI_Final_Code'] = split_data[0].str.strip()
+    df['New_AI_Reasoning'] = split_data[1].str.strip() if len(split_data.columns) > 1 else ""
 
+    # 2. NEW: Deduplicate the codes
+    # This handles cases like "Policies & Procedures, Policies & Procedures" 
+    # and turns them into a single "Policies & Procedures" entry.
+    def clean_and_deduplicate(code_string):
+        if pd.isna(code_string) or code_string == "":
+            return code_string
+        # Split by comma, remove extra whitespace, and keep unique values only
+        parts = [p.strip() for p in code_string.split(',')]
+        # Using a set to remove duplicates, then sorting for consistency
+        unique_parts = sorted(list(set(parts)))
+        return ", ".join(unique_parts)
+
+    df['New_AI_Final_Code'] = df['New_AI_Final_Code'].apply(clean_and_deduplicate)
+   
     # --- STEP 2: PATTERN GENERATION (New for Filtering) ---
     def get_human_pattern(row):
         codes = [str(row[c]).strip() for c in ['Code 1', 'Code 2', 'Code 3'] if pd.notna(row[c])]
