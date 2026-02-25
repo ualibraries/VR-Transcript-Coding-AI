@@ -8,7 +8,7 @@ CODE_MAP = {
     "Borrow Tech": "Borrow Technology",
     "Campus Services": "Campus Services",
     "Campus Wayfinding": "Campus Wayfinding",
-    "Citations & Citing Sources": "Citations / Citing Sources",
+    "Citation & Citing Sources": "Citations / Citing Sources",
     "Connectivity & Remote Access Issues": "Connectivity & Remote Access Issues",
     "Course Reserves": "Course Reserves",
     "Database Search Skills": "Database Search Skills",
