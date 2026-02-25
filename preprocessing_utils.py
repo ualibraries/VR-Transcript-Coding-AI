@@ -6,9 +6,10 @@ MODEL_NAME = "gemini-2.5-flash-lite"
 
 AI_CONFIG = {
     "temperature": 0.0,
-    "top_p": 0.95,
     "max_output_tokens": 1024,
     "top_k": 1, 
+    # top_p is removed or set to 1.0 because top_k=1 
+    # handles the deterministic selection.
 }
 
 # Pre-compiling regex for performance
