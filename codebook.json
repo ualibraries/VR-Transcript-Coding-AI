@@ -35,10 +35,10 @@
   "Renewals": "Extending borrowing periods.",
   "Research Strategy": "Broad help on how to begin or improve research.",
   "Safety & Security": "Personal safety or security, emergency procedures, or the presence of security personnel.",
-  "Software": "Assistance with availability, installation or use of specialized computer applications and tools (e.g., SPSS, PowerPoint, Excel spreadsheets, or Adobe Suite). This includes troubleshooting software-specific functions but excludes general hardware connectivity.",
+  "Software": "Use of software. INCLUDE questions about availability, installation or how to use software, specialized computer applications and tools (e.g., SPSS, PowerPoint, Excel spreadsheets, or Adobe Suite). This includes troubleshooting software-specific functions but excludes general hardware connectivity.",
   "Study Rooms & Reservations": "Booking or availability of group study or quiet study rooms including policies, and equipment.",
   "System Test": "Use of 'training chat' or 'system test' or the word 'test' with no other intent.",
-  "Tech Support": "Help with frozen computers or equipment login.",
-  "Website": "Issues or questions navigating the library site or scheduling appointments.",
+  "Tech Support": "Help with frozen computers, hardware setup, troubleshootin hardware or equipment issues.",
+  "Website": "Issues or questions navigating the library site including scheduling appointments.",
   "Request Purchase": "Requests for the library to acquire a new title or institutional license. DISTINCTION: This is for institutional acquisition only. Does NOT include questions about the number of available licenses or personal fines, library card fees, or 'buying' a replacement for a lost item."
   }
