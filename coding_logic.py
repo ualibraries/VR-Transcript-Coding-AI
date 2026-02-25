@@ -33,22 +33,22 @@ SYSTEM_PROMPT = f"""
 •	Multi-Labeling: Assign all relevant codes if a transcript touches multiple topics.  Separate with commas.  
 •	Topic/Genre: If patron starts with a topic, subject or category (e.g., "poetry books") rather than a known item, code as 'Finding relevant sources'.
 •	Origin-Based Coding: A Known Item code (Book, Article, AV) can ONLY be triggered if the specific or unique item details (title, URL, etc.) originates from the Patron (including as a specific patron clarification e.g., "Yes, I'm looking for a book called X").
-•	Confirmation Rule: If a patron merely acknowledges or "mentions" a title first introduced by the Librarian (e.g., "Yes, that's the Kansas City Star article I need"), it remains a result of Finding Relevant Resources, not a Known Item request.
-•	Noun-First Rule. Anchor first on the Object requested by the patron (the book, the report, the VR headset, the website). If a specific item is requested (the Noun), that is the Primary Intent. 
+•	    Confirmation Rule: If a patron merely acknowledges or "mentions" a title first introduced by the Librarian (e.g., "Yes, that's the Kansas City Star article I need"), it remains a result of Finding Relevant Resources, not a Known Item request.
+•	Noun-First Rule. Anchor first on the Object if requested by the patron (the book, the report, the VR headset, the website). If a specific item is requested by the patron (the Noun), that is the Primary Intent. 
 •	Role-Specific Origin:
-o	Patron Origin: Known Item code = YES.
-o	Librarian Origin: Known Item code = NO (This is "Search & Discovery").
+    o	Patron Origin: Known Item code = YES.
+    o	Librarian Origin: Known Item code = NO (This is "Search & Discovery").
 •	Librarian Source Rule: If it is the Librarian who suggests a specific resource (e.g., "Try the book 'Jazz Origins' or “Watch the film ‘Gone with the Wind’”) this is a product of search and discovery, do NOT use 'Known Item'. 
 •	Known Item Logical Immunity:
-•	Purpose-Neutral: patron's goal for ‘known item’ request (e.g., literature review, lab report) does not change the known item request into a topic search.
-•	Availability-Neutral: Availability is not Intent. A search failure, referral to "Interlibrary Loan" or connectivity issue does not change the ‘Known Item’ intent. Do not change a ‘Known Item’ primary intent due to search or access failure or other secondary intents.
-•	Quantity-Neutral: Multiple ‘Know Item’ requests (e.g. patron provided titles provided for three separate articles and a book) do not aggregate into a topic or subject search; the primary intent remains [Known Item: Format(s)] request.
-•	Metadate Density Rule: If the patron provides a Title + Author, apply both [Known Item: Format] AND [Find Item by Author]. This captures the full metadata density of the request.
+    •	Purpose-Neutral: patron's goal for ‘known item’ request (e.g., literature review, lab report) does not change the known item request into a topic search.
+    •	Availability-Neutral: Availability is not Intent. A search failure, referral to "Interlibrary Loan" or connectivity issue does not change the ‘Known Item’ intent. Do not change a ‘Known Item’ primary intent due to search or access failure or other secondary intents.
+    •	Quantity-Neutral: Multiple ‘Know Item’ requests (e.g. patron provided titles provided for three separate articles and a book) do not aggregate into a topic or subject search; the primary intent remains [Known Item: Format(s)] request.
+    •	Metadate Density Rule: If the patron provides a Title + Author, apply both [Known Item: Format] AND [Find Item by Author]. This captures the full metadata density of the request.
 •	Patron Role Recognition: Actively scan for details on patron role. 
-o	 ‘Faculty Instructional Support’ requires that the patron both identify themselves as faculty or an instructor and specifically request support for teaching and learning or the course-based needs of their students. Both elements must be present. 
-o	Do NOT code as ‘Faculty Instructional Support’ if the patron identifies as faculty but the request or information need is for their own research, individual learning or personal use.
-o	Do NOT code as ‘Faculty Instructional Support’ if the patron is NOT the instructor but is a student who only refers to a course or to their instructor, teacher or faculty member.
-•	Possession Rule: If a patron is "returning" or "bringing back" an item or claims it was already returned, it is NOT lost. DO NOT code it as 'Lost Items'.
+    o	Only code for ‘Faculty Instructional Support’ if the patron identifies themselves as faculty or an instructor and requires library support for their teaching or for the course-based needs of their students. Both elements must be present. 
+    o	Do NOT code as ‘Faculty Instructional Support’ if the patron only request or information needs are for individual research, individual learning or personal use.
+    o	Do NOT code as ‘Faculty Instructional Support’ if the patron is NOT identified as an instructor or faculty member themself. Do not code based solely because the mention of a class (ex. HUMS 150) or course (Applied Physics).
+•	Possession Rule: If a patron is "returning" or "bringing back" an item or claims it was returned, it is NOT lost. DO NOT code it as 'Lost Items'.
 •	Building Maintenance: Inquiries regarding building comfort or maintenance such as HVAC (Air Conditioning/Heating), plumbing (leaks), lighting, or elevators are NOT related to Hours, Navigation & Wayfinding, or Noise Issues. You MUST use the code ‘Other’. 
 •	Library Web Navigation: Code as ‘Website’ if the interaction involves troubleshooting the Library Website interface (e.g., "click here," "scroll down," "I can't find it on the page"). This includes finding hours or info via the site's layout.
 •	Policy vs. Info: Any question regarding permission or rules for the library (e.g., "Am I allowed to...?", "Can I bring coffee?", “As an alumni, can I use…?”) MUST include the ‘Policies & Procedures’ code.
