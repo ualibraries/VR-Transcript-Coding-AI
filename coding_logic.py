@@ -22,27 +22,32 @@ TOTAL_EXPECTED = 1747
 SYSTEM_PROMPT = f"""
 
 ### NEGATIVE CONSTRAINTS (THE "NO-GO" ZONE)
-•	NO INVENTED CODES: Use ONLY the exact wording of the code keys as provided in the JSON Codebook (CODEBOOK_DICT).  Do not summarize or combine code names.  Do not merge codes into a new string.  Each code must be its own distinct entry.
-•	DO NOT IMAGINE ADDITIONAL IMPACTS: Do not infer secondary impacts (e.g., air conditioning issues do not automatically mean 'Noise Issues’, bad odors do not mean ‘Noise Issues’).
+•	NO INVENTED CODES: Use ONLY the exact wording of the code keys as provided in the JSON Codebook (CODEBOOK_DICT).  Do not summarize or combine code names.  Each code must be its own distinct entry.
+•	NO INFERENTIAL CODING: Literal Evidence Only: You MUST only apply codes for intents explicitly stated by the patron or services performed by the librarian.
 •	DO NOT INFER FORMATS: Example - Music Scores = 'Known Item: Other'. Never 'Known Item: AV’
 •	DO NOT INFER COURSE RESERVES: Do not assume a student needs 'Course Reserves' solely because their need mentions a class (ex. HUMS 150) or course (Applied Physics).
+•	DO NOT INFER ADDITIONAL IMPACTS: Do not infer secondary impacts (e.g., air conditioning issues do not automatically mean 'Noise Issues’, bad odors do not mean ‘Noise Issues’).
 
 ### CORE LOGIC.
 •	Keyword Contextualization: Map keywords to the "Intent" and "Definition" sections of the Codebook. Do not infer meaning not supported by a keyword.
 •	Multi-Labeling: Assign all relevant codes if a transcript touches multiple topics.  Separate with commas.  
-•	Topic/Genre: If patron start with a topic, subject or category (e.g., "poetry books") rather than a specific title or author, code as 'Finding relevant sources'.
-•	Noun-First Rule. Anchor first on the Object requested (the book, the report, the VR headset, the website). If a specific item is requested (the Noun), that is the Primary Intent. 
+•	Topic/Genre: If patron starts with a topic, subject or category (e.g., "poetry books") rather than a known item, code as 'Finding relevant sources'.
+•	Origin-Based Coding: A Known Item code (Book, Article, AV) can ONLY be triggered if the specific or unique item details (title, URL, etc.) originates from the Patron (including as a specific patron clarification e.g., "Yes, I'm looking for a book called X").
+•	Confirmation Rule: If a patron merely acknowledges or "mentions" a title first introduced by the Librarian (e.g., "Yes, that's the Kansas City Star article I need"), it remains a result of Finding Relevant Resources, not a Known Item request.
+•	Noun-First Rule. Anchor first on the Object requested by the patron (the book, the report, the VR headset, the website). If a specific item is requested (the Noun), that is the Primary Intent. 
+•	Role-Specific Origin:
+o	Patron Origin: Known Item code = YES.
+o	Librarian Origin: Known Item code = NO (This is "Search & Discovery").
 •	Librarian Source Rule: If it is the Librarian who suggests a specific resource (e.g., "Try the book 'Jazz Origins' or “Watch the film ‘Gone with the Wind’”) this is a product of search and discovery, do NOT use 'Known Item'. 
-•	Known Item Triggers: Only PATRON providing unique item descriptors or identifiers for specific, needed resources triggers ‘Known Item’ code(s). Carefully identify unique descriptors and the source (patron/librarian).  Includes:
-    •	Specific Titles: Books, book chapters, journals, journal articles, government reports, or unique archival/administrative docs.
-    •	Metadata: item URLs, ISBNs, other citation details.
-    •	Proper Nouns: If the patron mentions Proper Name for a resource such as a branded database platform (Wiley, JCR, PubMed), Organizational report (MGMA), publication by title such as a newspaper (Kansas City Star), the transaction MUST include a ‘Known Item’ code. 
 •	Known Item Logical Immunity:
-    •	Purpose-Neutral: patron's goal for ‘known item’ request (e.g., literature review, lab report) does not change the known item request into a topic search.
-    •	Availability-Neutral: Availability is not Intent. A search failure, referral to "Interlibrary Loan" or connectivity issue does not change the ‘Known Item’ intent. Do not change a ‘Known Item’ primary intent due to search or access failure or other secondary intents.
-    •	Quantity-Neutral: Multiple ‘Know Item’ requests (e.g. patron provided titles provided for three separate articles and a book) do not aggregate into a topic or subject search; the primary intent remains [Known Item: Format(s)] request.
+•	Purpose-Neutral: patron's goal for ‘known item’ request (e.g., literature review, lab report) does not change the known item request into a topic search.
+•	Availability-Neutral: Availability is not Intent. A search failure, referral to "Interlibrary Loan" or connectivity issue does not change the ‘Known Item’ intent. Do not change a ‘Known Item’ primary intent due to search or access failure or other secondary intents.
+•	Quantity-Neutral: Multiple ‘Know Item’ requests (e.g. patron provided titles provided for three separate articles and a book) do not aggregate into a topic or subject search; the primary intent remains [Known Item: Format(s)] request.
 •	Metadate Density Rule: If the patron provides a Title + Author, apply both [Known Item: Format] AND [Find Item by Author]. This captures the full metadata density of the request.
-•	Patron Role Recognition: Actively scan for patron roles. If the patron identifies as faculty or instructor AND also expresses needs related to "my students," "my course," or "teaching," include the code ‘Faculty Instructional Support.’  Even if the secondary intents are technical (e.g., Course Reserves or Request Purchase). include the Faculty Instructional Support code as well to capture the professional nature of the service.
+•	Patron Role Recognition: Actively scan for details on patron role. 
+o	 ‘Faculty Instructional Support’ requires that the patron both identify themselves as faculty or an instructor and specifically request support for teaching and learning or the course-based needs of their students. Both elements must be present. 
+o	Do NOT code as ‘Faculty Instructional Support’ if the patron identifies as faculty but the request or information need is for their own research, individual learning or personal use.
+o	Do NOT code as ‘Faculty Instructional Support’ if the patron is a student referring to their course or to their instructor, teacher or faculty member.
 •	Possession Rule: If a patron is "returning" or "bringing back" an item or claims it was already returned, it is NOT lost. DO NOT code it as 'Lost Items'.
 •	Building Maintenance: Inquiries regarding building comfort or maintenance such as HVAC (Air Conditioning/Heating), plumbing (leaks), lighting, or elevators are NOT related to Hours, Navigation & Wayfinding, or Noise Issues. You MUST use the code ‘Other’. 
 •	Library Web Navigation: Code as ‘Website’ if the interaction involves troubleshooting the Library Website interface (e.g., "click here," "scroll down," "I can't find it on the page"). This includes finding hours or info via the site's layout.
@@ -51,6 +56,8 @@ SYSTEM_PROMPT = f"""
 •	Tech Renewals: If the user is renewing or returning a technology-based item, use 'Renewals' first and 'Borrow Tech' second
 •	Physical Wayfinding: If a permission or access question involves a specific library physical space (e.g., "Are the stacks open?"), apply both ‘Policies & Procedures’ and ‘Navigation & Wayfinding’
 •	Campus Service Priority: If a librarian refers a patron to a non-library, university entity (Bookstore, Bursar, Financial Aid), the code ‘Campus Services’ is mandatory.
+•	Implicit Needs: If the Patron's initial question is missing but the Librarian's response clearly identifies a specific service (e.g., "I am checking on those HDMI cables"), you MUST code based on that identified service.
+•	Intent over Greeting: A chat is only Abandoned if there is zero evidence of a library-related inquiry. If the librarian provides a link or discusses a policy, the chat is Active, even if the patron only says "Thank you".
 
 ### FEW-SHOT EXAMPLES (THE ANCHORS)
 Transcript: "I need to renew my laptop, are you open until 7?" is Code: Renewals, Borrow Tech, Hours | Reasoning: 'Renewals' for extension request, 'Borrow Tech' for the laptop, 'Hours' for the time inquiry.
