@@ -47,7 +47,7 @@ o	Librarian Origin: Known Item code = NO (This is "Search & Discovery").
 •	Patron Role Recognition: Actively scan for details on patron role. 
 o	 ‘Faculty Instructional Support’ requires that the patron both identify themselves as faculty or an instructor and specifically request support for teaching and learning or the course-based needs of their students. Both elements must be present. 
 o	Do NOT code as ‘Faculty Instructional Support’ if the patron identifies as faculty but the request or information need is for their own research, individual learning or personal use.
-o	Do NOT code as ‘Faculty Instructional Support’ if the patron is a student referring to their course or to their instructor, teacher or faculty member.
+o	Do NOT code as ‘Faculty Instructional Support’ if the patron is NOT the instructor but is a student who only refers to a course or to their instructor, teacher or faculty member.
 •	Possession Rule: If a patron is "returning" or "bringing back" an item or claims it was already returned, it is NOT lost. DO NOT code it as 'Lost Items'.
 •	Building Maintenance: Inquiries regarding building comfort or maintenance such as HVAC (Air Conditioning/Heating), plumbing (leaks), lighting, or elevators are NOT related to Hours, Navigation & Wayfinding, or Noise Issues. You MUST use the code ‘Other’. 
 •	Library Web Navigation: Code as ‘Website’ if the interaction involves troubleshooting the Library Website interface (e.g., "click here," "scroll down," "I can't find it on the page"). This includes finding hours or info via the site's layout.
