@@ -22,7 +22,7 @@ CODE_MAP = {
     "Hours": "Library Hours",
     "Interlibrary Loan": "Interlibrary Loan",
         # Singular (AI's favorite)
-    "Find a Known Item: Journal, Periodical, or Article": "Find a Known Item: Journals, Periodicals, or Articles",
+    "Known Item: Article": "Find a Known Item: Journals, Periodicals, or Articles",
     "Known Item: Book": "Find a Known Item: Books",
          # plural (safety net)
     "Known Item: Articles": "Find a Known Item: Journals, Periodicals, or Articles",
