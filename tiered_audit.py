@@ -40,7 +40,7 @@ CODE_MAP = {
     "Patron Account": "Patron Accounts",
     "Physical Accessibility": "Physical Accessibility",
     "Policies & Procedures": "Policies & Procedures",
-    "Printing & Scanning": "Printing & Scanning"
+    "Printing & Scanning": "Printing & Scanning",
     "Renewals": "Renewals",
     "Research Strategy": "Research Strategies",
     "Safety & Security": "Safety & Security",
@@ -49,7 +49,7 @@ CODE_MAP = {
     "System Test": "System Test",
     "Tech Support": "Tech Support",
     "Website": "Website",
-    "Request Purchase": "Request a Purchase",
+    "Request Purchase": "Request a Purchase"
 }
 
 def clean_and_normalize(val):
