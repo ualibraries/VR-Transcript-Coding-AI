@@ -181,7 +181,7 @@
       "code_name": "Patron Account",
       "definition": "Library user accounts, library card, or account status.",
       "inclusions": ["Can you give me your email so that I can take a look at your account?", "One moment please while I take a look at your account."],
-      "exclusions": [Issues with NetID]
+      "exclusions": ["Issues with NetID"]
     },
     {
       "code_name": "Physical Accessibility",
@@ -229,7 +229,7 @@
       "code_name": "Study Rooms & Reservations",
       "definition": "Booking or checking availability of group study or quiet study rooms including policies, and equipment in the rooom.",
       "inclusions": [],
-      "exclusions": []
+      "exclusions": ["can I schedule an appointment for the 24/7 technical area"]
     },
     {
       "code_name": "System Test",
