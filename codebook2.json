@@ -180,8 +180,8 @@
     {
       "code_name": "Patron Account",
       "definition": "Library user accounts, library card, or account status.",
-      "inclusions": ["Can you give me your email so that I can take a look at your account?"],
-      "exclusions": []
+      "inclusions": ["Can you give me your email so that I can take a look at your account?", "One moment please while I take a look at your account."],
+      "exclusions": [Issues with NetID]
     },
     {
       "code_name": "Physical Accessibility",
