@@ -36,3 +36,235 @@
     {
       "code_name": "Connectivity & Remote Access Issues",
       "definition": "Technical barriers preventing access to digital content. Includes Login/password failures, VPN/Proxy errors, NetID authentication issues, and broken database links. Use this for 'getting into' resources.",
+      "inclusions": ["When I click on the title in the library website it says I don't have access", "It does not permit me to login from the first UA Library Search result", "how can i connect to the WiFi on my tablet?"],
+      "exclusions": []
+    },
+    {
+      "code_name": "Course Reserves",
+      "definition": "materials (electronic or physical) such as books, articles, media, or personal instructor copies on reserve with the library specifically set aside for a class to use to ensure high-demand items are available to all students.",
+      "inclusions": ["How do I access the e-reserves?", "One of my teachers would like me to read something in the Course Reserve at the CSU library.", "I'm trying to figure out how to place the textbook for my class on a course reserve."],
+      "exclusions": ["Request to order or hold an item for personal use", "Do not include need to purchase textbooks or course materials from the campus bookstore"]
+    },
+    {
+      "code_name": "Database Search Skills",
+      "definition": "Using search tools in databases such as filters or Boolean operators, include the library catalog as database. Field Limiting, Phrase Searching, truncation",
+      "inclusions": ["I am trying to use Embase advanced search", "use your search terms in Cinahl's search box, and you can also narrow results there using filters on the left"],
+      "exclusions": []
+    },
+    {
+      "code_name": "Develop Research Topic",
+      "definition": "Brainstorming, narrowing or refining a research question.",
+      "inclusions": ["how to refine my research topic?", "Do you think my topic is too broad? (Maybe I could narrow it down to a specific point in time or election)"],
+      "exclusions": []
+    },
+    {
+      "code_name": "Evaluation Information",
+      "definition": "Assessing credibility or quality of sources",
+      "inclusions": ["how do I know if a book is scholarly", "Can you explain for me what is the peer-reviewed article?"],
+      "exclusions": []
+    },
+    {
+      "code_name": "Faculty Instruction Support",
+      "definition": "Specific support for faculty or other instructors that include class tours, pedagogy, syllabus design, or classroom curriculum. Includes an instructor requesting resources, access, or technical help specifically for use by their students or their course/class.",
+      "inclusions": ["As an instructor, if I include New York Times article links, will my students be able to access the article or will they encounter a paywall?"],
+      "exclusions": ["Exclude faculty who need support for their research or writing efforts."]
+    },
+    {
+      "code_name": "Find by Author",
+      "definition": "Requests where the PATRON asks to locate books, articles, or other information resources written, edited, or produced by a specific person or organization.",
+      "inclusions": ["All the Boobs in the house are men by Maxine Berman. Not 100% sure of title", "I'm looking for resources on the <NRP> designer <PERSON>."],
+      "exclusions": []
+    },
+    {
+      "code_name": "Finding Relevant Resources",
+      "definition": "Identifying topic-specific information resources from inquiries where the patron provides a topic, genre, or course code (e.g 'books for ENG 101') rather than a specific title.",
+      "inclusions": ["I'm looking for primary sources for research on AIDS/HIV", "find about 5-6 specific articles for chapter 1 of my dissertation?"],
+      "exclusions": []
+    },
+    {
+      "code_name": "Fines & Fees",
+      "definition": "Library fines charged to patron, questions of payment procedures for library charges, billing issues, bursar holds on account for library charges",
+      "inclusions": [],
+      "exclusions": []
+    },
+    {
+      "code_name": "Hold Request",
+      "definition": "Placing or managing request by a library patron to reserve a specific item, such as a book, movie, or other material for personal use. This may include placing the request, notification, pickup, delivery or checking user account for status. including delivery of local library materials to other campus locations for pickup",
+      "inclusions": [],
+      "exclusions": []
+    },
+    {
+      "code_name": "Hours",
+      "definition": "Operational hours for LIBRARY services and facilities only, including open/close times of the library or specific library departments or services",
+      "inclusions": [],
+      "exclusions": ["Questions about operational speed or service turnaround times", "Information about hours for campus and community services"]
+    },
+    {
+      "code_name": "Interlibrary Loan",
+      "definition": "Library service allowing patrons to borrow materials from other libraries when their local library does not own or have local access. Includes document delivery services. Includes physical or access to electronic materials (books, media) or receive copies of documents (articles, chapters)",
+      "inclusions": [],
+      "exclusions": []
+    },
+    {
+      "code_name": "Known Item: Article",
+      "definition": "Requests where the PATRON asks for specific journals, magazines, individual articles, government documents, reports, serials or newspapers by title or other key metadata used to find a specific item.",
+      "inclusions": ["Do you have access to the Wall Street journal?", "Does the university have the Harvard Business Review subscription?"],
+      "exclusions": []
+    },
+    {
+      "code_name": "Known Item: AV",
+      "definition": "Requests where the PATRON provides specific title, call number or other metadata for specific physical, digital, or streaming videos, audio recordings, music.",
+      "inclusions": [
+        "I am trying to watch [REDACTED NAME] Alley, a movie that is 103 minutes in length", 
+        "There is a listing in the library catalog for the film David Hockney: A Bigger Picture as being available through Films on Demand."
+      ],
+      "exclusions": ["Music scores"]
+    },
+    {
+      "code_name": "Known Item: Book",
+      "definition": "Requests where the PATRON asks for specific books or book chapters by title, call number, direct URL, ISBN or other item level metadata.",
+      "inclusions": ["I would I be able to access a book 'applied pharmacology for veterinary technicians'"],
+      "exclusions": []
+    },
+    {
+      "code_name": "Known Item: Other",
+      "definition": "Requests where the PATRON asks for specific items such as kits, maps, tools, games, maps, musical scores, datasets or anatomy boxes by individual descriptors.",
+      "inclusions": ["Fort Bowie National Historic site. I am trying to locate GIS data for the surrounding Bureau of Land Management property"],
+      "exclusions": []
+    },
+    {
+      "code_name": "Known Item: Thesis",
+      "definition": "Requests where the PATRON asks for specific academic theses or dissertations by title or author.",
+      "inclusions": [],
+      "exclusions": []
+    },
+    {
+      "code_name": "Library Services",
+      "definition": "information about or referral to library services such as research assistance, information literacy instruction, assisting with publishing, bibliometrics, open educational resources (OER), managing research data. makerspace use, and technology access, workshops",
+      "inclusions": [],
+      "exclusions": []
+    },
+    {
+      "code_name": "Lost & Found",
+      "definition": "Inquiries about personal items lost or misplaced in the library",
+      "inclusions": [],
+      "exclusions": ["Items the patron claims returned but still on their account"]
+    },
+    {
+      "code_name": "Lost Items",
+      "definition": "Items borrowed by the patron they are reporting lost or billed by library as lost",
+      "inclusions": [],
+      "exclusions": []
+    },
+    {
+      "code_name": "Managing & Organizing Information",
+      "definition": "Organizing research notes and references",
+      "inclusions": [],
+      "exclusions": []
+    },
+    {
+      "code_name": "Navigation & Wayfinding",
+      "definition": "Locating areas, physical items on shelf, collections, restrooms or services in a library location",
+      "inclusions": [],
+      "exclusions": []
+    },
+    {
+      "code_name": "Noise Issues",
+      "definition": "Concerns about noise levels or quiet areas in the libraries",
+      "inclusions": [],
+      "exclusions": []
+    },
+    {
+      "code_name": "Other",
+      "definition": "Inquiries not fitting in any above category. Includes building and facility issues not related to noise.",
+      "inclusions": ["All offers of donations, book gifts, or material contributions MUST be coded here."],
+      "exclusions": ["Do NOT invent a 'Donation' code."]
+    },
+    {
+      "code_name": "Patron Account",
+      "definition": "Library user accounts, library card, or account status.",
+      "inclusions": [],
+      "exclusions": []
+    },
+    {
+      "code_name": "Physical Accessibility",
+      "definition": "Inquiries about ADA access, ADA software or elevators.",
+      "inclusions": [],
+      "exclusions": []
+    },
+    {
+      "code_name": "Policies & Procedures",
+      "definition": "library rules, borrowing limits, conduct policies, or service guidelines.",
+      "inclusions": [],
+      "exclusions": []
+    },
+    {
+      "code_name": "Printing & Scanning",
+      "definition": "Printing, scanning, or reporting equipment issues. 3D printing, 3D scanning",
+      "inclusions": [],
+      "exclusions": []
+    },
+    {
+      "code_name": "Renewals",
+      "definition": "Extending borrowing periods",
+      "inclusions": [],
+      "exclusions": []
+    },
+    {
+      "code_name": "Research Strategy",
+      "definition": "Broad help on how to begin or improve research.",
+      "inclusions": [],
+      "exclusions": []
+    },
+    {
+      "code_name": "Safety & Security",
+      "definition": "Personal safety or security, emergency procedures, or the presence of security personnel",
+      "inclusions": [],
+      "exclusions": []
+    },
+    {
+      "code_name": "Software",
+      "definition": "Use of software. INCLUDE questions about availability, installation or how to use software, specialized computer applications and tools (e.g SPSS, PowerPoint, Excel spreadsheets, or Adobe Suite). This includes troubleshooting software-specific functions but excludes general hardware connectivity",
+      "inclusions": [],
+      "exclusions": ["general hardware connectivity"]
+    },
+    {
+      "code_name": "Study Rooms & Reservations",
+      "definition": "Booking or checking availability of group study or quiet study rooms including policies, and equipment in the rooom.",
+      "inclusions": [],
+      "exclusions": []
+    },
+    {
+      "code_name": "System Test",
+      "definition": "Use of 'training chat' or 'system test' or the word 'test' with no other intent",
+      "inclusions": [],
+      "exclusions": []
+    },
+    {
+      "code_name": "Tech Support",
+      "definition": "Help with frozen computers, hardware setup, troubleshootin hardware or equipment issues",
+      "inclusions": [
+        "I am trying to connect my tv to the Internet, but I am having problems", 
+        "my motherbord is going up to 90c is this ok and will it break my pc?"
+      ],
+      "exclusions": []
+    },
+    {
+      "code_name": "Website",
+      "definition": "Issues or questions navigating the library site including scheduling appointments",
+      "inclusions": [],
+      "exclusions": []
+    },
+    {
+      "code_name": "Request Purchase",
+      "definition": "Requests for the library to acquire a new title or institutional license. This is for institutional acquisition only.",
+      "inclusions": [],
+      "exclusions": [
+        "Questions about the number of available licenses",
+        "personal fines",
+        "library card fees",
+        "patron 'buying' a replacement for a lost item"
+      ]
+    }
+  ]
+}
