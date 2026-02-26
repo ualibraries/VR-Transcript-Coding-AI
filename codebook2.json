@@ -90,7 +90,7 @@
     {
       "code_name": "Hold Request",
       "definition": "Placing or managing request by a library patron to reserve a specific item, such as a book, movie, or other material for personal use. This may include placing the request, notification, pickup, delivery or checking user account for status. including delivery of local library materials to other campus locations for pickup",
-      "inclusions": ["Hello, I have an item on reserve ready for pickup on the hold shelf" "Can I put in a request for a book from the science engineering library if it can be ready in the next hour"],
+      "inclusions": ["Hello, I have an item on reserve ready for pickup on the hold shelf" ,"Can I put in a request for a book from the science engineering library if it can be ready in the next hour"],
       "exclusions": []
     },
     {
@@ -138,7 +138,7 @@
     {
       "code_name": "Library Services",
       "definition": "information about or referral to library services such as research assistance, information literacy instruction, assisting with publishing, bibliometrics, open educational resources (OER), managing research data. makerspace use, and technology access, workshops",
-      "inclusions": ["will there be any data and donuts workshops  offered by the library this semester?" "Does the UA Library have resources/workshops for poster presentations? Or resources for printing posters for conferences?"],
+      "inclusions": ["will there be any data and donuts workshops  offered by the library this semester?", "Does the UA Library have resources/workshops for poster presentations? Or resources for printing posters for conferences?"],
       "exclusions": []
     },
     {
