@@ -84,26 +84,26 @@
     {
       "code_name": "Fines & Fees",
       "definition": "Library fines charged to patron, questions of payment procedures for library charges, billing issues, bursar holds on account for library charges",
-      "inclusions": [],
+      "inclusions": ["You can see about any outstanding fees through this form here" "I have been unfairly charged on my bursar account for a laptop borrowed from the library"],
       "exclusions": []
     },
     {
       "code_name": "Hold Request",
       "definition": "Placing or managing request by a library patron to reserve a specific item, such as a book, movie, or other material for personal use. This may include placing the request, notification, pickup, delivery or checking user account for status. including delivery of local library materials to other campus locations for pickup",
-      "inclusions": [],
+      "inclusions": ["Hello, I have an item on reserve ready for pickup on the hold shelf" "Can I put in a request for a book from the science engineering library if it can be ready in the next hour"],
       "exclusions": []
     },
     {
       "code_name": "Hours",
       "definition": "Operational hours for LIBRARY services and facilities only, including open/close times of the library or specific library departments or services",
-      "inclusions": [],
+      "inclusions": ["can I access the Health Sciences library outside of public use hours?"],
       "exclusions": ["Questions about operational speed or service turnaround times", "Information about hours for campus and community services"]
     },
     {
       "code_name": "Interlibrary Loan",
       "definition": "Library service allowing patrons to borrow materials from other libraries when their local library does not own or have local access. Includes document delivery services. Includes physical or access to electronic materials (books, media) or receive copies of documents (articles, chapters).  it includes ILL and document delivery",
-      "inclusions": [],
-      "exclusions": []
+      "inclusions": ["but I just got an ILL in <IN_PAN> format (the little cards instead of the rolls)"],
+      "exclusions": ["Implying 'Interlibrary Loan' service was used just because the item was unavailable"]
     },
     {
       "code_name": "Known Item: Article",
@@ -114,10 +114,7 @@
     {
       "code_name": "Known Item: AV",
       "definition": "Requests where the PATRON provides specific title, call number or other metadata for specific physical, digital, or streaming videos, audio recordings, music.",
-      "inclusions": [
-        "I am trying to watch [REDACTED NAME] Alley, a movie that is 103 minutes in length", 
-        "There is a listing in the library catalog for the film David Hockney: A Bigger Picture as being available through Films on Demand."
-      ],
+      "inclusions": ["I am trying to watch [REDACTED NAME] Alley, a movie that is 103 minutes in length", "There is a listing in the library catalog for the film David Hockney: A Bigger Picture as being available through Films on Demand."],
       "exclusions": ["Music scores"]
     },
     {
@@ -141,20 +138,20 @@
     {
       "code_name": "Library Services",
       "definition": "information about or referral to library services such as research assistance, information literacy instruction, assisting with publishing, bibliometrics, open educational resources (OER), managing research data. makerspace use, and technology access, workshops",
-      "inclusions": [],
+      "inclusions": ["will there be any data and donuts workshops  offered by the library this semester?" "Does the UA Library have resources/workshops for poster presentations? Or resources for printing posters for conferences?"],
       "exclusions": []
     },
     {
       "code_name": "Lost & Found",
       "definition": "Inquiries about personal items lost or misplaced in the library",
       "inclusions": [],
-      "exclusions": ["Items the patron claims returned but still on their account"]
+      "exclusions": []
     },
     {
       "code_name": "Lost Items",
       "definition": "Items borrowed by the patron they are reporting lost or billed by library as lost",
       "inclusions": [],
-      "exclusions": []
+      "exclusions": ["Items checked out by the patron claims returned but still on their account"]
     },
     {
       "code_name": "Managing & Organizing Information",
@@ -243,10 +240,7 @@
     {
       "code_name": "Tech Support",
       "definition": "Help with frozen computers, hardware setup, troubleshootin hardware or equipment issues",
-      "inclusions": [
-        "I am trying to connect my tv to the Internet, but I am having problems", 
-        "my motherbord is going up to 90c is this ok and will it break my pc?"
-      ],
+      "inclusions": ["I am trying to connect my tv to the Internet, but I am having problems", "my motherbord is going up to 90c is this ok and will it break my pc?"],
       "exclusions": []
     },
     {
@@ -259,12 +253,6 @@
       "code_name": "Request Purchase",
       "definition": "Requests for the library to acquire a new title or institutional license. This is for institutional acquisition only.",
       "inclusions": [],
-      "exclusions": [
-        "Questions about the number of available licenses",
-        "personal fines",
-        "library card fees",
-        "patron 'buying' a replacement for a lost item"
-      ]
+      "exclusions": ["Questions just about the number of available licenses, personal fines, library card fees, patron 'buying' a replacement for a lost item"]
     }
-  ]
 }
