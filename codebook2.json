@@ -180,7 +180,7 @@
     {
       "code_name": "Patron Account",
       "definition": "Library user accounts, library card, or account status.",
-      "inclusions": [],
+      "inclusions": ["Can you give me your email so that I can take a look at your account?"],
       "exclusions": []
     },
     {
