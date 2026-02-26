@@ -101,7 +101,7 @@
     },
     {
       "code_name": "Interlibrary Loan",
-      "definition": "Library service allowing patrons to borrow materials from other libraries when their local library does not own or have local access. Includes document delivery services. Includes physical or access to electronic materials (books, media) or receive copies of documents (articles, chapters)",
+      "definition": "Library service allowing patrons to borrow materials from other libraries when their local library does not own or have local access. Includes document delivery services. Includes physical or access to electronic materials (books, media) or receive copies of documents (articles, chapters).  it includes ILL and document delivery",
       "inclusions": [],
       "exclusions": []
     },
