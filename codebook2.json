@@ -84,7 +84,7 @@
     {
       "code_name": "Fines & Fees",
       "definition": "Library fines charged to patron, questions of payment procedures for library charges, billing issues, bursar holds on account for library charges",
-      "inclusions": ["You can see about any outstanding fees through this form here" "I have been unfairly charged on my bursar account for a laptop borrowed from the library"],
+      "inclusions": ["You can see about any outstanding fees through this form here", "I have been unfairly charged on my bursar account for a laptop borrowed from the library"],
       "exclusions": []
     },
     {
