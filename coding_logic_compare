@@ -107,30 +107,50 @@ def main():
     else:
         df = pd.read_csv(INPUT_FILE)
 
-    # FIX 3: Create separate columns for the two models
+    # Prepare columns for both Results and Thoughts
     for m_id in MODELS_TO_TEST:
-        col_name = f"Results_{m_id}"
-        if col_name not in df.columns:
-            df[col_name] = ""
-        df[col_name] = df[col_name].astype(str)
+        for suffix in ["Results", "Thoughts"]:
+            col_name = f"{suffix}_{m_id}"
+            if col_name not in df.columns:
+                df[col_name] = ""
+            df[col_name] = df[col_name].astype(str)
    
     processed_this_session = 0
     
     try:
         for i, row in df.iterrows():
-            # Check if both models have already run for this row
-            all_done = all(pd.notnull(df.at[i, f"Results_{m}"]) and "ERROR" not in str(df.at[i, f"Results_{m}"]) and df.at[i, f"Results_{m}"].strip() != "" for m in MODELS_TO_TEST)
+            if processed_this_session >= MAX_ROWS: break 
+
+            # Check if all models have completed their Results for this row
+            results_cols = [f"Results_{m}" for m in MODELS_TO_TEST]
+            all_done = all(pd.notnull(df.at[i, col]) and df.at[i, col].strip() != "" and "ERROR" not in str(df.at[i, col]) for col in results_cols)
+            
             if all_done: continue
 
             print(f"📝 [{i+1}/{len(df)}] Comparing Models...")
             
-            # FIX 4: Loop through both models for the same transcript
+            # --- MODEL LOOP START ---
             for m_id in MODELS_TO_TEST:
-                col_name = f"Results_{m_id}"
-                # Only run if this specific model hasn't finished this row
-                if "ERROR" in str(df.at[i, col_name]) or df.at[i, col_name].strip() == "":
-                    df.at[i, col_name] = code_transcript(row['Transcript'], m_id)
-            
+                res_col = f"Results_{m_id}"
+                th_col = f"Thoughts_{m_id}"
+
+                # Only run if there's no valid result yet
+                if pd.isnull(df.at[i, res_col]) or df.at[i, res_col].strip() == "" or "ERROR" in str(df.at[i, res_col]):
+                    
+                    # --- DYNAMIC CONFIG SELECTION ---
+                    # This tells the script which "engine" to use
+                    if "gemini-3" in m_id:
+                        current_config = CONFIG_G3
+                    else:
+                        current_config = CONFIG_G2_LITE
+
+                    # Pass the config into the function
+                    clean_code, mental_process = code_transcript(row['Transcript'], m_id, current_config)
+                    
+                    df.at[i, res_col] = clean_code
+                    df.at[i, th_col] = mental_process
+            # --- MODEL LOOP END ---
+
             processed_this_session += 1
 
             if processed_this_session % SAVE_INTERVAL == 0:
@@ -144,6 +164,3 @@ def main():
     finally:
         df.to_csv(OUTPUT_FILE, index=False)
         print(f"🏁 Final Save Complete. Session Total: {processed_this_session}")
-
-if __name__ == "__main__":
-    main()
