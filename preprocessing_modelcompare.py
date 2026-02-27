@@ -5,14 +5,22 @@ from google.genai import types  # Add this import at the top
 # --- CONFIGURATION ---
 MODELS_TO_TEST = ["gemini-2.5-flash-lite", "gemini-3-flash-preview"]
 
-AI_CONFIG = types.GenerateContentConfig(
+# 1. Advanced Config for Gemini 3 (The Auditor)
+CONFIG_G3 = types.GenerateContentConfig(
     temperature=1.0,
     max_output_tokens=4096,
     top_k=1,
     thinking_config=types.ThinkingConfig(
         include_thoughts=True,
-        thinking_level="MEDIUM"  # Valid options: "MINIMAL", "LOW", "MEDIUM", "HIGH"
+        thinking_level="MEDIUM"
     )
+)
+
+# 2. Standard Config for Gemini 2.5 Lite (The Worker)
+CONFIG_G2_LITE = types.GenerateContentConfig(
+    temperature=0.0, # Kept at 0.0 for strict deterministic output
+    max_output_tokens=1024,
+    top_k=1
 )
 
 # Pre-compiling regex for performance
