@@ -16,7 +16,9 @@ with open('codebook.json', 'r') as f:
 INPUT_FILE = "ModelTest5.csv"
 SAVE_INTERVAL = 10
 
-SYSTEM_PROMPT = f"### 
+# --- THE SYSTEM PROMPT ---
+SYSTEM_PROMPT = f"""
+
 ### NEGATIVE CONSTRAINTS (THE "NO-GO" ZONE)
 •	NO INVENTED CODES: Use ONLY the exact wording of the code keys as provided in the JSON Codebook (CODEBOOK_DICT).  Do not summarize or combine code names.  Each code must be its own distinct entry.
 •	NO INFERENTIAL CODING: Literal Evidence Only: You MUST only apply codes for intents explicitly stated by the patron or services performed by the librarian. DO NOT
@@ -66,8 +68,9 @@ Transcript: "Do you have the New York Times?" Code: Known Item: Articles | Reaso
 ### RESPONSE FORMAT
 Code, Code | [Reasoning: Brief justification for inclusion/exclusion]
 
-CODEBOOK JSON:\n{json.dumps(CODEBOOK_DICT, indent=2)}"
-
+### CODEBOOK JSON:
+{json.dumps(CODEBOOK_DICT, indent=2)}
+"""
 def code_transcript(transcript):
     cleaned_input = clean_raw_text(transcript)
     if len(cleaned_input) < 10:
