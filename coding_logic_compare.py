@@ -72,15 +72,13 @@ Code, Code | [Reasoning: Brief justification for inclusion/exclusion]
 ### CODEBOOK JSON:
 {json.dumps(CODEBOOK_DICT, indent=2)}
 """
+
 def code_transcript(transcript):
-    """
-    Standardized function that handles both clean codes and internal thoughts.
-    """
     cleaned_input = clean_raw_text(transcript)
     if len(cleaned_input) < 10:
         return "Abandoned Chat | Insufficient data", ""
 
-    coffee_reminder = "\n\n### PRECISION CHECK: Identify all distinct categories. Use 'Other' if no fit."
+    coffee_reminder = "\n\n### PRECISION CHECK: Code for patron intent. Use 'Other' if no fit."
     
     for attempt in range(3):
         try:
@@ -90,10 +88,11 @@ def code_transcript(transcript):
                 config=AI_CONFIG 
             )
             
+            # This logic safely handles both models
+            # 2.5 Lite will skip thoughts; 3 Flash will capture them
             thoughts = []
             final_answer_parts = []
             
-            # Logic to separate thoughts from final text
             for part in response.candidates[0].content.parts:
                 if hasattr(part, 'thought') and part.thought:
                     thoughts.append(part.text)
@@ -107,7 +106,7 @@ def code_transcript(transcript):
             
         except Exception as e:
             time.sleep(5)
-    
+       
     return "ERROR | Response failed", ""
 
 def main():
