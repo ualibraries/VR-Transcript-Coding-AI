@@ -1,26 +1,25 @@
 import re
 import pandas as pd
-from google.genai import types  # Add this import at the top
 
 # --- CONFIGURATION ---
 MODELS_TO_TEST = ["gemini-2.5-flash-lite", "gemini-3-flash-preview"]
 
-# 1. Advanced Config for Gemini 3 (The Auditor)
-CONFIG_G3 = types.GenerateContentConfig(
+from google.genai import types
+
+# --- PASS 1: THE WORKER (Gemini 2.5 Lite) ---
+# Uncomment these three lines to run the 2.5 Lite Pass
+# MODEL_NAME = "gemini-2.5-flash-lite"
+# OUTPUT_FILE = "Results_2.5_Lite.csv"
+# AI_CONFIG = types.GenerateContentConfig(temperature=0.0, max_output_tokens=1024)
+
+# --- PASS 2: THE AUDITOR (Gemini 3 Flash) ---
+# Uncomment these three lines to run the Gemini 3 Pass
+MODEL_NAME = "gemini-3-flash-preview"
+OUTPUT_FILE = "Results_3_Flash.csv"
+AI_CONFIG = types.GenerateContentConfig(
     temperature=1.0,
     max_output_tokens=4096,
-    top_k=1,
-    thinking_config=types.ThinkingConfig(
-        include_thoughts=True,
-        thinking_level="MEDIUM"
-    )
-)
-
-# 2. Standard Config for Gemini 2.5 Lite (The Worker)
-CONFIG_G2_LITE = types.GenerateContentConfig(
-    temperature=0.0, # Kept at 0.0 for strict deterministic output
-    max_output_tokens=1024,
-    top_k=1
+    thinking_config=types.ThinkingConfig(include_thoughts=True, thinking_level="MEDIUM")
 )
 
 # Pre-compiling regex for performance
