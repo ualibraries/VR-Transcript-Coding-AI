@@ -1,14 +1,6 @@
 import re
 import pandas as pd
-
-# --- CONFIGURATION ---
-# We now define both models for the comparison run
-MODELS_TO_TEST = ["gemini-2.5-flash-lite", "gemini-3-flash-preview"]
-
-# Gemini 3 Note: Use temperature 1.0 for Gemini 3 to enable 'Thinking'
-# Gemini 2.5 Lite will still respect 0.0 for deterministic output
-AI_CONFIG = {
- from google.genai import types  # Add this import at the top
+from google.genai import types  # Add this import at the top
 
 # --- CONFIGURATION ---
 MODELS_TO_TEST = ["gemini-2.5-flash-lite", "gemini-3-flash-preview"]
@@ -22,7 +14,7 @@ AI_CONFIG = types.GenerateContentConfig(
         thinking_level="MEDIUM"  # Valid options: "MINIMAL", "LOW", "MEDIUM", "HIGH"
     )
 )
-   
+ 
 }
 
 # Pre-compiling regex for performance
