@@ -41,7 +41,7 @@ SYSTEM_PROMPT = f"""
   •	Purpose-Neutral: patron's goal for ‘known item’ request (e.g., literature review, lab report) does not change the known item request into a topic search.
   •	Availability-Neutral: Availability is not Intent. A search failure, referral to "Interlibrary Loan" or connectivity issue does not change the ‘Known Item’ intent. Do not change a ‘Known Item’ primary intent due to search or access failure or other secondary intents.
   •	Quantity-Neutral: Multiple ‘Know Item’ requests (e.g. patron provided titles provided for three separate articles and a book) do not aggregate into a topic or subject search; the primary intent remains [Known Item: Format(s)] request.
-•	Metadate Density Rule: If the patron provides a Title + Author, apply both [Known Item: Format] AND [Find Item by Author]. This captures the full metadata density of the request.
+•	Metadate Density Rule: If the patron provides a unique identifier (title or URL or similiar) + Author, apply both [Known Item: Format] AND [Find Item by Author]. This captures the full metadata density of the request.
 •	Role-Based Anchor (Faculty Instructional Support)
   o	Explicit Identity Required: Only apply Faculty Instructional Support if the user explicitly identifies as the teacher or instructor (e.g., "I am the professor," "for my students").
   o	No Inference from "Class": Do not assume a user is Faculty or Staff just because they mention a class (ex. HUMS 150) or course (Applied Physics) or uses "class," "assignment," or "research paper." Most students use these terms.
