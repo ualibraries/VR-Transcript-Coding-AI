@@ -18,7 +18,6 @@ AI_CONFIG = types.GenerateContentConfig(
     temperature=1.0,
     max_output_tokens=4096,
     thinking_config=types.ThinkingConfig(include_thoughts=True, thinking_level="MEDIUM")
-)
 
 # --- UTILS ---
 TIME_PATTERN = re.compile(r'\d{2}:\d{2}:\d{2}')
