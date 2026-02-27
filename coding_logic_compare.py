@@ -5,7 +5,7 @@ import pandas as pd
 from google import genai
 from google.colab import userdata
 # We now import exactly what is needed for a single pass
-from preprocessing_modelcompare import clean_raw_text, AI_CONFIG, MODEL_NAME, OUTPUT_FILE
+from preprocessing_modelcompare import clean_raw_text, AI_CONFIG, MODELS_TO_TEST, OUTPUT_FILE
 
 # --- INITIALIZATION ---
 client = genai.Client(api_key=userdata.get('GEMINI_API_KEY'))
@@ -83,7 +83,7 @@ def code_transcript(transcript):
     for attempt in range(3):
         try:
             response = client.models.generate_content(
-                model=MODEL_NAME,
+                model=MODELS_TO_TEST,
                 contents=f"{SYSTEM_PROMPT}\n\nTranscript: {cleaned_input}{coffee_reminder}",
                 config=AI_CONFIG 
             )
@@ -115,7 +115,7 @@ def main():
         print(f"📂 Resuming progress in {OUTPUT_FILE}...")
         df = pd.read_csv(OUTPUT_FILE)
     else:
-        print(f"🆕 Starting fresh run for {MODEL_NAME}...")
+        print(f"🆕 Starting fresh run for {MODELS_TO_TEST}...")
         df = pd.read_csv(INPUT_FILE)
 
     # 2. Ensure columns exist for this specific pass
@@ -135,7 +135,7 @@ def main():
             if pd.notnull(df.at[i, 'Applied_Code_Reasoning']) and df.at[i, 'Applied_Code_Reasoning'].strip() != "" and "ERROR" not in str(df.at[i, 'Applied_Code_Reasoning']):
                 continue
 
-            print(f"📝 [{i+1}/{len(df)}] Coding with {MODEL_NAME}...")
+            print(f"📝 [{i+1}/{len(df)}] Coding with {MODELS_TO_TEST}...")
             
             clean_code, mental_process = code_transcript(row['Transcript'])
             
