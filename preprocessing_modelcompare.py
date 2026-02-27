@@ -14,8 +14,6 @@ AI_CONFIG = types.GenerateContentConfig(
         thinking_level="MEDIUM"  # Valid options: "MINIMAL", "LOW", "MEDIUM", "HIGH"
     )
 )
- 
-}
 
 # Pre-compiling regex for performance
 TIME_PATTERN = re.compile(r'\d{2}:\d{2}:\d{2}')
