@@ -13,7 +13,7 @@ with open('codebook.json', 'r') as f:
     CODEBOOK_DICT = json.load(f)
 
 INPUT_FILE = "Test1500.csv"
-OUTPUT_FILE = "coded_results_1500pilot.csv"
+OUTPUT_FILE = "/content/drive/MyDrive/LibraryData/Results_3_Flash_Pilot500.csv"
 MAX_ROWS = 1750
 SAVE_INTERVAL = 100
 TOTAL_EXPECTED = 1747
