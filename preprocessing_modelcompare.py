@@ -8,9 +8,10 @@ MODELS_TO_TEST = ["gemini-2.5-flash-lite", "gemini-3-flash-preview"]
 # Gemini 3 Note: Use temperature 1.0 for Gemini 3 to enable 'Thinking'
 # Gemini 2.5 Lite will still respect 0.0 for deterministic output
 AI_CONFIG = {
-    "temperature": 1.0, 
-    "max_output_tokens": 2048, # Increased for G3 reasoning depth
-    "top_k": 1, 
+   "temperature": 1.0, 
+    "max_output_tokens": 4096, # Give it more room
+    "top_k": 1,
+    "thinking_level": "medium" # Stop the infinite loops
 }
 
 # Pre-compiling regex for performance
