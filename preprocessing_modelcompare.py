@@ -8,10 +8,21 @@ MODELS_TO_TEST = ["gemini-2.5-flash-lite", "gemini-3-flash-preview"]
 # Gemini 3 Note: Use temperature 1.0 for Gemini 3 to enable 'Thinking'
 # Gemini 2.5 Lite will still respect 0.0 for deterministic output
 AI_CONFIG = {
-   "temperature": 1.0, 
-    "max_output_tokens": 4096, # Give it more room
-    "top_k": 1,
-    "thinking_level": "medium" # Stop the infinite loops
+ from google.genai import types  # Add this import at the top
+
+# --- CONFIGURATION ---
+MODELS_TO_TEST = ["gemini-2.5-flash-lite", "gemini-3-flash-preview"]
+
+AI_CONFIG = types.GenerateContentConfig(
+    temperature=1.0,
+    max_output_tokens=4096,
+    top_k=1,
+    thinking_config=types.ThinkingConfig(
+        include_thoughts=True,
+        thinking_level="MEDIUM"  # Valid options: "MINIMAL", "LOW", "MEDIUM", "HIGH"
+    )
+)
+   
 }
 
 # Pre-compiling regex for performance
