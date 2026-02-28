@@ -3,7 +3,7 @@
   "Borrow Tech": "Laptops, chargers, tablets, cameras, tripods, VR equipment, calculators or other hardware loans.",
   "Campus Services": "non-library services offered on campus (e.g., tutoring, writing support, IT help, financial aid, counseling, dining).",
   "Campus Wayfinding": "Directions to physical locations elsewhere on campus. DISTINCTION: Does Not include finding campus services online. That would code as 'Campus Services'.",
-  "Citations & Citing Sources": "citation styles (APA, MLA, etc.), requests for citation style manuals or resources, tools such as Endnote, or avoiding plagiarism.",
+  "Citations / Citing Sources": "citation styles (APA, MLA, etc.), requests for citation style manuals or resources, tools such as Endnote, or avoiding plagiarism.",
   "Connectivity & Remote Access Issues": "Technical barriers preventing access to digital content. Includes: Login/password failures, VPN/Proxy errors, NetID authentication, and broken database links. DISTINCTION: Use this for 'getting into' resources; use 'Patron Account' only for administrative status.",
   "Course Reserves": "materials (electronic or physical) such as books, articles, media, or personal instructor copies on reserve with the library specifically set aside for a class to use to ensure high-demand items are available to all students. DISTINCTION:  Does not include need to purchase books for a course from the campus bookstore.",
   "Database Search Skills": "Using search tools in databases such as filters or Boolean operators, include library catalog as a database.",
