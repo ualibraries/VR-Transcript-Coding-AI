@@ -1,15 +1,19 @@
 import re
 import pandas as pd
 
-# --- CONFIGURATION ---
-MODEL_NAME = "gemini-3-flash-preview"
+# --- CONFIGURATION: GEMINI 3 FLASH PREVIEW ---
+# Updated to the specific Gemini 3 Flash model name
+MODEL_NAME = "gemini-3-flash" # Use -preview if -flash isn't available yet
 
-AI_CONFIG = types.GenerateContentConfig(
-  temperature=1.0,
-  max_output_tokens=4096, 
-  thinking_config=types.ThinkingConfig((include_thoughts=True, thinking_level="MEDIUM")
-    )
-)
+AI_CONFIG = {
+    "temperature": 1.0,         # Required for Gemini 3 'Thinking' models
+    "max_output_tokens": 4096, # INCREASED: Gemini 3 needs "room to think" 
+    "top_k": 1, 
+    "thinking_config": {
+        "include_thoughts": True,
+        "thinking_level": "MEDIUM" # Prevents "Infinite Loops" while maintaining depth
+    }
+}
 
 # Pre-compiling regex for performance
 TIME_PATTERN = re.compile(r'\d{2}:\d{2}:\d{2}')
@@ -29,5 +33,9 @@ def clean_raw_text(text):
     text = TAG_PATTERN.sub('', text)
     # 3. Redact long alphanumeric IDs to 'STAFF'
     text = STAFF_ID_PATTERN.sub('STAFF', text)
+    
+    # 4. NEW: Normalize whitespace to reduce token count
+    # This keeps the context but makes the prompt more efficient
+    text = re.sub(r'\s+', ' ', text)
     
     return text.strip()
