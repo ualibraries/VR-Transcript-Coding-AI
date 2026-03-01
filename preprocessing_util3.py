@@ -5,8 +5,9 @@ import pandas as pd
 MODEL_NAME = "gemini-3-flash-preview"
 
 AI_CONFIG = types.GenerateContentConfig(
-    temperature=1.0, max_output_tokens=4096, thinking_config=types.ThinkingConfig(
-        include_thoughts=True, thinking_level="medium"  # Corrected to string
+  temperature=1.0,
+  max_output_tokens=4096, 
+  thinking_config=types.ThinkingConfig((include_thoughts=True, thinking_level="MEDIUM")
     )
 )
 
