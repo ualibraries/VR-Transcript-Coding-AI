@@ -4,13 +4,11 @@ import pandas as pd
 # --- CONFIGURATION ---
 MODEL_NAME = "gemini-3-flash-preview"
 
-AI_CONFIG = {
-    "temperature": 0.0,
-    "max_output_tokens": 1024,
-    "top_k": 1, 
-    # top_p is removed or set to 1.0 because top_k=1 
-    # handles the deterministic selection.
-}
+AI_CONFIG = types.GenerateContentConfig(
+    temperature=1.0, max_output_tokens=4096, thinking_config=types.ThinkingConfig(
+        include_thoughts=True, thinking_level="medium"  # Corrected to string
+    )
+)
 
 # Pre-compiling regex for performance
 TIME_PATTERN = re.compile(r'\d{2}:\d{2}:\d{2}')
