@@ -19,13 +19,16 @@ df_triage['Decision_Category'] = "" # e.g., "AI was right", "Human was right", "
 # 4. Reorder columns for easier reading
 # Placing AI_Thoughts next to the Expert Decision columns is key
 final_columns = [
+    'StudyID',
+    'Institution',
+    'ID',
+    'Audit_Tier', 
     'Transcript', 
     'Human_Pattern', 
     'AI_Pattern', 
-    'Audit_Tier', 
-    'AI_Thoughts', 
     'Expert_Final_Code', 
     'Expert_Reasoning', 
+    'AI_Thoughts', 
     'Decision_Category'
 ]
 
