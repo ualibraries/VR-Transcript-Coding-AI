@@ -26,6 +26,7 @@ final_columns = [
     'Transcript', 
     'Human_Pattern', 
     'AI_Pattern', 
+    'Audit_Diff_Notes',
     'Expert_Final_Code', 
     'Expert_Reasoning', 
     'AI_Thoughts', 
