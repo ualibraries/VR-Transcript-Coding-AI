@@ -83,7 +83,7 @@ def code_transcript(transcript):
         return "Abandoned Chat | Insufficient data for classification", ""
 
     # THE AI COFFEE: This reminder is injected into every single API call to prevent the "Analytical Fatigue"
-    coffee_reminder = "\n\n### PRECISION CHECK: Identify all distinct categories from the taxonomy."
+    coffee_reminder = "\n\n### PRECISION CHECK: Identify all distinct categories from the codebook. Do not drift.  Do not invent codes"
     last_error = "Unknown Error"
 
     for attempt in range(3):
