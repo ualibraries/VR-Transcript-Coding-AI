@@ -3,11 +3,18 @@ import os
 import time
 import pandas as pd
 from google import genai
+from google.genai import types
 from google.colab import userdata
 from preprocessing_util import clean_raw_text, AI_CONFIG, MODEL_NAME
 
 # --- INITIALIZATION ---
-client = genai.Client(api_key=userdata.get('GEMINI_API_KEY'))
+client = genai.Client(
+    api_key=userdata.get('GEMINI_API_KEY'),
+    # This correctly forces the SDK to use the Developer branch (not Vertex)
+    vertexai=False,
+    # This ensures you're hitting the Beta endpoint for the latest 3.1 features
+    http_options=types.HttpOptions(api_version='v1beta')
+)
 
 with open('codebook2.json', 'r') as f:
     CODEBOOK_DICT = json.load(f)
@@ -73,52 +80,68 @@ Code, Code | [Reasoning: Brief justification for inclusion/exclusion]
 ### CODEBOOK JSON:
 {json.dumps(CODEBOOK_DICT, indent=2)}
 """
+import time
+import os
+import pandas as pd
+
 def code_transcript(transcript):
     """
-    Orchestrates the API call with retries and the 'AI Coffee' freshness injection.
+    Orchestrates the API call with the new March 2026 'Thinking' extraction.
     """
     cleaned_input = clean_raw_text(transcript)
-    if len(cleaned_input) < 10:
-        # Ensure consistent return type even for early exit
+    if len(str(cleaned_input)) < 10:
         return "Abandoned Chat | Insufficient data for classification", ""
 
-    # THE AI COFFEE: This reminder is injected into every single API call to prevent the "Analytical Fatigue"
-    coffee_reminder = "\n\n### PRECISION CHECK: Identify all distinct categories from the codebook. Do not drift.  Do not invent codes"
+    # THE AI COFFEE: Prevent analytical fatigue
+    coffee_reminder = "\n\n### PRECISION CHECK: Identify all distinct categories from the codebook. Do not drift. Do not invent codes."
     last_error = "Unknown Error"
 
     for attempt in range(3):
         try:
+            # The model call remains the same, but the response handling changes
             response = client.models.generate_content(
                 model=MODEL_NAME,
                 contents=f"{SYSTEM_PROMPT}\n\nTranscript: {cleaned_input}{coffee_reminder}",
                 config=AI_CONFIG
             )
-            # Remove the early return statement here
-            # return response.text.replace("**", "").replace("\n", " ").strip()
 
             thoughts = []
             final_answer_parts = []
 
-            for part in response.candidates[0].content.parts:
-                if hasattr(part, 'thought') and part.thought:
-                    thoughts.append(part.text)
-                elif part.text:
-                    final_answer_parts.append(part.text)
+            # MARCH 2026 UPDATED EXTRACTION:
+            # We iterate through the 'parts' of the first candidate.
+            # 'Thoughts' are distinct from 'Text'.
+            if response.candidates and response.candidates[0].content.parts:
+                for part in response.candidates[0].content.parts:
+                    # In the new SDK, parts that are thoughts are identified specifically
+                    if hasattr(part, 'thought') and part.thought:
+                        thoughts.append(part.text)
+                    elif hasattr(part, 'text') and part.text:
+                        final_answer_parts.append(part.text)
 
+            # Join and clean up formatting
             clean_code = " ".join(final_answer_parts).replace("**", "").replace("\n", " ").strip()
             mental_process = " ".join(thoughts).replace("\n", " ").strip()
+
+            # Fallback if thoughts were missed but text exists (sometimes happens in v1beta)
+            if not mental_process and "THOUGHT:" in clean_code:
+                # Handle cases where the model puts the thought in the main text body
+                parts = clean_code.split("THOUGHT:", 1)
+                clean_code = parts[0].strip()
+                mental_process = parts[1].strip() if len(parts) > 1 else ""
 
             return clean_code, mental_process
 
         except Exception as e:
             last_error = str(e)
-            if "503" in last_error:
+            if "503" in last_error or "429" in last_error:
                 wait = (attempt + 1) * 10
-                print(f"⚠️ Server Busy. Retrying in {wait}s...")
+                print(f"⚠️ Rate limited or Busy. Retrying in {wait}s...")
                 time.sleep(wait)
             else:
+                print(f"❌ API Error: {last_error}")
                 time.sleep(5)
-    # Ensure consistent return type for error case
+                
     return f"ERROR | {last_error[:50]}", ""
 
 def main():
@@ -130,40 +153,43 @@ def main():
         print(f"🆕 Starting fresh with {INPUT_FILE}...")
         df = pd.read_csv(INPUT_FILE)
 
-    # FIX: Explicitly ensure the column exists and is treated as a String/Object
-    if 'Applied_Code_Reasoning' not in df.columns:
-        df['Applied_Code_Reasoning'] = ""
-    if 'AI_Thoughts' not in df.columns:
-        df['AI_Thoughts'] = ""
-
-    df['Applied_Code_Reasoning'] = df['Applied_Code_Reasoning'].astype(str) 
-    df['AI_Thoughts'] = df['AI_Thoughts'].astype(str)
+    # Ensure columns exist as strings to prevent NaN/Float errors
+    for col in ['Applied_Code_Reasoning', 'AI_Thoughts']:
+        if col not in df.columns:
+            df[col] = ""
+        df[col] = df[col].fillna("").astype(str)
    
     processed_this_session = 0
+    TOTAL_ROWS = len(df)
     
     try:
         for i, row in df.iterrows():
-            if pd.notnull(df.at[i, 'Applied_Code_Reasoning']) and df.at[i, 'Applied_Code_Reasoning'].strip() != "" and "ERROR" not in str(df.at[i, 'Applied_Code_Reasoning']):
+            # Skip if already processed and not an error
+            current_val = str(df.at[i, 'Applied_Code_Reasoning']).strip()
+            if current_val != "" and "ERROR" not in current_val:
                 continue
 
-            print(f"📝 [{i+1}/{len(df)}] Coding...")
+            print(f"📝 [{i+1}/{TOTAL_ROWS}] Coding StudyID: {row.get('StudyID', 'N/A')}...")
             
-            # Unpack the tuple returned by code_transcript
+            # Run the AI Coding
             clean_code, mental_process = code_transcript(row['Transcript'])
             
-            # Now assign the variables
+            # Update the DataFrame
             df.at[i, 'Applied_Code_Reasoning'] = clean_code
             df.at[i, 'AI_Thoughts'] = mental_process
             processed_this_session += 1
 
+            # Checkpoint Save
             if processed_this_session % SAVE_INTERVAL == 0:
                 df.to_csv(OUTPUT_FILE, index=False)
-                progress = (i / TOTAL_EXPECTED) * 100
-                print(f"💾 Saved Checkpoint. Total Progress: {progress:.1f}%")
-            time.sleep(2.0) # Reduced sleep; Flash can handle higher RPS
+                progress = ((i + 1) / TOTAL_ROWS) * 100
+                print(f"💾 Checkpoint Saved. Total Progress: {progress:.1f}%")
+            
+            # Active wait to respect rate limits
+            time.sleep(1.5)
                       
     except KeyboardInterrupt:
-        print("\n🛑 Manual stop. Saving...")
+        print("\n🛑 Manual stop. Saving current progress...")
     finally:
         df.to_csv(OUTPUT_FILE, index=False)
         print(f"🏁 Final Save Complete. Session Total: {processed_this_session}")
