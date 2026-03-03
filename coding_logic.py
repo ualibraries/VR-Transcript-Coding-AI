@@ -4,7 +4,7 @@ import time
 import pandas as pd
 from google import genai
 from google.colab import userdata
-from preprocessing_util3 import clean_raw_text, AI_CONFIG, MODEL_NAME
+from preprocessing_util import clean_raw_text, AI_CONFIG, MODEL_NAME
 
 # --- INITIALIZATION ---
 client = genai.Client(api_key=userdata.get('GEMINI_API_KEY'))
@@ -13,7 +13,7 @@ with open('codebook2.json', 'r') as f:
     CODEBOOK_DICT = json.load(f)
 
 INPUT_FILE = "TestSet_Round10b.csv"
-OUTPUT_FILE = "coded_resultsb.csv"
+OUTPUT_FILE = "/content/drive/MyDrive/Colab_Outputs/Complete1746.csv"
 MAX_ROWS = 21
 SAVE_INTERVAL = 5
 TOTAL_EXPECTED = 20
