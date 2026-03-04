@@ -3,7 +3,7 @@ import pandas as pd
 
 # --- CONFIGURATION: GEMINI 3 FLASH PREVIEW ---
 # Updated to the specific Gemini 3 Flash model name
-MODEL_NAME = "gemini-3.1-flash-preview" # Use -preview if -flash isn't available yet
+MODEL_NAME = "gemini-3.1-flash-lite-preview" # Use -preview if -flash isn't available yet
 
 AI_CONFIG = {
     "temperature": 1.0,         # Required for Gemini 3 'Thinking' models
