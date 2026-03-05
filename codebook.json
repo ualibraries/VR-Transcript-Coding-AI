@@ -58,13 +58,13 @@
       "exclusions": []
     },
     {
-      "code_name": "Evaluation Information",
+      "code_name": "Evaluating Information",
       "definition": "Assessing credibility or quality of sources",
       "inclusions": ["how do I know if a book is scholarly", "Can you explain for me what is the peer-reviewed article?"],
       "exclusions": []
     },
     {
-      "code_name": "Faculty Instruction Support",
+      "code_name": "Faculty Instructional Support",
       "definition": "Specific support for faculty or other instructors that include class tours, pedagogy, syllabus design, or classroom curriculum. Includes an instructor requesting resources, access, or technical help specifically for use by their students or their course/class.",
       "inclusions": ["As an instructor, if I include New York Times article links, will my students be able to access the article or will they encounter a paywall?"],
       "exclusions": ["Exclude faculty who need support for their research or writing efforts."]
