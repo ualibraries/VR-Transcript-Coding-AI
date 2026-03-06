@@ -4,7 +4,7 @@
   "codes": [
     {
       "code_name": "Abandoned Chat",
-      "definition": "Chat with primarily empty fields, greetings only, or goodbye with no additional intent.",
+      "definition": "Chat with only an initial question, simple greetings and/or goodbye with no additional intent.",
       "inclusions": ["Hi this is UA, how can I help you? Are you still there?"],
       "exclusions": []
     },
@@ -103,7 +103,7 @@
       "code_name": "Interlibrary Loan",
       "definition": "Library service allowing patrons to borrow materials from other libraries when their local library does not own or have local access. Includes document delivery services. Includes physical or access to electronic materials (books, media) or receive copies of documents (articles, chapters).  it includes ILL and document delivery",
       "inclusions": ["but I just got an ILL in <IN_PAN> format (the little cards instead of the rolls)"],
-      "exclusions": ["Implying 'Interlibrary Loan' service was used just because the item was unavailable"]
+      "exclusions": ["Assuming 'Interlibrary Loan' code based only on item unavailability"]
     },
     {
       "code_name": "Known Item: Article",
