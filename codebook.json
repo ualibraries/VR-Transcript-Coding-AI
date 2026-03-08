@@ -247,7 +247,7 @@
       "code_name": "Website",
       "definition": "Issues or questions navigating the library site including scheduling appointments",
       "inclusions": [],
-      "exclusions": []
+      "exclusions": ["only implies or suggests a potential issue with how they are navigating or accessing information on the library website"]
     },
     {
       "code_name": "Request Purchase",
