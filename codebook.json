@@ -6,7 +6,7 @@
       "code_name": "Abandoned Chat",
       "definition": "Chat with only an initial question, simple greetings and/or goodbye with no additional intent.",
       "inclusions": ["Hi this is UA, how can I help you? Are you still there?"],
-      "exclusions": ["only includes Initial Question from patron with an offer from help from librarian with no other communication"]
+      "exclusions": ["do not use if chat only includes an item labeled as Initial Question without any other communication from the patron"]
     },
     {
       "code_name": "Borrow Tech",
