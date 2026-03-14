@@ -6,7 +6,7 @@
       "code_name": "Abandoned Chat",
       "definition": "Chat with only an initial question, simple greetings and/or goodbye with no additional intent.",
       "inclusions": ["Hi this is UA, how can I help you? Are you still there?"],
-      "exclusions": []
+      "exclusions": ["only includes Initial Question from patron with an offer from help from librarian with no other communication"]
     },
     {
       "code_name": "Borrow Tech",
@@ -247,7 +247,7 @@
       "code_name": "Website",
       "definition": "Issues or questions navigating the library site including scheduling appointments",
       "inclusions": [],
-      "exclusions": ["only implies or suggests a potential issue with how they are navigating or accessing information on the library website"]
+      "exclusions": ["only implies or suggests a need or potential issue related to navigating or accessing information on the library website"]
     },
     {
       "code_name": "Request Purchase",
