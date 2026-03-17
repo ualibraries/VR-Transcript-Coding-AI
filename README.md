@@ -10,9 +10,9 @@ As academic libraries face increasing demand for virtual support, this research 
 ## **🚀 Key Evolution: The Consensus Audit Model**
 Originally designed as a head-to-head comparison between human and AI coders, the project has evolved into an **AI-Augmented Consensus Model**. Pilot audits revealed significant **Human Analytical Fatigue** in manually coded sets, particularly in lower-frequency intent quartiles.
 
-To eliminate this bias, the pipeline now serves as a **High-Precision Auditor**, flagging human inconsistencies for expert adjudication to produce a 100% verified **Gold Standard** dataset.
+To eliminate this bias, the pipeline now serves as a **Deterministic Auditor**, flagging human inconsistencies for expert adjudication to produce a 100% verified **Gold Standard** dataset.
 
-## 🛠 Methodology: The "Light-Touch" Pipeline
+## 🛠 Methodology: The "Light-Touch" Pipeline Using Gemini 2.5 Flash Lite
 Unlike traditional models, this pipeline utilizes a **Structural Preprocessing** approach designed to maintain the "Semantic Anchors" required for professional judgment:
 
 * **Redaction & Anonymization:** Removal of PII and long-string alphanumeric identifiers.
@@ -27,7 +27,8 @@ Unlike traditional models, this pipeline utilizes a **Structural Preprocessing**
 * `codebook.json`: A 41-category hierarchical taxonomy  
 * `preprocessing_utils.py`:High-performance utility script for structural noise reduction and API configuration.  
 * `tiered_audit.py`: A tiered conflict-detection script that prioritizes **Tier 1 (Total Mismatches)** and **Tier 2 (AI Intent Expansion)** for expert review.  Also includes **Tier 3 (Intent Contraction)** and **Tier 4 (Perfect Match)**
-
+* `edge_case.py`: Identifies and pulls out remaining mismatched transcripts for final human review (decision and code determination) using Chain of Thought (CoT) information from Gemini 3 Flash for detailed logic analysis
+  
 ## 🚀 Key Discovery: The Preprocessing Paradox
 * **The Preprocessing Paradox**: Lemmatization was found to degrade model performance by removing the syntactic nuance required to distinguish between formats (e.g., "Print" as a format vs. "Printing" as a tech issue).
 * **Exhaustivity**: The AI consistently identifies secondary intents (e.g., directional help requested after a technical issue) that human coders frequently overlook due to fatigue.
