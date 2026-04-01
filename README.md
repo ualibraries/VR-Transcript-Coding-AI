@@ -21,12 +21,11 @@ Unlike traditional models, this pipeline utilizes a **Structural Preprocessing**
 * **Deterministic Execution**: API configuration is locked at **Temperature=0.0** and **Top\_K=1** to ensure computational reproducibility.  
 * **The "AI Coffee" Injection**: A specific freshness reminder is injected into every API call to combat "analytical drift" and ensure the 35,000th transcript is processed with the same rigor as the first.
 
-
 ## 📂 Repository Structure
 * `coding_logic.py`: Optimized Python orchestration using the Gemini 2.5 Flash-lite API with exponential backoff and resume logic. Includes system prompt with explicit "Traps" and "Negative Constraints" to prevent common misclassifications.  
 * `codebook.json`: A 41-category hierarchical taxonomy  
 * `preprocessing_utils.py`:High-performance utility script for structural noise reduction and API configuration.  
-* `tiered_audit.py`: A tiered conflict-detection script that prioritizes **Tier 1 (Total Mismatches)** and **Tier 2 (AI Intent Expansion)** for expert review.  Also includes **Tier 3 (Intent Contraction)** and **Tier 4 (Perfect Match)**
+* `tiered_audit.py`: Tiered conflict-detection script prioritizes Tier 1 **(Total Mismatches)** and **Tier 2 (AI Intent Expansion)** for expert review. Also includes **Tier 3 (Intent Contraction)** and **Tier 4 (Complex Overlap)** as well as **Perfect Match​****
 * `edge_case.py`: Identifies and pulls out remaining mismatched transcripts for final human review (decision and code determination) using Chain of Thought (CoT) information from Gemini 3 Flash for detailed logic analysis
   
 ## 🚀 Key Discovery: The Preprocessing Paradox
