@@ -2,7 +2,7 @@ import pandas as pd
 import time
 import os
 from coding_logic import call_gemini_api, SYSTEM_PROMPT 
-from preprocessing_util import clean_and_normalize_transcript
+from preprocessing_util import clean_raw_text
 
 # --- CONFIGURATION ---
 INPUT_FILE = '/content/drive/MyDrive/Colab_Outputs/Master_Transcripts_34k.csv'
