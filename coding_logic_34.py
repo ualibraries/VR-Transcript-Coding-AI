@@ -17,8 +17,27 @@ client = genai.Client(
 # Load codebook for the prompt
 with open('codebook2.json', 'r') as f:
     CODEBOOK_DICT = json.load(f)
+# --- INITIALIZATION ---
+client = genai.Client(
+    api_key=userdata.get('GEMINI_API_KEY'),
+    # This correctly forces the SDK to use the Developer branch (not Vertex)
+    vertexai=False,
+    # This ensures you're hitting the Beta endpoint for the latest 3.1 features
+    http_options=types.HttpOptions(api_version='v1beta')
+)
+
+with open('codebook2.json', 'r') as f:
+    CODEBOOK_DICT = json.load(f)
+
+INPUT_FILE = "TestSet_Round10b.csv"
+OUTPUT_FILE = "/content/drive/MyDrive/Colab_Outputs/Complete1746.csv"
+MAX_ROWS = 21
+SAVE_INTERVAL = 5
+TOTAL_EXPECTED = 20
 
 # --- THE SYSTEM PROMPT ---
+SYSTEM_PROMPT = f"""
+
 ### NEGATIVE CONSTRAINTS (THE "NO-GO" ZONE)
 •NO INVENTED CODES: Use ONLY the exact wording of the code keys as provided in the JSON Codebook (CODEBOOK_DICT).  Do not summarize or combine code names.  Each code must be its own distinct entry.
 •NO INFERENTIAL CODING: Literal Evidence Only: You MUST only apply codes for intents explicitly stated by the patron or services performed by the librarian. DO NOT
@@ -67,6 +86,11 @@ Transcript: "Do you have the New York Times?" Code: Known Item: Articles | Reaso
 
 ### RESPONSE FORMAT
 Code, Code | [Reasoning: Brief justification for inclusion/exclusion]
+
+### CODEBOOK JSON:
+{json.dumps(CODEBOOK_DICT, indent=2)}
+"""
+
 
 ### CODEBOOK JSON:
 {json.dumps(CODEBOOK_DICT, indent=2)}
