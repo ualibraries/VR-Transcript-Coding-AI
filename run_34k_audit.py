@@ -27,35 +27,32 @@ def run_batch_process():
 
     results = []
 
-    # 3. Loop through the batch
+  # 3. Loop through the batch
     for index, row in df.iterrows():
         study_id = row['StudyID']
-        # Double check: does your CSV have 'Cleaned_Transcript' or just 'Transcript'?
         transcript_text = row['Transcript'] 
         
         try:
             # --- THE ACTUAL API CALL ---
-            # We call code_transcript and it returns TWO items: the code and the thoughts
             ai_output, thoughts = code_transcript(transcript_text)
             
-            # Append result
+            # Append result - NOW INCLUDING THE TRANSCRIPT
             results.append({
                 'StudyID': study_id,
+                'Transcript': transcript_text,  # <--- Added this line
                 'New_AI_Final_Code': ai_output,
-                'AI_Thoughts': thoughts,  # Adding the thoughts column back in!
+                'AI_Thoughts': thoughts,
                 'Processed_At': time.strftime("%Y-%m-%d %H:%M:%S")
             })
             
-            # Progress marker
             print(f"✅ Processed StudyID {study_id}...")
-            
-            # Politeness breather for the API
             time.sleep(1.5)
 
         except Exception as api_error:
             print(f"⚠️ Error on StudyID {study_id}: {api_error}")
             results.append({
                 'StudyID': study_id, 
+                'Transcript': transcript_text, # Keep the transcript even on error
                 'New_AI_Final_Code': "ERROR", 
                 'AI_Thoughts': str(api_error),
                 'Processed_At': None
@@ -63,6 +60,12 @@ def run_batch_process():
 
     # 4. Save results
     results_df = pd.DataFrame(results)
+    results_df.to_csv(OUTPUT_FILE, index=False)
+    
+    print(f"🏁 Batch Complete! Output saved to: {OUTPUT_FILE}")
+
+# Run the script
+run_batch_process()
     results_df.to_csv(OUTPUT_FILE, index=False)
     
     print(f"🏁 Batch Complete! Output saved to: {OUTPUT_FILE}")
