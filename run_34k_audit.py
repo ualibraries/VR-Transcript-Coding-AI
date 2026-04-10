@@ -39,7 +39,7 @@ def run_batch_process():
             # --- YOUR API CALL GOES HERE ---
             # response = call_gemini_api(transcript_text, master_prompt)
             # For now, we'll placeholder it:
-            ai_output = "AI_Response_Placeholder" 
+            ai_output = "ai_output, thoughts = call_gemini_api(transcript_text, SYSTEM_PROMPT)" 
             
             # Append result
             results.append({
