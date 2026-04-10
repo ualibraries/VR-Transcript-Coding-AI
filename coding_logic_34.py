@@ -14,26 +14,8 @@ client = genai.Client(
     http_options=types.HttpOptions(api_version='v1beta')
 )
 
-# Load codebook for the prompt
 with open('codebook2.json', 'r') as f:
     CODEBOOK_DICT = json.load(f)
-# --- INITIALIZATION ---
-client = genai.Client(
-    api_key=userdata.get('GEMINI_API_KEY'),
-    # This correctly forces the SDK to use the Developer branch (not Vertex)
-    vertexai=False,
-    # This ensures you're hitting the Beta endpoint for the latest 3.1 features
-    http_options=types.HttpOptions(api_version='v1beta')
-)
-
-with open('codebook2.json', 'r') as f:
-    CODEBOOK_DICT = json.load(f)
-
-INPUT_FILE = "TestSet_Round10b.csv"
-OUTPUT_FILE = "/content/drive/MyDrive/Colab_Outputs/Complete1746.csv"
-MAX_ROWS = 21
-SAVE_INTERVAL = 5
-TOTAL_EXPECTED = 20
 
 # --- THE SYSTEM PROMPT ---
 SYSTEM_PROMPT = f"""
