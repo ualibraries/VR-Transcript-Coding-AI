@@ -1,7 +1,7 @@
 import pandas as pd
 import time
 import os
-from coding_logic import call_gemini_api, SYSTEM_PROMPT 
+from coding_logic_34 import call_gemini_api, SYSTEM_PROMPT 
 from preprocessing_util import clean_raw_text
 
 # --- CONFIGURATION ---
