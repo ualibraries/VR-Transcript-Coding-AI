@@ -91,11 +91,6 @@ Code, Code | [Reasoning: Brief justification for inclusion/exclusion]
 {json.dumps(CODEBOOK_DICT, indent=2)}
 """
 
-
-### CODEBOOK JSON:
-{json.dumps(CODEBOOK_DICT, indent=2)}
-"""
-
 def code_transcript(transcript):
     """Orchestrates API call with March 2026 Thinking extraction."""
     cleaned_input = clean_raw_text(transcript)
