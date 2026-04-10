@@ -57,6 +57,19 @@ def run_batch_process():
                 'AI_Thoughts': str(api_error),
                 'Processed_At': None
             })
+                      
+            # --- THE CHECKPOINT SAVE ---
+            # (index + 1) because index starts at 0
+            if (index + 1) % SAVE_INTERVAL == 0:
+                checkpoint_df = pd.DataFrame(results)
+                checkpoint_df.to_csv(OUTPUT_FILE, index=False)
+                print(f"💾 Checkpoint Saved at row {index + 1}. Total batch progress: {((index + 1)/BATCH_SIZE)*100:.1f}%")
+       
+        print(f"✅ Processed StudyID {study_id}...")
+            time.sleep(1.5)
+
+        except Exception as api_error:
+            # ... (your existing error handling) ...
 
     # 4. Save results
     results_df = pd.DataFrame(results)
@@ -69,6 +82,3 @@ run_batch_process()
     results_df.to_csv(OUTPUT_FILE, index=False)
     
     print(f"🏁 Batch Complete! Output saved to: {OUTPUT_FILE}")
-
-# Run the script
-run_batch_process()
