@@ -57,6 +57,9 @@ SYSTEM_PROMPT = f"""
   oDevelop Research Topic: Use if the Patron is still refining the idea or focus of their project.
   oResearch Strategies: Use if the Patron has a topic but needs a pathway (keywords, specific databases to try).
   oDatabase Search Skills: Use if the Librarian is teaching the mechanical use of a tool (how to use filters, Boolean operators, or interface features).
+Database vs. Library Website" Definitional Anchor> - Code as ‘Database Search Skills’: When the labor involves manipulating search parameters inside a research database or library catalog (e.g., "use the peer-review filter," "sort by newest," "add a second search box," or "use quotation marks for phrases").
+•	Code as ‘Website’: ONLY for navigating the library’s top-level layout or finding information on a page (e.g., "click the 'Services' tab," "scroll to the footer for hours," or "I can't find the chat button").  Example: Showing the user how to get to the AZ List is Website.  
+•	"Catalog Rule": library discovery layer (the catalog) is a database. Interactions involving the use of it or its search features to area form of research (item search, etc.) not Website Navigation.
 •Possession Rule: If a patron is "returning" or "bringing back" an item or claims it was already returned, it is NOT lost. DO NOT code it as 'Lost Items'.
 •Building Maintenance: Inquiries regarding building comfort or maintenance such as HVAC (Air Conditioning/Heating), plumbing (leaks), lighting, or elevators are NOT related to Hours, Navigation & Wayfinding, or Noise Issues. You MUST use the code ‘Other’. 
 •Library Web Navigation: Code as ‘Website’ if the interaction involves troubleshooting the Library Website interface (e.g., "click here," "scroll down," "I can't find it on the page"). This includes finding hours or info via the site's layout.
@@ -65,7 +68,6 @@ SYSTEM_PROMPT = f"""
 •Tech Renewals: If the user is renewing or returning a technology-based item, use 'Renewals' first and 'Borrow Tech' second.  Do NOT use ‘Known Item’ for technology-based hardware.
 •Physical Wayfinding: If a permission or access question involves a specific library physical space (e.g., "Are the stacks open to community users?"), apply both ‘Policies & Procedures’ and ‘Navigation & Wayfinding’
 •Campus Service Priority: If a librarian refers a patron to a non-library, university entity (Bookstore, Bursar, Financial Aid), the code ‘Campus Services’ is mandatory.
-
 ### FEW-SHOT EXAMPLES (THE ANCHORS)
 Transcript: "I need to renew my laptop, are you open until 7?" is Code: Renewals, Borrow Tech, Hours | Reasoning: 'Renewals' for extension request, 'Borrow Tech' for the laptop, 'Hours' for the time inquiry.
 Transcript: “I am a faculty member and I need a US Census dataset for my research paper” is Code: Known Item: Other | Reasoning: Patron is asking for known dataset for their own research project unrelated to teaching a class.
@@ -73,6 +75,13 @@ Transcript: "I want to donate 50 books on the Mayans." is Code: Other | Reasonin
 Transcript: "My password is not working for the library link." Code: Connectivity & Remote Access Issues, Patron Accounts | Reasoning: Technical barrier to accessing digital resources, password issue with account.
 Transcript: "I will just purchase the textbook myself." Code: Other | Reasoning: User is discussing buying the item themself. 'Request Purchase' is limited to the user asking the library to purchase or license access to an item.
 Transcript: "Do you have the New York Times?" Code: Known Item: Articles | Reasoning: User is asking for a journal, newspaper or magazine by its title.
+Transcript: "How do I search for a journal article by title in your library website?" Code: Database Search Skills, Finding Relevant Sources Reasoning: Even though this happens on the library URL and the user calls is “website”, the labor is 'Database Search Skills' because it involves applying search limiters (date, peer-review) within the catalog index. Do NOT code as 'Website'.
+Transcript: "Does the library have Project MUSE institutional access?" is Code: Known Item: Article | Reasoning: The patron provided a named database ("Project MUSE"). Per the Noun-First Rule, a request for a specific resource by name is a 'Known Item' request.   Known Item: Article includes articles, journal by title, a named databases.
+Transcript: "What’s the login for the computers? ... Are you using a library laptop or a computer in the library?  is Code: Tech Support | Reasoning: Context indicates a physical machine in the building. This is local 'Tech Support,' not 'Connectivity & Remote Access' (which is for off campus/proxy issues/item link failure).
+Transcript: "I got a video link and added to class I am teaching but it isn't working. I found it through the library but how do I add that link to my course?" is Code: Connectivity & Remote Access Issues, Website, Known Item: Audiovisual | Reasoning: No explicit mention of the reserve system (do not infer 'Course Reserves'). Intent involves a link error ('Connectivity'), site navigation ('Website'), and a video ('Known Item: AV').
+Transcript: Only content similar to "I seem to have been logged out of the conversation... You may need to stay on the tab..." is Code: Abandoned Chat | Reasoning: Interaction is limited to technical chat platform issues with zero evidence of a library-related inquiry. 
+Transcript: "nese lanterns ... Hello. ... What may we help you with?" is Code: Abandoned Chat | Reasoning: "Nese lanterns" is a fragment without library intent. Despite the librarian greeting, the lack of an active library inquiry triggers 'Abandoned Chat'.
+Transcript: "I'm in the library catalog looking for books on history, but there are too many. How do I see only the ones in the main stacks?" Code: Database Search Skills, Finding Relevant Sources Reasoning: Even though the user is on the library's URL, the labor is 'Database Search Skills' because it involves applying a location filter within the catalog's search engine. Do NOT code as 'Website'.
 
 ### RESPONSE FORMAT
 Code, Code | [Reasoning: Brief justification for inclusion/exclusion]
@@ -80,10 +89,6 @@ Code, Code | [Reasoning: Brief justification for inclusion/exclusion]
 ### CODEBOOK JSON:
 {json.dumps(CODEBOOK_DICT, indent=2)}
 """
-import time
-import os
-import pandas as pd
-
 def code_transcript(transcript):
     """
     Orchestrates the API call with the new March 2026 'Thinking' extraction.
