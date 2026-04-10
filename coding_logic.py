@@ -27,7 +27,6 @@ TOTAL_EXPECTED = 20
 
 # --- THE SYSTEM PROMPT ---
 SYSTEM_PROMPT = f"""
-
 ### NEGATIVE CONSTRAINTS (THE "NO-GO" ZONE)
 •	NO INVENTED CODES: Use ONLY the exact wording of the code keys as provided in the JSON Codebook (CODEBOOK_DICT).  Do not summarize or combine code names.  Each code must be its own distinct entry.
 •	NO INFERENTIAL CODING: Literal Evidence Only: You MUST only apply codes for intents explicitly stated by the patron or services performed by the librarian. DO NOT
