@@ -1,12 +1,31 @@
 import pandas as pd
 import time
 import os
-from coding_logic_34 import code_transcript, SYSTEM_PROMPT 
-from preprocessing_util import clean_raw_text
+import sys
+
+# Define the folder name on your Drive where the modules are located
+DRIVE_MODULES_FOLDER = '34Batch'
+MODULES_FULL_PATH = os.path.join('/content/drive/MyDrive', DRIVE_MODULES_FOLDER)
+
+# Add the module path to sys.path so Python can find coding_logic_34.py
+sys.path.append(MODULES_FULL_PATH)
+
+# Temporarily change the current working directory to where the module is located
+# This allows coding_logic_34.py to find codebook2.json using a relative path during import
+original_cwd = os.getcwd()
+os.chdir(MODULES_FULL_PATH)
+
+try:
+    # IMPORTANT: Importing 'code_transcript' because that is the name inside your .py file
+    from coding_logic_34 import code_transcript, SYSTEM_PROMPT
+    from preprocessing_util import clean_raw_text
+finally:
+    # Always change back to the original working directory after import
+    os.chdir(original_cwd)
 
 # --- CONFIGURATION ---
-INPUT_FILE = '/content/drive/MyDrive/34Batch/NewPrompt.csv'
-OUTPUT_FILE = '/content/drive/MyDrive/34Batch/NewPrompt_Batch_1.csv'
+INPUT_FILE = '/content/drive/MyDrive/34Batch/clean.csv'
+OUTPUT_FILE = '/content/drive/MyDrive/34Batch/clean_2.csv'
 
 # Set your batch parameters
 BATCH_SIZE = 5000  # Set this to 7 for your final small test, then 5000
