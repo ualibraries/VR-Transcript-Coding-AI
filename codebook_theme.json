@@ -10,7 +10,7 @@
       "exclusions": ["do not use if chat only includes an item labeled as Initial Question without any other communication from the patron"]
     },
     {
-      "category": "Technology & Connectivity",
+      "category": "Technical & Connectivity",
       "code_name": "Borrow Tech",
       "definition": "Technology items circulated by the library for patrons to borrow such as laptops, chargers, tablets, cameras, tripods, VR equipment, calculators or other hardware loans.",
       "inclusions": ["I borrowed a macbook from the main library", "I need a camera to use for an assignment"],
@@ -39,7 +39,7 @@
       "exclusions": []
     },
     {
-      "category": "Technology & Connectivity",
+      "category": "Technical & Connectivity",
       "code_name": "Connectivity & Remote Access Issues",
       "definition": "Technical barriers preventing access to digital content. Includes Login/password failures, VPN/Proxy errors, NetID authentication issues, and broken database links. Use this for 'getting into' resources.",
       "inclusions": ["When I click on the title in the library website it says I don't have access", "It does not permit me to login from the first UA Library Search result", "how can i connect to the WiFi on my tablet?"],
@@ -283,7 +283,7 @@
       "exclusions": []
     },
     {
-      "category": "Technical & Connectivity",
+      "category": "Technical & Connectivity ",
       "code_name": "Website",
       "definition": "Issues or questions navigating the library site including scheduling appointments",
       "inclusions": [],
