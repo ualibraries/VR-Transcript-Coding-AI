@@ -3,7 +3,7 @@
   "version": "1.2",
   "codes": [
     {
-      "category": "Abandoned",
+      "category": "Other",
       "code_name": "Abandoned Chat",
       "definition": "Chat with only an initial question, simple greetings and/or goodbye with no additional intent.",
       "inclusions": ["Hi this is UA, how can I help you? Are you still there?"],
@@ -269,7 +269,7 @@
       "exclusions": ["can I schedule an appointment for the 24/7 technical area"]
     },
     {
-      "category": "Abandoned",
+      "category": "Other",
       "code_name": "System Test",
       "definition": "Use of 'training chat' or 'system test' or the word 'test' with no other intent",
       "inclusions": [],
