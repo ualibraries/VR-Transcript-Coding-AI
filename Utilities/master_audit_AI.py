@@ -8,9 +8,15 @@ df = pd.read_csv('/content/drive/MyDrive/Colab_Outputs/Adjudicated_April.csv')
 # Define the mapping of common "drifts" to the "Gold Standard"
 normalization_map = {
     "Patron Accounts": "Patron Account",
+    "Borrow Techs": "Borrow Tech",
+    "Faculty Instruction Support": "Faculty Instructional Support",
+    "Finding Relevant Sources": "Finding Relevant Resources",
+    "Evaluation Information": "Evaluating Information",
+    "Known Item: Audiovisual": "Known Item: AV",
+    "Find Item by Author": "Find by Author",
     "Finding relevant sources": "Finding Relevant Resources",
-    "Finding relevant resources": "Finding Relevant Resources",
-    "Borrow Techs": "Borrow Tech"
+    "Research Strategies": "Research Strategy",
+    "Final Content: Known Item: Book" : "Known Item: Book"
 }
 
 def split_and_normalize(val):
