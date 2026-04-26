@@ -36,7 +36,7 @@ def split_and_normalize(val):
     return clean_codes
 
 # Apply the combined logic to create the list for exploding
-df['AI_Code_List'] = df['New_AI_Final_Code'].apply(split_and_normalize)
+df['AI_Code_List'] = df['AI_Final_Code'].apply(split_and_normalize)
 
 # 2. Explode the data (One row per Code/Study ID pair)
 ai_audit_df = df.explode('AI_Code_List')
