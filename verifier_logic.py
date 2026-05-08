@@ -1,10 +1,22 @@
+import json
 import os
-import google.generativeai as genai
+import time
+import pandas as pd
+from google import genai
+from google.genai import types
+from google.colab import userdata
 
 # mean librarian script
-# Setup your API Key (Assume it's in your environment or defined here)
-# genai.configure(api_key="YOUR_API_KEY")
-model = genai.GenerativeModel('gemini-2.0-flash-lite')
+# --- INITIALIZATION ---
+client = genai.Client(
+    api_key=userdata.get('GEMINI_API_KEY'),
+    # This correctly forces the SDK to use the Developer branch (not Vertex)
+    vertexai=False,
+    # This ensures you're hitting the Beta endpoint for the latest 3.1 features
+    http_options=types.HttpOptions(api_version='v1beta')
+)
+
+
 
 VERIFIER_SYSTEM_PROMPT = """
 You are a Senior Library Assessment Auditor. Your role is to conduct a "Glass Box" audit of a Coder Agent's work.
