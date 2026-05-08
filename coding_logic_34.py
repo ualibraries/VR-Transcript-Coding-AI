@@ -14,7 +14,7 @@ client = genai.Client(
     http_options=types.HttpOptions(api_version='v1beta')
 )
 
-with open('codebook2.json', 'r') as f:
+with open('codebook_theme.json', 'r') as f:
     CODEBOOK_DICT = json.load(f)
 
 # --- THE SYSTEM PROMPT ---
