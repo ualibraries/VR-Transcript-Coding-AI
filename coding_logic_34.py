@@ -10,7 +10,9 @@ from preprocessing_util import clean_raw_text, AI_CONFIG, MODEL_NAME
 # --- INITIALIZATION ---
 client = genai.Client(
     api_key=userdata.get('GEMINI_API_KEY'),
+    # This correctly forces the SDK to use the Developer branch (not Vertex)
     vertexai=False,
+    # This ensures you're hitting the Beta endpoint for the latest 3.1 features
     http_options=types.HttpOptions(api_version='v1beta')
 )
 
