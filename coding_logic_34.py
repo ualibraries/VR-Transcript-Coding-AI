@@ -29,33 +29,34 @@ LOGIC GATES:
 
 OUTPUT: Return JSON {"is_valid": true/false, "feedback": "reason"}
 """
-
 def code_transcript_with_verify(transcript):
     cleaned_input = clean_raw_text(transcript)
     if len(str(cleaned_input)) < 10:
         return "Abandoned Chat", "N/A", "Insufficient data"
 
-    # --- STEP 1: INITIAL ATTEMPT ---
-    initial_prompt = f"{SYSTEM_PROMPT}\n\nTranscript: {cleaned_input}"
+    # --- STEP 1: INITIAL ATTEMPT (Demanding String Format) ---
+    initial_prompt = f"{SYSTEM_PROMPT}\n\nTranscript: {cleaned_input}\n\nOUTPUT FORMAT: Provide ONLY the code names separated by ' | '. Do not use JSON."
     res = client.models.generate_content(model=MODEL_NAME, contents=initial_prompt, config=AI_CONFIG)
     
-    initial_code = res.text.strip()
+    # Extracting text and thoughts
+    initial_code = res.text.strip().replace("```", "").replace("json", "").strip()
     initial_thoughts = getattr(res.candidates[0].content.parts[0], 'thought', "No thoughts recorded")
 
-    # --- STEP 2: VERIFICATION ---
+    # --- STEP 2: SURGICAL VERIFICATION ---
+    # We use a very light touch here to avoid the "over-correction" you saw
     v_prompt = f"{VERIFIER_PROMPT}\n\nTRANSCRIPT: {cleaned_input}\n\nPROPOSED CODES: {initial_code}"
     v_res = client.models.generate_content(model=MODEL_NAME, contents=v_prompt)
     
-    # Simple JSON-ish check
     is_valid = '"is_valid": true' in v_res.text.lower()
-    feedback = v_res.text # Capture the feedback for the record
+    feedback = v_res.text
 
     # --- STEP 3: REVISION (IF NEEDED) ---
     if not is_valid:
-        revision_prompt = f"{SYSTEM_PROMPT}\n\nTranscript: {cleaned_input}\n\nREJECTION FEEDBACK: {feedback}\n\nPlease correct your codes."
+        revision_prompt = f"{SYSTEM_PROMPT}\n\nTranscript: {cleaned_input}\n\nAUDIT FEEDBACK: {feedback}\n\nREVISE AND PROVIDE ONLY THE CODE NAMES SEPARATED BY ' | '."
         rev_res = client.models.generate_content(model=MODEL_NAME, contents=revision_prompt, config=AI_CONFIG)
-        final_code = rev_res.text.strip()
-        final_thoughts = f"REVISED based on: {feedback} | Original Thoughts: {initial_thoughts}"
-        return final_code, feedback, final_thoughts
+        final_code = rev_res.text.strip().replace("```", "").replace("json", "").strip()
+        return final_code, feedback, f"REVISED | {initial_thoughts}"
+
+    return initial_code, "PASS", initial_thoughts
 
     return initial_code, "PASS", initial_thoughts
