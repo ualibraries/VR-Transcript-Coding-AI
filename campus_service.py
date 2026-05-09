@@ -3,7 +3,7 @@ import time
 import os
 import re
 from google.colab import userdata  # Assuming you are running this in Google Colab
-from google.genai import Client
+from google import genai
 
 # Initialize the GenAI client
 client = genai.Client(
