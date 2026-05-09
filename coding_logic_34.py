@@ -100,14 +100,11 @@ def code_transcript(transcript, feedback=None): # <--- Added feedback=None here
 
     last_error = "Unknown Error"
 
-    for attempt in range(3):
-        try:
-            # Inject the audit_intervention between the prompt and the transcript
-            full_prompt = f"{SYSTEM_PROMPT}{audit_intervention}\n\nTranscript: {cleaned_input}{coffee_reminder}"
-            
+    for attempt in range(3)
+        try
             response = client.models.generate_content(
                 model=MODEL_NAME,
-                contents=full_prompt, # <--- Uses the new combined prompt
+                contents= f"{SYSTEM_PROMPT}{audit_intervention}\n\nTranscript {cleaned_input}{coffee_reminder}"
                 config=AI_CONFIG
             )
 
