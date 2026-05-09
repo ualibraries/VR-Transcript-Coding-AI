@@ -59,5 +59,3 @@ def code_transcript_with_verify(transcript):
         return final_code, feedback, f"REVISED | {initial_thoughts}"
 
     return initial_code, "PASS", initial_thoughts
-
-    return initial_code, "PASS", initial_thoughts
