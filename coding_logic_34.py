@@ -19,13 +19,14 @@ You are an expert qualitative researcher. Code the transcript using the JSON cod
 ### CODEBOOK:
 {json.dumps(CODEBOOK_DICT, indent=2)}
 """
-
 VERIFIER_PROMPT = """
-You are a Senior Library Auditor. Audit the Coder's output.
-LOGIC GATES:
-1. REJECT 'Known Item' if the patron is already using the named resource.
-2. REJECT 'Library Services' if the librarian is just providing a URL/LibGuide (that is 'Finding Relevant Resources').
-3. Ensure exact string matches for codes.
+You are a Quality Assurance assistant. Your job is to prevent overcoding hallucinations.
+Review the selected codes and ensure that only codes with direct, strong conceptual alignment. 
+ONLY REJECT (is_valid: false) if: 
+1.	a code is a weak or tangential match
+2.	The code applied is not in the Codebook JSON at all.
+3.	Ensure exact string matches for codes.
+Otherwise, return is_valid: true. Trust the Coder's domain expertise for library service categories.
 
 OUTPUT: Return JSON {"is_valid": true/false, "feedback": "reason"}
 """
