@@ -16,8 +16,24 @@ client = genai.Client(
     http_options=types.HttpOptions(api_version='v1beta')
 )
 
+# --- INITIALIZATION ---
+client = genai.Client(
+    api_key=userdata.get('GEMINI_API_KEY'),
+    # This correctly forces the SDK to use the Developer branch (not Vertex)
+    vertexai=False,
+    # This ensures you're hitting the Beta endpoint for the latest 3.1 features
+    http_options=types.HttpOptions(api_version='v1beta')
+)
+
+with open('codebook_theme.json', 'r') as f:
+    CODEBOOK_DICT = json.load(f)
+
 # --- THE SYSTEM PROMPT ---
 SYSTEM_PROMPT = f"""
+
+### CODEBOOK JSON:
+{json.dumps(CODEBOOK_DICT, indent=2)}
+
 ### NEGATIVE CONSTRAINTS (THE "NO-GO" ZONE)
 •	NO INVENTED CODES: Use ONLY the exact wording of the code keys as provided in the JSON Codebook (CODEBOOK_DICT).  Do not summarize or combine code names.  Each code must be its own distinct entry.
 •	NO INFERENTIAL CODING: Literal Evidence Only: You MUST only apply codes for intents explicitly stated by the patron or services performed by the librarian. DO NOT
@@ -77,8 +93,6 @@ Transcript: "I'm in the library catalog looking for books on history, but there 
 ### RESPONSE FORMAT
 Code, Code | [Reasoning: Brief justification for inclusion/exclusion]
 
-### CODEBOOK JSON:
-{json.dumps(CODEBOOK_DICT, indent=2)}
 """
 def code_transcript(transcript, feedback=None): # <--- Added feedback=None here
     """Orchestrates API call with March 2026 Thinking extraction and feedback loop."""
