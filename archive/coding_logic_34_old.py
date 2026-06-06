@@ -7,15 +7,16 @@ from google.genai import types
 from google.colab import userdata
 from preprocessing_util import clean_raw_text, AI_CONFIG, MODEL_NAME
 
-# --- INITIALIZATION ---
-client = genai.Client(
-    api_key=userdata.get('GEMINI_API_KEY'),
-    # This correctly forces the SDK to use the Developer branch (not Vertex)
-    vertexai=False,
-    # This ensures you're hitting the Beta endpoint for the latest 3.1 features
-    http_options=types.HttpOptions(api_version='v1beta')
-)
+# 1. Initialize API Client Once
+api_key = userdata.get('GEMINI_API_KEY')
+client = genai.Client(api_key=api_key)
 
+# 2. Load Codebook
+CODEBOOK_PATH = '/content/drive/MyDrive/TestJune/codebook_cluster.json'
+with open(CODEBOOK_PATH, 'r') as f:
+    CODEBOOK_DICT = json.load(f)
+
+# 3. Centralized Prompting
 # --- THE SYSTEM PROMPT ---
 SYSTEM_PROMPT = f"""
 ### NEGATIVE CONSTRAINTS (THE "NO-GO" ZONE)
