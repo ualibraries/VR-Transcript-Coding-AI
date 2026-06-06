@@ -16,15 +16,11 @@ client = genai.Client(
     http_options=types.HttpOptions(api_version='v1beta')
 )
 
-with open('codebook_theme.json', 'r') as f:
+with open('codebook_cluster.json', 'r') as f:
     CODEBOOK_DICT = json.load(f)
 
 # --- THE SYSTEM PROMPT ---
 SYSTEM_PROMPT = f"""
-
-### CODEBOOK JSON:
-{json.dumps(CODEBOOK_DICT, indent=2)}
-
 ### NEGATIVE CONSTRAINTS (THE "NO-GO" ZONE)
 •	NO INVENTED CODES: Use ONLY the exact wording of the code keys as provided in the JSON Codebook (CODEBOOK_DICT).  Do not summarize or combine code names.  Each code must be its own distinct entry.
 •	NO INFERENTIAL CODING: Literal Evidence Only: You MUST only apply codes for intents explicitly stated by the patron or services performed by the librarian. DO NOT
@@ -42,21 +38,21 @@ SYSTEM_PROMPT = f"""
 •	Noun-First Rule. Anchor first on the Object requested by the patron (the book, the report, the VR headset, the website). If a specific item is requested (the Noun), that is the Primary Intent. 
 •	Librarian Source Rule: If it is the Librarian who suggests a specific resource (e.g., "Try the book 'Jazz Origins' or “Watch the film ‘Gone with the Wind’”)" this is a product of search and discovery, do NOT use 'Known Item'. 
 •	Known Item Logical Immunity:
-o	Purpose-Neutral: patron's goal for ‘known item’ request (e.g., literature review, lab report) does not change the known item request into a topic search.
-o	Availability-Neutral: Availability is not Intent. A search failure, referral to "Interlibrary Loan" or connectivity issue does not change the ‘Known Item’ intent. Do not change a ‘Known Item’ primary intent due to search or access failure or other secondary intents.
-o	Quantity-Neutral: Multiple ‘Know Item’ requests (e.g. patron provided titles provided for three separate articles and a book) do not aggregate into a topic or subject search; the primary intent remains [Known Item: Format(s)] request.
-o	Metadate Density Rule: If the patron provides a unique identifier (title or URL or similiar) + Author, apply both [Known Item: Format] AND [Find Item by Author]. This captures the full metadata density of the request.
+    o	Purpose-Neutral: patron's goal for ‘known item’ request (e.g., literature review, lab report) does not change the known item request into a topic search.
+    o   Availability-Neutral: Availability is not Intent. A search failure, referral to "Interlibrary Loan" or connectivity issue does not change the ‘Known Item’ intent. Do not change a ‘Known Item’ primary intent due to search or access failure or other secondary intents.
+    o	Quantity-Neutral: Multiple ‘Know Item’ requests (e.g. patron provided titles provided for three separate articles and a book) do not aggregate into a topic or subject search; the primary intent remains [Known Item: Format(s)] request.
+    o	Metadate Density Rule: If the patron provides a unique identifier (title or URL or similiar) + Author, apply both [Known Item: Format] AND [Find Item by Author]. This captures the full metadata density of the request.
 •	Role-Based Anchor (Faculty Instructional Support)
-o	Functional Role over Phrasing: Apply 'Faculty Instructional Support' if the context clearly describes teaching labor or course-building. Look for verbs and possessives that imply ownership of the curriculum (e.g., "adding to my D2L," "for my students," "putting on reserve for my class," "assigning this to my lab"). The specific words "I am the professor" are not required if the action is instructional.
-o	"Student vs. Instructor" Filter: Distinguish between receiving an assignment and delivering one for the use of Faculty Instructional support:  Student (Exclude): "I have an assignment for HUMS 150," "I'm in Applied Physics." Instructor (Include): "I'm setting up my HUMS 150 course," "I need to find a video for my Applied Physics students."
-o	Personal Research vs. Pedagogy: If a professor asks for help with individual research or personal use, use standard 'Research' codes, NOT 'Faculty Instructional Support'.
+    o	Functional Role over Phrasing: Apply 'Faculty Instructional Support' if the context clearly describes teaching labor or course-building. Look for verbs and possessives that imply ownership of the curriculum (e.g., "adding to my D2L," "for my students," "putting on reserve for my class," "assigning this to my lab"). The specific words "I am the professor" are not required if the action is instructional.
+    o	"Student vs. Instructor" Filter: Distinguish between receiving an assignment and delivering one for the use of Faculty Instructional support:  Student (Exclude): "I have an assignment for HUMS 150," "I'm in Applied Physics." Instructor (Include): "I'm setting up my HUMS 150 course," "I need to find a video for my Applied Physics students."
+    o	Personal Research vs. Pedagogy: If a professor asks for help with individual research or personal use, use standard 'Research' codes, NOT 'Faculty Instructional Support'.
 •	Research Spectrum (Decision Tree)
-o	Develop Research Topic: Use if the Patron is still refining the idea or focus of their project.
-o	Research Strategies: Use if the Patron has a topic but needs a pathway (keywords, specific databases to try).
-o	Database Search Skills: Use if the Librarian is teaching the mechanical use of a tool (how to use filters, Boolean operators, or interface features). The library catalog for discovery of items is considered a database.
+    o	Develop Research Topic: Use if the Patron is still refining the idea or focus of their project.
+    o	Research Strategies: Use if the Patron has a topic but needs a pathway (keywords, specific databases to try).
+    o	Database Search Skills: Use if the Librarian is teaching the mechanical use of a tool (how to use filters, Boolean operators, or interface features). The library catalog for discovery of items is considered a database.
 •	Database vs. Library Website" Definitional Anchor> - Code as ‘Database Search Skills’: When the labor involves manipulating search parameters inside a research database or library catalog (e.g., "use the peer-review filter," "sort by newest," "add a second search box," or "use quotation marks for phrases").
-o	Code as ‘Website’: ONLY for navigating the library’s top-level layout or finding information on a page (e.g., "click the 'Services' tab," "scroll to the footer for hours," or "I can't find the chat button").  Example: Showing the user how to get to the AZ List is Website.  
-o	"Catalog Rule": library discovery layer (the catalog) is a database. Interactions involving the use of it or its search features to area form of research (item search, etc.) not Website Navigation.
+    o	Code as ‘Website’: ONLY for navigating the library’s top-level layout or finding information on a page (e.g., "click the 'Services' tab," "scroll to the footer for hours," or "I can't find the chat button").  Example: Showing the user how to get to the AZ List is Website.  
+    o	"Catalog Rule": library discovery layer (the catalog) is a database. Interactions involving the use of it or its search features to area form of research (item search, etc.) not Website Navigation.
 •	Possession Rule: If a patron is "returning" or "bringing back" an item or claims it was already returned, it is NOT lost. DO NOT code it as 'Lost Items'.
 •	Building Maintenance: Inquiries regarding building comfort or maintenance such as HVAC (Air Conditioning/Heating), plumbing (leaks), lighting, or elevators are NOT related to Hours, Navigation & Wayfinding, or Noise Issues. You MUST use the code ‘Other’. 
 •	Library Web Navigation: Code as ‘Website’ if the interaction involves troubleshooting the Library Website interface (e.g., "click here," "scroll down," "I can't find it on the page"). This includes finding hours or info via the site's layout.
