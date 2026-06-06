@@ -74,6 +74,8 @@ Transcript: Only content similar to "I seem to have been logged out of the conve
 Transcript: "nese lanterns ... Hello. ... What may we help you with?" is Code: Abandoned Chat | Reasoning: "Nese lanterns" is a fragment without library intent. Despite the librarian greeting, the lack of an active library inquiry triggers 'Abandoned Chat'.
 Transcript: "I'm in the library catalog looking for books on history, but there are too many. How do I see only the ones in the main stacks?" Code: Database Search Skills, Finding Relevant Sources Reasoning: Even though the user is on the library's URL, the labor is 'Database Search Skills' because it involves applying a location filter within the catalog's search engine. Do NOT code as 'Website'.
 
+### RESPONSE FORMAT
+Code, Code | [Reasoning: Brief justification for inclusion/exclusion]
 
 ### CODEBOOK JSON:
 {json.dumps(CODEBOOK_DICT, indent=2)}
