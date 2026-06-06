@@ -9,7 +9,7 @@ api_key = userdata.get('GEMINI_API_KEY')
 client = genai.Client(api_key=api_key)
 
 # 2. Load Codebook
-CODEBOOK_PATH = '/content/drive/MyDrive/34Batch/codebook_cluster.json'
+CODEBOOK_PATH = '/content/drive/MyDrive/TestJune/codebook_cluster.json'
 with open(CODEBOOK_PATH, 'r') as f:
     CODEBOOK_DICT = json.load(f)
 
