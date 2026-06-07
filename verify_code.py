@@ -40,14 +40,14 @@ def audit_record(row):
     Applied Code Reasoning: {clean_val(row.get('New_AI_Reasoning'))}
     AI Thoughts: {clean_val(row.get('AI_Thoughts'))}
     -----------------------
-    
     Perform your audit balancing the guidelines. 
-    Output exactly ONE line of text containing these 4 fields separated strictly by a pipe character (|). Do not include a header row, markdown formatting, or extra conversational text.
+    Output exactly ONE line of text containing these 5 fields separated strictly by a pipe character (|).
     
     Fields to output:
-    Applied Code | Reasoning For Applied Code | Recommended Code Changes | Reason For Code Changes
+    Applied Code | Reasoning For Applied Code | Recommended Code Changes | Reason For Code Changes | Final Resolved Code
+    
+    *NOTE for 'Final Resolved Code': If there are no changes, output the exact 'Current Codes Assigned'. If you recommended changes, output what the complete, clean final list of codes should look like after applying your recommendations.*
     """
-
     try:
         response = client.models.generate_content(
             model="gemini-2.5-flash",
@@ -62,14 +62,14 @@ def audit_record(row):
         fields = [f.strip() for f in response.text.split('|')]
         
         # Guard: Ensure we always return exactly 4 fields to prevent column misalignment
-        if len(fields) < 4:
-            fields.extend(["N/A"] * (4 - len(fields)))
-        return fields[:4]
+        if len(fields) < 5:
+            fields.extend(["N/A"] * (5 - len(fields)))
+        return fields[:5]
         
     except Exception as e:
         print(f"Error processing StudyID {row.get('StudyID')}: {e}")
         # Fallback fields matching the format to preserve the CSV row layout
-        return ["API Error", "API Error Interruption", "ERROR", str(e)]
+        return ["API Error", "API Error Interruption", "ERROR", str(e), "ERROR"]
 
 
 def run_batch_audit(input_csv_path, output_csv_path, max_rows=None, save_interval=None, start_row=0):
@@ -97,7 +97,8 @@ def run_batch_audit(input_csv_path, output_csv_path, max_rows=None, save_interva
             '[Applied Code]', 
             '[Reasoning for Applied Code]', 
             '[Recommended Code Changes]', 
-            '[Reason for Code Changes]'
+            '[Reason for Code Changes]',
+            '[Final Code]'
         ])
         temp_df.to_csv(path, index=False)
 
