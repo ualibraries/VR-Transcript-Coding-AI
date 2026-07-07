@@ -175,8 +175,8 @@
       "category": "Access & Circulation",
       "code_name": "Lost Items",
       "definition": "Items borrowed by the patron they are reporting lost or billed by library as lost",
-      "inclusions": [],
-      "exclusions": ["Items checked out by the patron claims returned but still on their account"]
+      "inclusions": ["Questions about library items checked out but billed as lost or reporting as lost." ],
+      "exclusions": ["Items checked out by the patron claims returned but still on their account. If a patron is "returning" or "bringing back" an item or claims it was already returned, DO NOT code it as 'Lost Items'."]
     },
     {
       "category": "Discovery & Research Support",
@@ -203,8 +203,8 @@
       "category": "Other",
       "code_name": "Other",
       "definition": "Inquiries not fitting in any above category. Includes building and facility issues not related to noise.",
-      "inclusions": ["All offers of donations, book gifts, or material contributions MUST be coded here."],
-      "exclusions": ["Do NOT invent a 'Donation' code."]
+      "inclusions": ["All offers of donations, book gifts, or material contributions MUST be coded here. Building Maintenance: Inquiries regarding building comfort or maintenance such as HVAC (Air Conditioning/Heating), plumbing (leaks), lighting, or elevators"],
+      "exclusions": ["Do NOT invent a 'Donation' code. Do not include areas related to Hours, Navigation & Wayfinding, or Noise Issues"]
     },
     {
       "category": "Access & Circulation",
@@ -223,8 +223,8 @@
     {
       "category": "Referral & Administrative",
       "code_name": "Policies & Procedures",
-      "definition": "library rules, borrowing limits, conduct policies, or service guidelines.",
-      "inclusions": ["Stating explicit rules or restrictions on who, when, or how a library service or library space can be used."],
+      "definition": "explicit library rules, borrowing limits, conduct policies, or service guidelines.",
+      "inclusions": ["Stating or requesting information on explicit rules or restrictions on who, when, or how a library service or library space can be used (e.g., Am I allowed to...?, Can I bring coffee?, As an alumni, can I use...?)"],
       "exclusions": ["Basic directional info or stating which building houses a library or campus service without referencing a restrictive rule (map this to Navigation instead)"]
     },
     {
@@ -287,8 +287,8 @@
       "category": "Technical & Connectivity",
       "code_name": "Website",
       "definition": "Issues or questions navigating the library site including scheduling appointments",
-      "inclusions": [],
-      "exclusions": ["only implies or suggests a need or potential issue related to navigating or accessing information on the library website"]
+      "inclusions": ["navigating the library’s top-level layout or finding information on a page (e.g., "click the 'Services' tab," "scroll to the footer for hours," or "I can't find the chat button").  Example: Showing the user how to get to the AZ List is Website."],
+      "exclusions": ["only implies or suggests a need or potential issue related to navigating or accessing information on the library website. Use of the library discovery layer (the catalog) interactions involving the use of it or its search features."]
     },
     {
       "category": "Referral & Administrative",
