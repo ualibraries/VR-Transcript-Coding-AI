@@ -224,8 +224,8 @@
       "category": "Referral & Administrative",
       "code_name": "Policies & Procedures",
       "definition": "library rules, borrowing limits, conduct policies, or service guidelines.",
-      "inclusions": ["Stating restrictions on who, when, or how a service can be used"],
-      "exclusions": ["Basic directional info or stating which building houses a service without referencing a restrictive rule (map this to Navigation instead)"]
+      "inclusions": ["Stating explicit rules or restrictions on who, when, or how a library service or library space can be used."],
+      "exclusions": ["Basic directional info or stating which building houses a library or campus service without referencing a restrictive rule (map this to Navigation instead)"]
     },
     {
       "category": "Physical & Operational",
