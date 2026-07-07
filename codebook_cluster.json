@@ -1,6 +1,6 @@
 {
   "codebook_name": "Updated Library Chat Reference Codebook",
-  "version": "1.3",
+  "version": "1.2",
   "codes": [
     {
       "category": "Other",
@@ -21,7 +21,7 @@
       "code_name": "Campus Services",
       "definition": "Non-library services offered by the university or larger campus (e.g tutoring, writing support, IT help, financial aid, counseling, dining)",
       "inclusions": ["That appears to be part of the School of Music. I would be happy to refer your request", "looks like the university provides access to premium features on Overleaf", "I would recommend contacting the UA Bookstore"],
-      "exclusions": "Where can I park on campus? That is Campus Wayfinding."[]
+      "exclusions": ["Where can I park on campus? That is Campus Wayfinding."]
     },
     {
       "category": "Physical & Operational",
@@ -29,6 +29,7 @@
       "definition": "Directions to finding physical locations elsewhere on campus",
       "inclusions": ["Where is the School of Music?", "There is some metered parking around campus, but it would probably be easiest to park in a garage."],
       "exclusions": ["Information about the name of campus services or the hours they might be open.  Those details are campus services not wayfinding."]
+
     },
     {
       "category": "Discovery & Research Support",
@@ -79,6 +80,7 @@
       "definition": "Specific support for faculty or other instructors that include class tours, pedagogy, syllabus design, or classroom curriculum. Includes an instructor requesting resources, access, or technical help specifically for use by their students or their course/class.",
       "inclusions": ["As an instructor, if I include New York Times article links, will my students be able to access the article or will they encounter a paywall?"],
       "exclusions": ["Exclude faculty who need support for their personal use, research or writing efforts. Simple mention that user has faculty status with no reference to instructional needs"]
+
     },
     {
       "category": "Known Item Retrieval",
@@ -100,6 +102,7 @@
       "definition": "Library fines charged to patron, questions of payment procedures for library charges, billing issues, bursar holds on account for library charges",
       "inclusions": ["You can see about any outstanding fees through this form here", "I have been unfairly charged on my bursar account for a laptop borrowed from the library"],
       "exclusions": ["requests about overdues or renewals that do not reference money owed, charges or payments"]
+
     },
     {
       "category": "Access & Circulation",
@@ -175,8 +178,8 @@
       "category": "Access & Circulation",
       "code_name": "Lost Items",
       "definition": "Items borrowed by the patron they are reporting lost or billed by library as lost",
-      "inclusions": ["Questions about library items checked out but billed as lost or reporting as lost." ],
-      "exclusions": ["Items checked out by the patron claims returned but still on their account. If a patron is "returning" or "bringing back" an item or claims it was already returned, DO NOT code it as 'Lost Items'."]
+      "inclusions": [],
+      "exclusions": ["Items checked out by the patron claims returned but still on their account"]
     },
     {
       "category": "Discovery & Research Support",
@@ -203,8 +206,8 @@
       "category": "Other",
       "code_name": "Other",
       "definition": "Inquiries not fitting in any above category. Includes building and facility issues not related to noise.",
-      "inclusions": ["All offers of donations, book gifts, or material contributions MUST be coded here. Building Maintenance: Inquiries regarding building comfort or maintenance such as HVAC (Air Conditioning/Heating), plumbing (leaks), lighting, or elevators"],
-      "exclusions": ["Do NOT invent a 'Donation' code. Do not include areas related to Hours, Navigation & Wayfinding, or Noise Issues"]
+      "inclusions": ["All offers of donations, book gifts, or material contributions MUST be coded here."],
+      "exclusions": ["Do NOT invent a 'Donation' code."]
     },
     {
       "category": "Access & Circulation",
@@ -223,9 +226,9 @@
     {
       "category": "Referral & Administrative",
       "code_name": "Policies & Procedures",
-      "definition": "explicit library rules, borrowing limits, conduct policies, or service guidelines.",
-      "inclusions": ["Stating or requesting information on explicit rules or restrictions on who, when, or how a library service or library space can be used (e.g., Am I allowed to...?, Can I bring coffee?, As an alumni, can I use...?)"],
-      "exclusions": ["Basic directional info or stating which building houses a library or campus service without referencing a restrictive rule (map this to Navigation instead)"]
+      "definition": "library rules, borrowing limits, conduct policies, or service guidelines.",
+      "inclusions": ["Stating restrictions on who, when, or how a service can be used"],
+      "exclusions": ["Basic directional info or stating which building houses a service without referencing a restrictive rule (map this to Navigation instead)"]
     },
     {
       "category": "Physical & Operational",
@@ -249,8 +252,7 @@
       "exclusions": []
     },
     {
-      "category": "Physical & Operational",
-      "code_name": "Safety & Security",
+      "code_name": "Physical & Operational",
       "definition": "Personal safety or security, emergency procedures, or the presence of security personnel",
       "inclusions": [],
       "exclusions": []
@@ -281,21 +283,18 @@
       "code_name": "Tech Support",
       "definition": "Help with frozen computers, hardware setup, troubleshootin hardware or equipment issues",
       "inclusions": ["I am trying to connect my tv to the Internet, but I am having problems", "my motherbord is going up to 90c is this ok and will it break my pc?"],
-      "exclusions": ["My login is not working. I cannot access this article"]
+      "exclusions": []
     },
     {
       "category": "Technical & Connectivity",
       "code_name": "Website",
       "definition": "Issues or questions navigating the library site including scheduling appointments",
-      "inclusions": ["navigating the library’s top-level layout or finding information on a page (e.g., "click the 'Services' tab," "scroll to the footer for hours," or "I can't find the chat button").  Example: Showing the user how to get to the AZ List is Website."],
-      "exclusions": ["only implies or suggests a need or potential issue related to navigating or accessing information on the library website. Use of the library discovery layer (the catalog) interactions involving the use of it or its search features."]
+      "inclusions": [],
+      "exclusions": ["only implies or suggests a need or potential issue related to navigating or accessing information on the library website"]
     },
     {
       "category": "Referral & Administrative",
       "code_name": "Request Purchase",
       "definition": "Requests for the library to acquire a new title or institutional license. This is for institutional acquisition only.",
       "inclusions": [],
-      "exclusions": ["Questions just about the number of available licenses, personal fines, library card fees, patron 'buying' a replacement for a lost item"]
-}
-  ]
-}
+      "exclusions": ["Questions just about the number of available licenses, perso
