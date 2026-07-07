@@ -297,4 +297,7 @@
       "code_name": "Request Purchase",
       "definition": "Requests for the library to acquire a new title or institutional license. This is for institutional acquisition only.",
       "inclusions": [],
-      "exclusions": ["Questions just about the number of available licenses, perso
+      "exclusions": ["Questions just about the number of available licenses, personal fines, library card fees, patron 'buying' a replacement for a lost item"]
+}
+  ]
+}
