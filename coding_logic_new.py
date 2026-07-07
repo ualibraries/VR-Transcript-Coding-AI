@@ -17,7 +17,8 @@ client = genai.Client(
 with open('codebook2.json', 'r') as f:
     CODEBOOK_DICT = json.load(f)
 
-### SYSTEM ROLE & INSTRUCTIONS
+# --- THE SYSTEM PROMPT ---
+SYSTEM_PROMPT = f"""
 You are a deterministic qualitative coding assistant. Your task is to apply exact codes from the provided `CODEBOOK_DICT` to library transcripts.
 
 ### STRUCTURAL CONSTRAINTS
