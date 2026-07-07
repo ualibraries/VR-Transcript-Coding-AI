@@ -280,7 +280,7 @@
       "code_name": "Tech Support",
       "definition": "Help with frozen computers, hardware setup, troubleshootin hardware or equipment issues",
       "inclusions": ["I am trying to connect my tv to the Internet, but I am having problems", "my motherbord is going up to 90c is this ok and will it break my pc?"],
-      "exclusions": []
+      "exclusions": ["My login is not working. I cannot access this article"]
     },
     {
       "category": "Technical & Connectivity",
