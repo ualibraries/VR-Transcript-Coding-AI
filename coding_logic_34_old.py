@@ -59,6 +59,8 @@ o	"Catalog Rule": library discovery layer (the catalog) is a database. Interacti
 •	Tech Renewals: If the user is renewing or returning a technology-based item, use 'Renewals' first and 'Borrow Tech' second.  Do NOT use ‘Known Item’ for technology-based hardware.
 •	Physical Wayfinding: If a permission or access question involves a specific library physical space (e.g., "Are the stacks open to community users?"), apply both ‘Policies & Procedures’ and ‘Navigation & Wayfinding’
 •	Campus Service Priority: If a librarian refers a patron to a non-library, university entity (Bookstore, Bursar, Financial Aid), the code ‘Campus Services’ is mandatory.
+•	Campus Service Priority: If a librarian refers a patron to a non-library, university entity (Bookstore, Bursar, Financial Aid), the code ‘Campus Services’ is mandatory.
+•	Tie-Breaking Rule: If a statement mentions a location where a service is offered (e.g., "lending is out of the Main Library"), code it strictly as Navigation & Wayfinding. Do not apply Policies & Procedures unless an explicit rule, penalty, or restriction (e.g., limits, fines, ID requirements) is stated.
 
 ### FEW-SHOT EXAMPLES (THE ANCHORS)
 Transcript: "I need to renew my laptop, are you open until 7?" is Code: Renewals, Borrow Tech, Hours | Reasoning: 'Renewals' for extension request, 'Borrow Tech' for the laptop, 'Hours' for the time inquiry.
