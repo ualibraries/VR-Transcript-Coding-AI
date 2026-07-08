@@ -14,9 +14,6 @@ AI_CONFIG = {
         "thinking_level": "MEDIUM" # Prevents "Infinite Loops" while maintaining depth
     }
 }
-     
-    }
-}
 
 # Pre-compiling regex for performance
 TIME_PATTERN = re.compile(r'\d{2}:\d{2}:\d{2}')
