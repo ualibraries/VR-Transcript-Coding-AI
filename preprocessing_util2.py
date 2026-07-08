@@ -7,8 +7,13 @@ MODEL_NAME = "gemini-3-flash-preview" # Use -preview if -flash isn't available y
 
 AI_CONFIG = {
     "temperature": 1.0,         # Required for Gemini 3 'Thinking' models
-    "max_output_tokens": 65536, # INCREASED: Gemini 3 needs "room to think" 
+    "max_output_tokens": 4096, # INCREASED: Gemini 3 needs "room to think" 
     "top_k": 1, 
+    "thinking_config": {
+        "include_thoughts": True,
+        "thinking_level": "MEDIUM" # Prevents "Infinite Loops" while maintaining depth
+    }
+}
      
     }
 }
