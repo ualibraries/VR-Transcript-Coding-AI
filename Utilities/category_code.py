@@ -2,12 +2,12 @@ import pandas as pd
 import json
 
 # 1. LOAD YOUR REVISED CODEBOOK
-with open('codebook_category.json', 'r') as f:
+with open('codebook2.json', 'r') as f:
     raw_data = json.load(f)
 
 # Handle potential nested JSON structure
 if isinstance(raw_data, dict):
-    codebook_list = raw_data.get('codes', []) 
+    codebook_list = raw_data.get('codes', [])
 else:
     codebook_list = raw_data
 
@@ -29,10 +29,13 @@ for item in codebook_list:
 cat_all_codes_str = {k: ", ".join(v) for k, v in category_to_all_codes.items()}
 
 # 3. LOAD YOUR AI RESULTS
-df = pd.read_csv('Complete_Code.csv')
+# Added `on_bad_lines='warn'` to handle potential parsing errors in the CSV.
+# This will issue a warning for malformed rows and skip them.
+# Switched to the 'python' engine for better handling of malformed CSV lines.
+df = pd.read_csv('master_combined.csv', on_bad_lines='warn', engine='python')
 
 # 4. PROCESS THE MULTI-INTENT CODES
-df['Code_List'] = df['New_AI_Final_Code'].astype(str).str.split(',').apply(
+df['Code_List'] = df['AI_Final_Code'].astype(str).str.split(',').apply(
     lambda x: [i.strip() for i in x] if isinstance(x, list) else []
 )
 exploded_df = df.explode('Code_List')
