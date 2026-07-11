@@ -2,20 +2,23 @@ import pandas as pd
 import re
 
 # 1. Load your master file
-df = pd.read_csv('Complete_Code.csv')
+# Added `on_bad_lines='warn'` to handle potential parsing errors in the CSV.
+# This will issue a warning for malformed rows and skip them.
+# Switched to the 'python' engine for better handling of malformed CSV lines.
+df = pd.read_csv('master_combined.csv', on_bad_lines='warn', engine='python')
 
 # --- ROBUST FILTERING FUNCTION ---
 def nuclear_filter(exploded_df, column_name):
     # This captures 'abandoned', 'Abandoned', 'abandoned chat', 'Abandoned Chat ', etc.
     # It also handles hidden whitespace and non-breaking spaces (\xa0)
-    
+
     # Create a mask for rows that DO NOT contain 'abandon'
     mask = ~exploded_df[column_name].str.contains('abandon', case=False, na=False, regex=True)
-    
+
     # Diagnostic: Let's see what we are about to drop
     dropped_values = exploded_df[~mask][column_name].unique()
     print(f"🚫 Removing these variants from {column_name}: {dropped_values}")
-    
+
     return exploded_df[mask]
 
 # --- PART 1: AI CODE ANALYSIS ---
@@ -24,7 +27,7 @@ def split_codes(val):
     # Split by comma or semicolon just in case
     return [c.strip() for c in re.split(r'[,;]', str(val)) if c.strip()]
 
-df['AI_Code_List'] = df['New_AI_Final_Code'].apply(split_codes)
+df['AI_Code_List'] = df['AI_Final_Code'].apply(split_codes)
 ai_exploded = df.explode('AI_Code_List')
 
 # Apply the Nuclear Filter
@@ -37,15 +40,17 @@ ai_counts['Rank'] = ai_counts.index + 1
 # Percentage is now calculated against the 'Active' workload only
 ai_counts['Percentage'] = (ai_counts['Count'] / len(ai_filtered) * 100).round(2)
 
-# Consistency Check
-num_inst = df['Institution'].nunique()
-inst_per_ai = ai_filtered.groupby('AI_Code_List')['Institution'].nunique()
-ai_counts['Consistent Across All Inst'] = ai_counts['Transaction Code'].map(
-    lambda x: "Yes" if inst_per_ai.get(x, 0) == num_inst else "No"
-)
+# Consistency Check (Commented out as 'Institution' column is not found in df)
+# If you intend to use 'Institution' for consistency, please ensure it's in your CSV.
+# num_inst = df['Institution'].nunique()
+# inst_per_ai = ai_filtered.groupby('AI_Code_List')['Institution'].nunique()
+# ai_counts['Consistent Across All Inst'] = ai_counts['Transaction Code'].map(
+#     lambda x: "Yes" if inst_per_ai.get(x, 0) == num_inst else "No"
+# )
 
 ai_counts.to_csv('AI_Top_10_No_Abandoned.csv', index=False)
 
+print("\n📊 Success! Generated: AI_Top_10_No_Abandoned.csv")
 
 # --- PART 2: HUMAN CODE ANALYSIS ---
 def collect_human_codes(row):
