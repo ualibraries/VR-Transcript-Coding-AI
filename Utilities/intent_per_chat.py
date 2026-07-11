@@ -3,11 +3,14 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # 1. Load your adjudicated data
-df = pd.read_csv("/content/drive/MyDrive/Colab_Outputs/Adjudication_April_X.csv")
+# Added `on_bad_lines='warn'` to handle potential parsing errors in the CSV.
+# This will issue a warning for malformed rows and skip them.
+# Switched to the 'python' engine for better handling of malformed CSV lines.
+df = pd.read_csv('master_combined.csv', on_bad_lines='warn', engine='python')
 
 # 2. Identify the column containing your codes (without reasoning)
 # Adjust 'Final_Codes' to match your actual column name
-code_column = 'New_AI_Final_Code'
+code_column = 'AI_Final_Code'
 
 # 3. Calculate "Intent Count" (Number of codes per row)
 # We split the string by commas and count the items in the resulting list
