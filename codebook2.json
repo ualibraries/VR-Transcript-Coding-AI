@@ -1,6 +1,6 @@
 {
   "codebook_name": "Updated Library Chat Reference Codebook",
-  "version": "1.2",
+  "version": "1.3",
   "codes": [
     {
       "category": "Other",
@@ -252,7 +252,8 @@
       "exclusions": []
     },
     {
-      "code_name": "Physical & Operational",
+      "category": "Physical & Operational",
+      "code_name": "Safety & Security",
       "definition": "Personal safety or security, emergency procedures, or the presence of security personnel",
       "inclusions": [],
       "exclusions": []
